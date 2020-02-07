@@ -194,9 +194,7 @@ const Buildings = ({match}) => {
 
 
         <div className="building-atricle flex ai-c">
-          <div className="building-atricle-text">
-            {building.description}
-          </div>
+          <div className="building-atricle-text" dangerouslySetInnerHTML={{__html: building.description}}></div>
           <img src={building.desc_img} alt={building.name} />
         </div>
 
