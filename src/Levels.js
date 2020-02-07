@@ -265,9 +265,17 @@ const Levels = ({match}) => {
             <div className="level-legend">
               <p className="level-legend-title">Legenda</p>
               <ul className="level-legend-items">
-                <li className="flex ai-c">
+                <li className="level-legend-avaliable flex ai-c">
                   <span></span>
                   <p>dostępne</p>
+                </li>
+                <li className="level-legend-reserved flex ai-c">
+                  <span></span>
+                  <p>zarezerwowane</p>
+                </li>
+                <li className="level-legend-sold flex ai-c">
+                  <span></span>
+                  <p>sprzedane</p>
                 </li>
               </ul>
             </div>
