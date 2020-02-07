@@ -25,6 +25,454 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+    <style>
+      /*custom styles*/
+.container {
+    width: 1300px;
+    margin: 0 auto;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ul {
+  list-style-type: none;
+}
+a {
+  text-decoration: none;
+  color: #221F1F;
+}
+body {
+  font-family: 'Source Sans Pro', sans-serif!important;
+  overflow-x: hidden;
+  line-height: 1.2;
+}
+img {
+  max-width: 100%;
+}
+select {
+  border: none;
+  background: none;
+  -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 2px 30px 2px 2px;
+    border: none;
+}
+select::-ms-expand {
+    display: none;
+}
+button {
+  cursor: pointer;
+}
+.container {
+  width: 1300px;
+  margin: 0 auto;
+}
+
+.flex {
+  display: flex;
+}
+.v-cent {
+  align-items: center;
+}
+.jc-spb {
+  justify-content: space-between;
+}
+.jc-spa {
+  justify-content: space-around;
+}
+.jc-c {
+  justify-content: center;
+}
+.jc-fe {
+  justify-content: flex-end;
+}
+.ai-c {
+  align-items: center;
+}
+
+.white-heading {
+  font-size: 21px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.white-heading.faded {
+  color: #B4B4B4;
+}
+
+.section-title {
+  /*font-size: 30px;*/
+  font-size: 1.9em;
+  font-weight: bold;
+  color: #221F1F;
+  position: relative;
+  padding-left: 60px;
+  margin: 45px 0 25px 0;
+  line-height: 1.1;
+}
+.section-title:before {
+  content: url(./images/ikony/detal.png);
+  display: block;
+  position: absolute;
+    left: 0;
+}
+.section-title.white {
+  color: #fff;
+}
+.w-50 {
+  width: 50%;
+}
+.w-33 {
+  width: calc(100% / 3);
+}
+.hidden {
+  display: none;
+}
+.btn {
+  border: 1px solid #E60000;
+  padding: 10px;
+  color: #221F1F;
+  font-size: 14px;
+  font-weight: bold;
+  background: #fff;
+  display: block;
+  text-align: center;
+  text-transform: uppercase;
+}
+.btn-xs {
+  width: 25%;
+  padding: 5px;
+}
+.btn-xl {
+  width: 45%;
+}
+.line-before,
+.line-after {
+  position: relative;
+}
+.line-before:before {
+  content: '';
+  display: block;
+  background: #B4B4B4;
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  left: -100%;
+  top: 50%;
+}
+.line-after:after {
+  content: '';
+  display: block;
+  background: #B4B4B4;
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  right: -100%;
+  top: 50%;
+}
+
+.arrow-after {
+  position: relative;
+}
+.arrow-after:after {
+  content: '';
+  border: solid #E60000;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  margin-top: -5px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  pointer-events: none;
+}
+.bold {
+  font-weight: bold;
+}
+
+/* CUSTOM STYLLES - UNIT */
+.unitView-images-concepts {
+  width: 25%;
+  background-color: #F5F5F5;
+  height: 100%;
+}
+.unitView-main-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.unitView-main-img img {
+  max-width: 80%;
+}
+.concepts-signle {
+  width: 70%;
+  margin: 25px auto;
+  cursor: pointer;
+}
+.info-cell {
+  border: 1px solid #B4B4B4;
+  text-align: center;
+  padding: 5px;
+}
+.info-cell span:first-child {
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+.unitView-right {
+  margin-left: 40px;
+}
+.unitView-left {
+  margin-right: 40px;
+}
+.info-cell.w-50 {
+  border-bottom: none;
+}
+.info-cell span {
+  display: block;
+}
+.adjust-box,
+.options-box {
+  margin: 10px 0;
+}
+.adjust-box-header,
+.options-box-header {
+  background: #F5F5F5;
+  cursor: pointer;
+}
+.adjust-box-header img,
+.options-box-header img {
+  margin: 5px 20px;
+}
+.adjust-box-title,
+.options-box-title {
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+}
+.adjust-box-title .arrow-after:after,
+.options-box-title .arrow-after:after {
+  right: 30px;
+}
+.options-box-header-white {
+  background: #fff;
+  border: 1px solid #B4B4B4;
+}
+.adjust-box-body,
+.options-box-body {
+  padding: 0 80px 10px 80px;
+  display: none;
+}
+
+.rooms-table {
+  width: 100%;
+  border-spacing: 0;
+}
+.rooms-table th {
+  background: #F5F5F5;
+}
+.rooms-table td,
+.rooms-table th {
+  padding: 5px 10px;
+  border: 1px solid #B4B4B4;
+  border-left: none;
+  border-bottom: none;
+}
+.rooms-table th {
+  border-top: none;
+}
+.rooms-table td:last-child,
+.rooms-table th:last-child {
+  border-right: none;
+}
+.rooms-table-summary {
+  background-color: #F5F5F5;
+}
+.unitView-investment-details-name {
+  font-size: 30px;
+  font-weight: bold;
+}
+.unitView-add-to-comparison-btn {
+  display: flex;
+  background: #fff;
+  border: 1px solid #B4B4B4;
+  align-items: center;
+  padding: 10px 5px;
+  font-weight: bold;
+  text-align: left;
+}
+.unitView-add-to-comparison-btn img {
+  margin-right: 5px;
+}
+.unitView-unit-name,
+.bold-title {
+  font-weight: bold;
+  font-size: 30px;
+  margin: 40px 0 15px 0;
+}
+.unitView-unit-name span {
+  color: #E60000;
+}
+.download-pdf {
+  font-weight: bold;
+  padding: 3px 20px;
+  border: 1px solid #B4B4B4;
+}
+.download-pdf img {
+  margin-right: 15px;
+}
+.unitView-images-concepts-title {
+  text-align: center;
+  font-weight: bold;
+}
+
+.investment-benefits-content {
+  flex-wrap: wrap;
+}
+.investment-benefits-single {
+  width: 40%;
+  margin: 40px 0;
+}
+.investment-benefits-single-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.investment-benefits-single-text {
+  margin-left: 35px;
+}
+
+.investment-boxes {
+  padding: 40px 0;
+  overflow: hidden;
+  /* filter: blur(8px);
+  -webkit-filter: blur(8px); */
+}
+.investment-boxes .container.flex {
+  flex-direction: column;
+}
+.investment-box {
+  background-color: #fff;
+  width: 60%;
+  margin: 40px 0 150px 0;
+  padding: 50px 90px 50px 0;
+  position: relative;
+}
+.investment-box .bold-title {
+  margin-top: 0;
+}
+.investment-box-description {
+  margin: 20px 0;
+}
+.investment-box-list-item {
+  margin: 20px 0;
+  
+}
+.investment-box-list-item img {
+  margin-right: 25px;
+}
+.investment-box-left:before,
+.investment-box-right:before {
+  content: '';
+  display: block;
+  width: 1000px;
+  height: 100%;
+  position: absolute;
+  left: -1000px;
+  background-color: #fff;
+  top: 0;
+}
+.investment-box-right {
+  align-self: flex-end;
+}
+.investment-box-right:before {
+  left: auto;
+  right: -1000px;
+}
+
+.investment-details {
+  width: 30%;
+  margin-left: auto;
+  padding: 0 10% 0 35px;
+}
+.investment-details-name,
+.building-details-building-name {
+  font-weight: bold;
+  font-size: 30px;
+}
+.investment-details-address,
+.building-details-address,
+.level-detailsdetails-address {
+  font-weight: normal;
+}
+.investment-details-description {
+  font-size: 20px;
+  margin: 25px 0;
+}
+
+
+
+/* building */
+.building-details,
+.level-details {
+  width: 30%;
+  margin-left: auto;
+  padding-left: 35px;
+}
+.building-details-list li {
+  font-weight: bold;
+  margin: 20px 0;
+}
+.building-details-list li img {
+  margin-right: 15px;
+}
+.building-details-building-name {
+  margin-top: 40px;
+}
+
+/* level */
+.level-search {
+  background-color: #F5F5F5;
+  padding: 15px 25px 25px 15px;
+}
+.level-search select {
+  background-color: #fff;
+  border: 1px solid #B4B4B4;
+  display: block;
+  padding: 7px 40px 7px 7px;
+}
+.level-search select option {
+  font-weight: lighter;
+}
+.level-search-input {
+  position: relative;
+}
+/* .level-search-input:after { 
+  content: '';
+  border: solid #E60000;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 2px;
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  margin-top: -4px;
+} */
+
+    </style>
+
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -39,5 +487,166 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+
+function coord(xy, orig_size, chngd_size) {
+  const x_scale = chngd_size[0] / orig_size[0];
+  const y_scale = chngd_size[1] / orig_size[1];
+  let coo = [];
+  for (i = 0; i < xy.length; i += 2) {
+    coo.push(xy[i] * x_scale);
+    coo.push(xy[i+1] * y_scale);
+  }
+  return coo;
+}
+
+
+
+
+     
+
+      $(document).ready(function() {
+        $('.options-box-header').click( function() {
+          $(this).next().slideToggle()
+        })
+
+        $('.adjust-box-header').click( function() {
+          $(this).next().slideToggle()
+        })
+
+
+        function coordStare(xy, orig_size, chngd_size) {
+          const x_scale = chngd_size[0] / orig_size[0];
+          const y_scale = chngd_size[1] / orig_size[1];
+          let coo = [];
+          for (i = 0; i < xy.length; i += 2) {
+            coo.push(xy[i] * x_scale);
+            coo.push(xy[i+1] * y_scale);
+          }
+          return coo;
+        }
+
+        console.log('koordynatory ZE STAREGO', coord([350, 110, 175, 400, 525, 600], [1000, 621], [1037, 621]))
+
+        
+
+
+        //skalowanie
+
+        let txt = `
+        <path d="M150 0 L75 200 L225 200 Z" />
+`;
+
+function coord(xy, orig_size, chngd_size) {
+  const x_scale = chngd_size[0] / orig_size[0];
+  const y_scale = chngd_size[1] / orig_size[1];
+  let coo = [];
+  for (i = 0; i < xy.length; i += 2) {
+    coo.push(xy[i] * x_scale);
+    coo.push(xy[i+1] * y_scale);
+  }
+  // console.log('coo', coo)
+  return coo;
+}
+
+
+function parser(text, o, ch) {
+  let parser = new DOMParser();
+  let xmlDoc = parser.parseFromString(text, "text/xml");
+
+  let d = xmlDoc.getElementsByTagName('path')[0].getAttribute('d');
+
+  let arr = d.toUpperCase().replace(/,/g, ' ').replace(/-/g, ' -').split(' ');
+
+  arr = arr.filter( val => val != '' );
+
+  let k = 0;
+  while (k < arr.length) {
+    if ((arr[k].length > 1) && (arr[k].match(/[A-Z]/i))) {
+        tmp = arr[k];
+        arr[k] = arr[k].substr(0, 1);
+        arr.splice(k+1, 0, tmp.substr(1, tmp.length));
+    }
+    k += 1;
+  }
+
+  let tmp_arr = [];
+  let i = 0;
+  while (i < arr.length) {
+      let tmp = [];
+      if (arr[i].match(/[A-Z]/i)) {
+        let j = i;
+        while (j < arr.length - 1) {
+          tmp.push(arr[j]);
+          //console.log('tmp', tmp)
+          if (arr[j + 1].match(/[A-Z]/i)) {
+            let tmp2 = coord(tmp, o, ch);
+            tmp2 = tmp2.filter( val => !Number.isNaN(val) );
+            tmp_arr.push(arr[i] + tmp2.join(' '));
+            i = j;
+            break;
+          }
+          j += 1
+        }
+      }
+    i += 1;
+  }
+  //console.log('tmp_arr', tmp_arr) 
+  return tmp_arr.join(' ') + ' Z';
+}
+
+//console.log('nowe koordynatory 1', parser(txt, [1000, 621], [250, 155]));
+
+
+
+
+
+    //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
+ setTimeout(() => {
+  //console.log('DONE')
+      //svg container/image
+let svgContainer = document.getElementById('svg1')  //kontener svg
+const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
+
+
+//cover img width and height
+let coverImgWidth = coverImg.width
+let coverImgHeight = coverImg.height
+//console.log('coverImgWidth', coverImgWidth)
+//console.log('coverImgHeight', coverImgWidth)
+
+
+
+//actual width and height of svg container
+let svgContainerWidth = svgContainer.width.baseVal.value
+let svgContainerHeight = svgContainer.height.baseVal.value
+//console.log('svgContainerWidth', svgContainerWidth)
+//console.log('svgContainerHeight', svgContainerHeight)
+
+
+let gElems = svgContainer.querySelectorAll('g')
+//console.log('gElems', gElems)
+
+
+gElems.forEach((g, i) => {
+  let pathElem = g.querySelector('path')
+  //console.log('path przed', pathElem)
+  let svgText = pathElem.outerHTML
+  //console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
+  let newcoords = parser(svgText, [1000, 621], [coverImgWidth, coverImgWidth])
+  //console.log('newcoords', newcoords)
+  pathElem.setAttribute('d', newcoords)
+  //console.log('path po', pathElem)
+})
+ }, 2000);
+
+    
+
+
+
+
+
+      })
+    </script>
   </body>
 </html>
