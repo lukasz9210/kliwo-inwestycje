@@ -16,8 +16,7 @@ const Levels = ({match}) => {
     const [levelsInBuilding, setLevelsInBuilding] = useState([])
     const [selectedLevelId, setSelectedLevelId] = useState(0)
 
-    const [redirectToLevelId, setRedirectToLevelId]= useState()
-    const [redirectToLevelS, setRedirectToLevelS] = useState(false)
+
 
     useEffect(() => {
         fetchLevel(match.params.levelId)
@@ -256,7 +255,7 @@ const Levels = ({match}) => {
                 <select onChange={selectLevelChange}>
                   {
                     levelsInBuilding.map((l) => {
-                      return <option value={l.id}>Poziom {l.number}</option>
+                      return <option value={l.id}>{l.number} Piętro (DostęĻnych lokali {l.count.free})</option>
                     })
                   }
                 </select>
