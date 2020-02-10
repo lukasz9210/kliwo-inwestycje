@@ -7,7 +7,6 @@ const Levels = ({match}) => {
     const [unitsInLevel, setUnitsInLevel] = useState([])
     const [redirect, setRedirect] = useState(false)
     const [redirectId, setRedirectId] = useState()
-    const [investmentId, setInvestmentId] = useState(0)
     const [investment, setInvestment] = useState({})
     const [buildings, setBuildings] = useState({})
     const [buildingsArray, setBuildingsArray] = useState([])
@@ -30,13 +29,6 @@ const Levels = ({match}) => {
         setSelectedBuildingId(level.building_id)
         fetchUnitsInLevel(level.id)
     }, [level])
-
-
-    useEffect(() => {
-      if(investmentId != 0) {
-        fetchInvestment()
-      }
-    }, [investmentId])
 
 
     useEffect(() => {
@@ -77,8 +69,8 @@ const Levels = ({match}) => {
           }).then(r => {
             return r.json()
           }).then(j => {
-
             setLevel(j.data.levels)
+            setInvestment(j.data.investment)
             console.log('this level', j)
           })
     }
@@ -116,35 +108,6 @@ const Levels = ({match}) => {
     }
 
 
-    //fetch INVESTMENT
-    const fetchInvestment = () => {
-      let details = {
-        'id': investmentId
-      };
-  
-      let formBody = [];
-      for (let property in details) {
-        let encodedKey = encodeURIComponent(property);
-        let encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-      }
-  
-      formBody = formBody.join("&");
-      console.log('formBody', formBody)
-  
-      fetch('http://kliwo.realizacje.grupaaf.pl/api/investments-show', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        body: formBody
-      }).then(r => {
-        return r.json()
-      }).then(j => {
-          setInvestment(j.data.investments)
-        //console.log('this investment', j.data.investments)
-      })
-  }
 
   //fetch ALL BUILDINGS
   const fetchBuildings = () => {

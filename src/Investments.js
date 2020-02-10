@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import parse from 'html-react-parser'
 import roletyImg from './images/ico_rolety_zewnetrzne.png'
+import Header from './Header.js'
+import Footer from './Footer.js'
 
 const Test = ({match}) => {
     const [investment, setInvestment] = useState({})
@@ -110,8 +112,10 @@ const Test = ({match}) => {
     }
 
     return (
+      <div>
+        <Header />
+      
         <div className="investment">
-            <h1>Inwestycja {investment.name}</h1>
             <div className="container">
               <p className="bold-title">Kliknij na wybrany budynek, aby poznać szczegóły.</p>
             </div>
@@ -254,7 +258,8 @@ const Test = ({match}) => {
 
 
         </div>
-        
+        <Footer />
+        </div>
     )
 }
 
