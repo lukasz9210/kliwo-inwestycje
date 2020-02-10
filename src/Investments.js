@@ -9,6 +9,8 @@ const Test = ({match}) => {
     const [buildings, setBuildings] = useState([])
     const [redirectId, setRedirectId] = useState()
     const [imaheHeight, setImaheHeight] = useState(0)
+    const [cloudShown, setCloudShown] = useState(false)
+    const [dataInCloud, setDataInCloud] = useState({})
 
     
 
@@ -96,8 +98,15 @@ const Test = ({match}) => {
     }
 
 
-    const showCoordinates = () => {
-        
+    const mouseOver = data => {
+      console.log('cloud SHOWN')
+      setDataInCloud(data)
+      setCloudShown(true)
+    }
+
+    const mouseLeave = data => {
+      console.log('cloud NOT SHOWN')
+      setCloudShown(false)
     }
 
     return (
@@ -107,30 +116,39 @@ const Test = ({match}) => {
               <p className="bold-title">Kliknij na wybrany budynek, aby poznać szczegóły.</p>
             </div>
 
+            <div className="svg-container" style={{height: imaheHeight}}>
             <img id="coverImg" style={{position: 'absolute', width: '70%'}} src="https://kliwo.pl/images/kliwo/mapy/trzebnica-cz/mapa-trzebnica-cz.jpg" />
             <svg style={{position: 'absolute'}} id="svg1" width="70%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
             {
               buildings.map((b, i) => {
-                console.log('b', b)
+                //console.log('b', b)
                 let svg = b.svg
-                console.log('svg', svg)
-                return <g id={`buildingsvg${i + 1}`} onClick={() => {redirectToBuilding(b.id)}} dangerouslySetInnerHTML={{__html: svg}}>
+                //console.log('svg', svg)
+                return <g onMouseOver={() => mouseOver(b)} onMouseLeave={() => mouseLeave()}  id={`buildingsvg${i + 1}`} onClick={() => {redirectToBuilding(b.id)}} dangerouslySetInnerHTML={{__html: svg}}>
                         
                         </g>
               })
             }
             </svg>
-        {redirect ? <Redirect to={`/budynek/${redirectId}`} /> : null}
+            {redirect ? <Redirect to={`/budynek/${redirectId}`} /> : null}
 
-        <div className="investment-details">
+            <div style={{display: cloudShown ? 'block' : 'none'}} className="svg-cloud">
+              <p>{dataInCloud.name}</p>
+            </div>
+
+            <div className="investment-details">
           <img src={investment.logo} alt={investment.name} />
           <h4 className="investment-details-name">{investment.name}</h4>
           <h5 className="investment-details-address">{investment.address}</h5>
           <p className="investment-details-description">{investment.description}</p>
         </div>
 
+            </div>
 
-        <div style={{display: 'none'}} className="container">
+        
+
+
+        <div className="container">
           <div className="investment-benefits">
               <h4 className="bold-title">Dlaczego Osiedle {investment.name}?</h4>
             <div className="investment-benefits-content flex jc-spb">
@@ -170,7 +188,7 @@ const Test = ({match}) => {
 
 
 
-        <div className="investment-boxes" style={{display: 'none' ,backgroundImage: 'url(https://kliwo.pl/images/kliwo/budynki/budynki-trzebnica-cz-b5.jpg)'}}>
+        <div className="investment-boxes" style={{backgroundImage: 'url(https://kliwo.pl/images/kliwo/budynki/budynki-trzebnica-cz-b5.jpg)'}}>
             <div className="container flex">
               <div className="investment-box investment-box-left" >
                 <div className="investment-box-content">
