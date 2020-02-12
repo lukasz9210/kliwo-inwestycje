@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {Redirect} from 'react-router-dom'
+import Header from './Header.js'
+import Footer from './Footer.js'
 
 
 const Levels = ({match}) => {
@@ -174,6 +176,7 @@ const Levels = ({match}) => {
 
     return (
         <div className="level">
+          <Header />
             <h1>ID Piętra: {level.id}</h1>
             <h1>Numer piętra: {level.number}</h1>
 
@@ -250,7 +253,7 @@ const Levels = ({match}) => {
       
 
 
-
+                  {/* <Footer /> */}
         </div>
     )
 }

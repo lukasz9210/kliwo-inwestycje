@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import {Redirect} from 'react-router-dom'
+import Header from './Header.js'
+import Footer from './Footer.js'
 
 const Buildings = ({match}) => {
     const [building, setBuilding] = useState({})
@@ -127,7 +129,7 @@ const Buildings = ({match}) => {
 
     return (
         <div>
-            <h1>{building.name}</h1>
+            <Header />
             <p className="bold-title">Najedź kursorem na piętro, aby sprawdzić liczbę wolnych lokali.<br />Kliknij, aby zobaczyć rzut pietra.</p>
 
 
@@ -200,7 +202,7 @@ const Buildings = ({match}) => {
 
 
         </div>
-
+               <Footer />
         </div>
     )
 }

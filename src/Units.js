@@ -5,6 +5,8 @@ import unitImg from './images/ico_komorkalokatorska.png'
 import GarageImg from './images/ico_zakupgarazu.png'
 import plusImg from './images/ico_plus.png'
 import downloadImg from './images/ico_download.png'
+import Header from './Header.js'
+import Footer from './Footer.js'
 
 
 const Units = ({match}) => {
@@ -290,6 +292,7 @@ const Units = ({match}) => {
 
     return (
         <div className="unitView">
+          <Header />
           <div className="container">
             <div className="unitView-content flex">
               <div className="unitView-left w-50">
@@ -538,7 +541,7 @@ const Units = ({match}) => {
 
 
           </div>
-
+          <Footer />
         </div>
     )
 }
