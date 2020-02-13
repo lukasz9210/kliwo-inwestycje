@@ -10,10 +10,23 @@ const Buildings = ({match}) => {
     const [redirectId, setRedirectId] = useState()
     const [investmentId, setInvestmentId] = useState(0)
     const [investment, setInvestment] = useState({})
+    const [imaheHeight, setImaheHeight] = useState(0)
 
     useEffect(() => {
         fetchBuilding()
         fetchLevelsInBuilding()
+
+        setTimeout(() => {
+          let ih = document.getElementById('coverImg').height
+        console.log('ih', ih)
+        setImaheHeight(ih)
+        console.log('imaheHeight', imaheHeight)
+        }, 1000);
+
+
+        console.log(jQuery)
+
+
     }, [])
 
 
@@ -128,13 +141,13 @@ const Buildings = ({match}) => {
 
 
     return (
-        <div>
+        <div className="building">
             <Header />
             <p className="bold-title">Najedź kursorem na piętro, aby sprawdzić liczbę wolnych lokali.<br />Kliknij, aby zobaczyć rzut pietra.</p>
 
 
 
-<svg id="svg1" width="1000" height="621" xmlns="http://www.w3.org/2000/svg" style={{position: 'absolute', background: "url(https://kliwo.pl/images/kliwo/budynki/budynki-trzebnica-cz-b5.jpg)", 'background-size': "cover"}}>
+{/* <svg id="svg1" width="1000" height="621" xmlns="http://www.w3.org/2000/svg" style={{position: 'absolute', background: "url(https://kliwo.pl/images/kliwo/budynki/budynki-trzebnica-cz-b5.jpg)", 'background-size': "cover"}}>
                
                {
                    levelsInBuilding.map((l, i) => {
@@ -149,13 +162,27 @@ const Buildings = ({match}) => {
 
                    })
                }
-           </svg>
-        {redirect ? <Redirect to={`/pietro/${redirectId}`} /> : null}
+           </svg> */}
 
 
-        <div className="container" >
+<div className="svg-container" style={{height: imaheHeight}}>
+            <img id="coverImg" style={{position: 'absolute', width: '60%'}} src="http://kliwo.realizacje.grupaaf.pl/wp-content/themes/kliwo/images/photos/B4.jpg" />
+            <svg style={{position: 'absolute'}} id="buildingSvgImg" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
+            {
+              levelsInBuilding.map((l, i) => {
+                //console.log('l', l)
+                let svg = l.coords
+                //console.log('svg', svg)
+                return <g id={`levelsvg${i + 1}`} onClick={() => {redirectToLevel(l.id)}} dangerouslySetInnerHTML={{__html: svg}}>
+                        
+                        </g>
+              })
+            }
+            </svg>
+            {redirect ? <Redirect to={`/budynek/${redirectId}`} /> : null}
 
-        <div className="building-details">
+            <div className="container">
+            <div className="building-details">
           <img src={investment.logo} alt={investment.name} />
           <h4 className="building-details-name">{investment.name}</h4>
           <h5 className="building-details-address">{investment.address}</h5>
@@ -193,6 +220,21 @@ const Buildings = ({match}) => {
             </ul>
           </div>
         </div>
+            </div>
+
+
+
+            </div>
+
+
+
+
+        {redirect ? <Redirect to={`/pietro/${redirectId}`} /> : null}
+
+
+        <div className="container" >
+
+       
 
 
         <div className="building-atricle flex ai-c">

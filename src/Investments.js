@@ -121,8 +121,8 @@ const Test = ({match}) => {
             </div>
 
             <div className="svg-container" style={{height: imaheHeight}}>
-            <img id="coverImg" style={{position: 'absolute', width: '70%'}} src="http://kliwo.realizacje.grupaaf.pl/wp-content/uploads/2020/02/Mask-Group-112.png" />
-            <svg style={{position: 'absolute'}} id="svg1" width="70%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
+            <img id="coverImg" style={{position: 'absolute', width: '60%'}} src="http://kliwo.realizacje.grupaaf.pl/wp-content/uploads/2020/02/Mask-Group-112.png" />
+            <svg style={{position: 'absolute'}} id="svg1" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
             {
               buildings.map((b, i) => {
                 //console.log('b', b)

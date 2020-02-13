@@ -949,7 +949,15 @@ button {
 .level-legend-items li {
   margin-bottom: 10px;
 }
+path {
+  fill: transparent;
+}
+.svgActive {
+  fill: #e4e2e2ad;
+  stroke: #e60000;
+  stroke-width: 1px;
 
+}
 /* .level-search-input:after { 
   content: '';
   border: solid #E60000;
@@ -1102,47 +1110,96 @@ function parser(text, o, ch) {
 
 
 
+//     //inwestycja
+//     //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
+//  setTimeout(() => {
+//   //console.log('DONE')
+//       //svg container/image
+// let svgContainer = document.getElementById('svg1')  //kontener svg
+// const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
 
+// //cover img width and height
+// let coverImgWidth = coverImg.width
+// let coverImgHeight = coverImg.height
+
+// //actual width and height of svg container
+// let svgContainerWidth = Math.round(svgContainer.width.baseVal.value / 0.6)
+// let svgContainerHeight = svgContainer.height.baseVal.value
+// //console.log('svgContainerWidth', svgContainerWidth)
+// //console.log('svgContainerHeight', svgContainerHeight)
+
+// let gElems = svgContainer.querySelectorAll('g')
+// //console.log('gElems', gElems)
+
+// gElems.forEach((g, i) => {
+//   let pathElem = g.querySelector('path')
+//   //console.log('path przed', pathElem)
+//   let svgText = pathElem.outerHTML
+//   //console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
+//   let newcoords = parser(svgText, [1230, 846], [svgContainerWidth, svgContainerHeight])
+//   //console.log('newcoords', newcoords)
+//   pathElem.setAttribute('d', newcoords)
+//   //console.log('path po', pathElem)
+// })
+//  }, 2000);
+//  //koniec inwestycji
+
+
+
+
+
+
+     //budynek
     //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
- setTimeout(() => {
+    setTimeout(() => {
   //console.log('DONE')
       //svg container/image
-let svgContainer = document.getElementById('svg1')  //kontener svg
+let svgContainer = document.getElementById('buildingSvgImg')  //kontener svg
 const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
 
-
 //cover img width and height
-let coverImgWidth = coverImg.width
-let coverImgHeight = coverImg.height
-//console.log('coverImgWidth', coverImgWidth)
-//console.log('coverImgHeight', coverImgWidth)
-
 
 
 //actual width and height of svg container
-console.log('SVH CONTAINER WIDTH', svgContainer.width)
-let svgContainerWidth = Math.round(svgContainer.width.baseVal.value / 0.7)
+//console.log('WIDTH SVGCONT', svgContainer)
+let svgContainerWidth = Math.round(svgContainer.width.baseVal.value / 0.6)
 let svgContainerHeight = svgContainer.height.baseVal.value
 //console.log('svgContainerWidth', svgContainerWidth)
 //console.log('svgContainerHeight', svgContainerHeight)
 
-
 let gElems = svgContainer.querySelectorAll('g')
 //console.log('gElems', gElems)
-
 
 gElems.forEach((g, i) => {
   let pathElem = g.querySelector('path')
   //console.log('path przed', pathElem)
   let svgText = pathElem.outerHTML
-  console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-  let newcoords = parser(svgText, [1230, 846], [svgContainerWidth, svgContainerHeight])
+  //console.log('SVG TEXT', svgText)
+  ///console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
+  let newcoords = parser(svgText, [1405, 967], [svgContainerWidth, svgContainerHeight])
   //console.log('newcoords', newcoords)
   pathElem.setAttribute('d', newcoords)
-  console.log('path po', pathElem)
+  //console.log('path po', pathElem)
 })
- }, 2000);
 
+jQuery('path').mouseenter(function() {
+    //jQuery(this).find('path').addClass('svgActive')
+    jQuery(this).addClass('svgActive')
+    console.log("PATH JQUERY", this)
+  })
+
+  jQuery('path').mouseleave(function() {
+    //jQuery(this).find('path').addClass('svgActive')
+    jQuery(this).removeClass('svgActive')
+  })
+
+ }, 2000);
+ //koniec budynku
+
+
+
+
+  
     
 
 
@@ -1162,8 +1219,10 @@ gElems.forEach((g, i) => {
 		 } else {
 		 	jQuery('.main-menu-mobile').slideUp()
 		 }
+  })
+  
 
-	})
+  
 
 
 
