@@ -1120,7 +1120,8 @@ let coverImgHeight = coverImg.height
 
 
 //actual width and height of svg container
-let svgContainerWidth = svgContainer.width.baseVal.value
+console.log('SVH CONTAINER WIDTH', svgContainer.width)
+let svgContainerWidth = Math.round(svgContainer.width.baseVal.value / 0.7)
 let svgContainerHeight = svgContainer.height.baseVal.value
 //console.log('svgContainerWidth', svgContainerWidth)
 //console.log('svgContainerHeight', svgContainerHeight)
@@ -1134,15 +1135,18 @@ gElems.forEach((g, i) => {
   let pathElem = g.querySelector('path')
   //console.log('path przed', pathElem)
   let svgText = pathElem.outerHTML
-  //console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-  let newcoords = parser(svgText, [1000, 621], [coverImgWidth, coverImgWidth])
+  console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
+  let newcoords = parser(svgText, [1230, 846], [svgContainerWidth, svgContainerHeight])
   //console.log('newcoords', newcoords)
   pathElem.setAttribute('d', newcoords)
-  //console.log('path po', pathElem)
+  console.log('path po', pathElem)
 })
  }, 2000);
 
     
+
+
+
 
  var hamburger = $('#hamburger-icon');
 	hamburger.click(function() {
