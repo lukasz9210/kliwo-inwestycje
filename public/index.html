@@ -900,6 +900,9 @@ button {
 .building-details-building-name {
   margin-top: 40px;
 }
+.building-atricle {
+  margin: 60px 0;
+}
 .building-atricle img {
   margin-left: 30px;
 }
@@ -951,6 +954,7 @@ button {
 }
 path {
   fill: transparent;
+  cursor: pointer;
 }
 .svgActive {
   fill: #e4e2e2ad;
@@ -975,10 +979,32 @@ path {
 
 .svg-cloud {
   position: absolute;
-  widows: 100px;
-  height: 100px;
-  background-color: red;
-  right: 30%;
+  background-color: #fff;
+  right: 40%;
+  margin: 20px;
+  padding: 10px;
+  max-width: 340px;
+}
+.svg-cloud-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+.svg-cloud-box {
+  background-color: #F5F5F5;
+  padding: 10px 10px 36px 10px;
+  position: relative;
+}
+.svg-cloud-box span {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.svg-cloud-box span:last-child {
+  position: absolute;
+  left: 0;
+  bottom: 10px;
 }
 
     </style>
@@ -1106,101 +1132,6 @@ function parser(text, o, ch) {
 }
 
 //console.log('nowe koordynatory 1', parser(txt, [1000, 621], [250, 155]));
-
-
-
-
-//     //inwestycja
-//     //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
-//  setTimeout(() => {
-//   //console.log('DONE')
-//       //svg container/image
-// let svgContainer = document.getElementById('svg1')  //kontener svg
-// const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
-
-// //cover img width and height
-// let coverImgWidth = coverImg.width
-// let coverImgHeight = coverImg.height
-
-// //actual width and height of svg container
-// let svgContainerWidth = Math.round(svgContainer.width.baseVal.value / 0.6)
-// let svgContainerHeight = svgContainer.height.baseVal.value
-// //console.log('svgContainerWidth', svgContainerWidth)
-// //console.log('svgContainerHeight', svgContainerHeight)
-
-// let gElems = svgContainer.querySelectorAll('g')
-// //console.log('gElems', gElems)
-
-// gElems.forEach((g, i) => {
-//   let pathElem = g.querySelector('path')
-//   //console.log('path przed', pathElem)
-//   let svgText = pathElem.outerHTML
-//   //console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-//   let newcoords = parser(svgText, [1230, 846], [svgContainerWidth, svgContainerHeight])
-//   //console.log('newcoords', newcoords)
-//   pathElem.setAttribute('d', newcoords)
-//   //console.log('path po', pathElem)
-// })
-//  }, 2000);
-//  //koniec inwestycji
-
-
-
-
-
-
-     //budynek
-    //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
-    setTimeout(() => {
-  //console.log('DONE')
-      //svg container/image
-let svgContainer = document.getElementById('buildingSvgImg')  //kontener svg
-const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
-
-//cover img width and height
-
-
-//actual width and height of svg container
-//console.log('WIDTH SVGCONT', svgContainer)
-let svgContainerWidth = Math.round(svgContainer.width.baseVal.value / 0.6)
-let svgContainerHeight = svgContainer.height.baseVal.value
-//console.log('svgContainerWidth', svgContainerWidth)
-//console.log('svgContainerHeight', svgContainerHeight)
-
-let gElems = svgContainer.querySelectorAll('g')
-//console.log('gElems', gElems)
-
-gElems.forEach((g, i) => {
-  let pathElem = g.querySelector('path')
-  //console.log('path przed', pathElem)
-  let svgText = pathElem.outerHTML
-  //console.log('SVG TEXT', svgText)
-  ///console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-  let newcoords = parser(svgText, [1405, 967], [svgContainerWidth, svgContainerHeight])
-  //console.log('newcoords', newcoords)
-  pathElem.setAttribute('d', newcoords)
-  //console.log('path po', pathElem)
-})
-
-jQuery('path').mouseenter(function() {
-    //jQuery(this).find('path').addClass('svgActive')
-    jQuery(this).addClass('svgActive')
-    console.log("PATH JQUERY", this)
-  })
-
-  jQuery('path').mouseleave(function() {
-    //jQuery(this).find('path').addClass('svgActive')
-    jQuery(this).removeClass('svgActive')
-  })
-
- }, 2000);
- //koniec budynku
-
-
-
-
-  
-    
 
 
 
