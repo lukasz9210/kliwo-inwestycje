@@ -952,6 +952,11 @@ button {
 .level-legend-items li {
   margin-bottom: 10px;
 }
+.svg-cloud-level-status span{
+  width: 12px;
+  height: 12px;
+  margin-right: 10px;
+}
 path {
   fill: #c1777778;
   cursor: pointer;
@@ -960,7 +965,15 @@ path {
   fill: #e4e2e2ad;
   stroke: #e60000;
   stroke-width: 1px;
-
+}
+.unitSold path {
+  fill: #c1777778;
+}
+.unitReserved path {
+  fill: #fff89880;
+}
+.unitFree path {
+  fill: #bbf0b47d;
 }
 /* .level-search-input:after { 
   content: '';
@@ -991,12 +1004,18 @@ path {
   font-size: 28px;
   margin-bottom: 10px;
 }
-.svg-cloud-box {
+.svg-cloud-level .svg-cloud-title {
+  font-size: 20px;
+  font-weight: normal;
+}
+.svg-cloud-box,
+.svg-cloud-table-cell {
   background-color: #F5F5F5;
   padding: 10px 10px 36px 10px;
   position: relative;
 }
-.svg-cloud-box span {
+.svg-cloud-box span,
+.svg-cloud-table-cell span {
   display: block;
   width: 100%;
   text-align: center;
@@ -1005,6 +1024,26 @@ path {
   position: absolute;
   left: 0;
   bottom: 10px;
+}
+.svg-cloud-table-cell {
+  border: 1px solid #B4B4B4;
+  background-color: #fff;
+  padding: 10px 5px;
+  min-width: 100px;
+}
+.svg-cloud-table-cell span:first-child {
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.svg-cloud-table-cell.w-50 {
+  border-bottom: none;
+}
+.svg-cloud-level {
+  max-width: 380px;
+  border: 1px solid #B4B4B4;
+}
+.svg-cloud-level-status {
+  margin-top: 10px;
 }
 
     </style>

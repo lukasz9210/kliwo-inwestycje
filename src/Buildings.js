@@ -310,7 +310,7 @@ const Buildings = ({match}) => {
                   <span>{dataInCloud.count_m.free}</span>
                 </div>
                 <div className="svg-cloud-box w-50">
-                  <span>Dostępne lokale uytkowe</span>
+                  <span>Dostępne lokale użytkowe</span>
                   <span>{dataInCloud.count_l.free}</span>
                 </div>
               </div>

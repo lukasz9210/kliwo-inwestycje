@@ -17,6 +17,8 @@ const Levels = ({match}) => {
     const [selectedBuildingId, setSelectedBuildingId] = useState(0) //initial selected is current building
     const [levelsInBuilding, setLevelsInBuilding] = useState([])
     const [selectedLevelId, setSelectedLevelId] = useState(0)
+    const [dataInCloud, setDataInCloud] = useState({count_m: {free: 0}, count_l: {free: 0}})
+    const [cloudShown, setCloudShown] = useState(false)
 
 
     const coord = function(xy, orig_size, chngd_size) {
@@ -292,6 +294,40 @@ const Levels = ({match}) => {
     }
 
     
+    const mouseOver = data => {
+      console.log('cloud SHOWN')
+      setDataInCloud(data)
+      setCloudShown(true)
+    }
+
+    const mouseLeave = data => {
+      console.log('cloud NOT SHOWN')
+      setCloudShown(false)
+    }
+
+    const printStatus = data => {
+      let statusClass = ''
+      let statusName = ''
+      switch(data.status) {
+        case "1": 
+        statusName = 'sprzedane'
+        statusClass = 'level-legend-sold'
+        break;
+        case "2": statusName = 'zarezerwowane'
+        statusClass = 'level-legend-reserved'
+        break;
+        case "3": statusName = 'wolne'
+        statusClass = 'level-legend-avaliable'
+        break;
+
+      }
+      return (
+        <div className={`${statusClass} flex ai-c`}>
+          <span></span>
+          <p>{statusName}</p>
+        </div>
+      )
+    }
 
 
     return (
@@ -302,38 +338,61 @@ const Levels = ({match}) => {
 
 
 
-{/* <svg id="svg1" width="1000" height="621" xmlns="http://www.w3.org/2000/svg" style={{position: 'absolute', background: "url(https://kliwo.pl/images/kliwo/poziomy/b5/2-pietro/2-pietro.jpg)", 'background-size': "cover"}}>
-               
-               {
-                   unitsInLevel.map((u, i) => {
-                       //console.log('u', u)
-                       let svg = u.coords
-                       //console.log('svg', svg)
-                       return <g key={i} id={`levelSVG${i + 1}`} onClick={() => {redirectToUnit(u.id)}} dangerouslySetInnerHTML={{__html: svg}}>
-                               
-                               </g>
-                    
-
-
-                   })
-               }
-           </svg> */}
-
-
 <div className="svg-container" style={{height: imaheHeight}}>
             <img id="coverImg" style={{position: 'absolute', width: '60%'}} src="http://kliwo.realizacje.grupaaf.pl/wp-content/uploads/2020/02/CZ-B4-P2.jpg" />
             <svg style={{position: 'absolute'}} id="levelSvgImg" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
             {
               unitsInLevel.map((u, i) => {
-                //console.log('u', u)
+                let unitClass = ''
+                if(u.status == 1) {
+                  unitClass = 'unitSold'
+                } else if (u.status == 2) {
+                  unitClass = 'unitReserved'
+                } else if (u.status == 3) {
+                  unitClass = 'unitFree'
+                }
+                console.log('u', u)
                 let svg = u.coords
                 //console.log('svg', svg)
-                return <g id={`unitsvg${i + 1}`} onClick={() => {redirectToUnit(u.id)}} dangerouslySetInnerHTML={{__html: svg}}>
+                return <g onMouseOver={() => mouseOver(u)} onMouseLeave={() => mouseLeave()} className={unitClass} id={`unitsvg${i + 1}`} onClick={() => {redirectToUnit(u.id)}} dangerouslySetInnerHTML={{__html: svg}}>
                         
                         </g>
               })
             }
             </svg>
+
+            <div style={{display: cloudShown ? '' : 'none'}} className="svg-cloud svg-cloud-level">
+              <p className="svg-cloud-title">Mieszkanie {dataInCloud.name}</p>
+              <div className="svg-cloud-table">
+                <div className="svg-cloud-table-row flex">
+                  <div className="svg-cloud-table-cell w-50">
+                    <span className="bold">Powierzchnia</span>
+                    <span>{dataInCloud.space}</span>
+                  </div>
+                  <div className="svg-cloud-table-cell w-50">
+                    <span className="bold">liczba pokoi</span>
+                    <span>{dataInCloud.rooms}</span>
+                  </div>
+                </div>
+                <div className="svg-cloud-table-row flex">
+                  <div className="svg-cloud-table-cell w-33">
+                    <span className="bold">Cena</span>
+                    <span>{dataInCloud.price}</span>
+                  </div>
+                  <div className="svg-cloud-table-cell w-33">
+                    <span className="bold">CENA ZA m²</span>
+                    <span>{dataInCloud.priceperm2}</span>
+                  </div>
+                  <div className="svg-cloud-table-cell w-33">
+                    <span className="bold">Piętro</span>
+                    <span>{dataInCloud.level_number}</span>
+                  </div>
+                </div>
+              </div>
+              <div className="svg-cloud-level-status flex jc-c">
+                {printStatus(dataInCloud)}
+              </div>
+            </div>
          
 
             <div className="container">
@@ -401,7 +460,7 @@ const Levels = ({match}) => {
       
 
 
-                  {/* <Footer /> */}
+                  <Footer />
         </div>
     )
 }
