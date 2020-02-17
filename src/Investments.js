@@ -84,7 +84,7 @@ const Test = ({match}) => {
         console.log('ih', ih)
         setImaheHeight(ih)
         console.log('imaheHeight', imaheHeight)
-        }, 1000);
+        }, 2000);
 
 
             //inwestycja
@@ -219,7 +219,7 @@ gElems.forEach((g, i) => {
             </div>
 
             <div className="svg-container" style={{height: imaheHeight}}>
-            <img id="coverImg" style={{position: 'absolute', width: '60%'}} src="http://kliwo.realizacje.grupaaf.pl/wp-content/uploads/2020/02/Mask-Group-112.png" />
+            <img id="coverImg" style={{position: 'absolute', width: '60%'}} src={investment.svg} />
             <svg style={{position: 'absolute'}} id="svg1" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
             {
               buildings.map((b, i) => {

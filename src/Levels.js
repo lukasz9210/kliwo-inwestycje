@@ -92,7 +92,7 @@ const Levels = ({match}) => {
         //console.log('ih', ih)
         setImaheHeight(ih)
         //console.log('imaheHeight', imaheHeight)
-        }, 1000);
+        }, 2000);
 
 
 
@@ -339,7 +339,7 @@ const Levels = ({match}) => {
 
 
 <div className="svg-container" style={{height: imaheHeight}}>
-            <img id="coverImg" style={{position: 'absolute', width: '60%'}} src="http://kliwo.realizacje.grupaaf.pl/wp-content/uploads/2020/02/CZ-B4-P2.jpg" />
+            <img id="coverImg" style={{position: 'absolute', width: '60%'}} src={level.img_names} />
             <svg style={{position: 'absolute'}} id="levelSvgImg" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
             {
               unitsInLevel.map((u, i) => {

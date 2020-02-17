@@ -85,7 +85,7 @@ const Buildings = ({match}) => {
         //console.log('ih', ih)
         setImaheHeight(ih)
         //console.log('imaheHeight', imaheHeight)
-        }, 1000);
+        }, 2000);
 
 
             //budynek
@@ -287,7 +287,7 @@ const Buildings = ({match}) => {
 
 
 <div className="svg-container" style={{height: imaheHeight}}>
-            <img id="coverImg" style={{position: 'absolute', width: '60%'}} src="http://kliwo.realizacje.grupaaf.pl/wp-content/themes/kliwo/images/photos/B4.jpg" />
+            <img id="coverImg" style={{position: 'absolute', width: '60%'}} src={building.main_img} />
             <svg style={{position: 'absolute'}} id="buildingSvgImg" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
             {
               levelsInBuilding.map((l, i) => {

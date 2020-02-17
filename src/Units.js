@@ -7,6 +7,7 @@ import plusImg from './images/ico_plus.png'
 import downloadImg from './images/ico_download.png'
 import Header from './Header.js'
 import Footer from './Footer.js'
+import $ from 'jquery';
 
 
 const Units = ({match}) => {
@@ -17,11 +18,25 @@ const Units = ({match}) => {
     const [mainImgUrl, setMainImgUrl] = useState('')
     const [investmentId, setInvestmentId] = useState(0)
     const [investment, setInvestment] = useState({})
+    const [level, setLevel] = useState({})
 
    
 
     useEffect(() => {
          fetchUnit()
+
+         //add event listeners
+         $(document).ready(function() {
+          $('.options-box-header').click( function() {
+            $(this).next().slideToggle()
+          })
+  
+          $('.adjust-box-header').click( function() {
+            $(this).next().slideToggle()
+          })
+        })
+
+
     }, [])
 
     useEffect(() => {
@@ -98,6 +113,7 @@ const Units = ({match}) => {
             setUnit(j.data.unit)
             setClauseId(j.data.unit.clause_id)
             setInvestmentId(j.data.unit.investment_id)
+            setLevel(j.data.level)
             console.log('this unit', j)
             
             
@@ -170,38 +186,6 @@ const Units = ({match}) => {
           setClause(j.data.clause)
         })
   }
-
-
-
-    // fetch INVESTMENT
-  //   const fetchInvestment = () => {
-  //     let details = {
-  //       'id': 
-  //     };
-  
-  //     let formBody = [];
-  //     for (let property in details) {
-  //       let encodedKey = encodeURIComponent(property);
-  //       let encodedValue = encodeURIComponent(details[property]);
-  //       formBody.push(encodedKey + "=" + encodedValue);
-  //     }
-  
-  //     formBody = formBody.join("&");
-  //     console.log('formBody', formBody)
-  
-  //     fetch('http://kliwo.realizacje.grupaaf.pl/api/investments-show', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-  //       },
-  //       body: formBody
-  //     }).then(r => {
-  //       return r.json()
-  //     }).then(j => {
-  //         setInvestment(j.data.investments)
-  //       //console.log('this investment', j.data.investments)
-  //     })
-  // }
 
 
     const showRoomName = id => {
@@ -298,7 +282,7 @@ const Units = ({match}) => {
               <div className="unitView-left w-50">
                 <div className="unitView-images flex">
                   <div className="unitView-images-container flex">
-                    <div className="unitView-images-concepts">
+                    <div style={{display: unit.available_wall == "1" ? '' : 'none'}} className="unitView-images-concepts">
                       <p className="unitView-images-concepts-title">Wybierz układ ścianek działowych</p>
                       <div className="concepts-signle" onClick={() => handleMainImgUrl(unit.concept1)}>
                         <img src={unit.concept1} alt=""/>
@@ -307,6 +291,9 @@ const Units = ({match}) => {
                         <img src={unit.concept2} alt=""/>
                       </div>
                       <div className="concepts-signle" onClick={() => handleMainImgUrl(unit.concept3)}>
+                        <img src={unit.concept3} alt=""/>
+                      </div>
+                      <div className="concepts-signle" onClick={() => handleMainImgUrl(unit.concept4)}>
                         <img src={unit.concept3} alt=""/>
                       </div>
                     </div>
@@ -362,7 +349,7 @@ const Units = ({match}) => {
                   </div>
                   <div className="info-cell w-33">
                     <span className="info-cell-title">Piętro</span>
-                    <span className="info-cell-data">{unit.number}</span>
+                    <span className="info-cell-data">{level.number}</span>
                   </div>
                 </div>
               </div>
