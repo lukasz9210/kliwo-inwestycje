@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {Redirect} from 'react-router-dom'
 import wallsImg from './images/ico_scianki.png'
+import electricImg from './images/ico_instalacja.png'
+import hydraulicImg from './images/ico_hydraulika.png'
+import heatingImg from './images/ico_ogrzewanie.png'
 import unitImg from './images/ico_komorkalokatorska.png'
 import GarageImg from './images/ico_zakupgarazu.png'
 import plusImg from './images/ico_plus.png'
@@ -461,7 +464,7 @@ const Units = ({match}) => {
               
                 <div style={{display: unit.available_electric === '1' ? '' : 'none'}} className="adjust-box">
                   <div className="adjust-box-header flex ai-c">
-                    <img src={wallsImg} alt="Układ ścianek działowych" />
+                    <img src={electricImg} alt="Układ ścianek działowych" />
                     <h6 className="adjust-box-title arrow-after">Ustal rozkład instalacji elektrycznej</h6>
                   </div>
                   <div className="adjust-box-body">
@@ -471,7 +474,7 @@ const Units = ({match}) => {
 
                 <div style={{display: unit.available_hydraulic === '1' ? '' : 'none'}} className="adjust-box">
                   <div className="adjust-box-header flex ai-c">
-                    <img src={wallsImg} alt="Układ ścianek działowych" />
+                    <img src={hydraulicImg} alt="Układ ścianek działowych" />
                     <h6 className="adjust-box-title arrow-after">Ustal rozkład instalacji hydraulicznej</h6>
                   </div>
                   <div className="adjust-box-body">
@@ -481,7 +484,7 @@ const Units = ({match}) => {
                 
                 <div style={{display: unit.available_heating === '1' ? '' : 'none'}} className="adjust-box">
                   <div className="adjust-box-header flex ai-c">
-                    <img src={wallsImg} alt="Układ ścianek działowych" />
+                    <img src={heatingImg} alt="Układ ścianek działowych" />
                     <h6 className="adjust-box-title arrow-after">Dostosuj zasięg ogrzewania podłogowego</h6>
                   </div>
                   <div className="adjust-box-body">
