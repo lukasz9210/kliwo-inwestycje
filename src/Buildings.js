@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import {Redirect} from 'react-router-dom'
 import Header from './Header.js'
 import Footer from './Footer.js'
+import preLoaderGif from './images/preloader.gif'
 import $ from 'jquery';
 
 const Buildings = ({match}) => {
@@ -14,6 +15,7 @@ const Buildings = ({match}) => {
     const [imaheHeight, setImaheHeight] = useState(0)
     const [dataInCloud, setDataInCloud] = useState({count_m: {free: 0}, count_l: {free: 0}})
     const [cloudShown, setCloudShown] = useState(false)
+    const [loading, setLoading] = useState(true)
 
 
     const coord = function(xy, orig_size, chngd_size) {
@@ -84,6 +86,7 @@ const Buildings = ({match}) => {
           let ih = document.getElementById('coverImg').height
         //console.log('ih', ih)
         setImaheHeight(ih)
+        setLoading(false)
         //console.log('imaheHeight', imaheHeight)
         }, 2000);
 
@@ -264,26 +267,11 @@ const Buildings = ({match}) => {
     return (
         <div className="building">
             <Header />
+            <div style={{display: loading ? 'flex' : 'none'}} className="preloader flex ai-c jc-c">
+              <img src={preLoaderGif} />
+            </div>
+
             <p className="bold-title">Najedź kursorem na piętro, aby sprawdzić liczbę wolnych lokali.<br />Kliknij, aby zobaczyć rzut pietra.</p>
-
-
-
-{/* <svg id="svg1" width="1000" height="621" xmlns="http://www.w3.org/2000/svg" style={{position: 'absolute', background: "url(https://kliwo.pl/images/kliwo/budynki/budynki-trzebnica-cz-b5.jpg)", 'background-size': "cover"}}>
-               
-               {
-                   levelsInBuilding.map((l, i) => {
-                       console.log('l', l)
-                       let svg = l.coords
-                       console.log('svg', svg)
-                       return <g id={`levelSVG${i + 1}`} onClick={() => {redirectToLevel(l.id)}} dangerouslySetInnerHTML={{__html: svg}}>
-                               
-                               </g>
-                    
-
-
-                   })
-               }
-           </svg> */}
 
 
 <div className="svg-container" style={{height: imaheHeight}}>

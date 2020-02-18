@@ -5,6 +5,7 @@ import roletyImg from './images/ico_rolety_zewnetrzne.png'
 import Header from './Header.js'
 import Footer from './Footer.js'
 import $ from 'jquery';
+import preLoaderGif from './images/preloader.gif'
 
 const Test = ({match}) => {
     const [investment, setInvestment] = useState({})
@@ -14,6 +15,7 @@ const Test = ({match}) => {
     const [imaheHeight, setImaheHeight] = useState(0)
     const [cloudShown, setCloudShown] = useState(false)
     const [dataInCloud, setDataInCloud] = useState({})
+    const [loading, setLoading] = useState(true)
 
 
     const coord = function(xy, orig_size, chngd_size) {
@@ -83,6 +85,7 @@ const Test = ({match}) => {
           let ih = document.getElementById('coverImg').height
         console.log('ih', ih)
         setImaheHeight(ih)
+        setLoading(false)
         console.log('imaheHeight', imaheHeight)
         }, 2000);
 
@@ -212,6 +215,9 @@ gElems.forEach((g, i) => {
     return (
       <div>
         <Header />
+        <div style={{display: loading ? 'flex' : 'none'}} className="preloader flex ai-c jc-c">
+          <img src={preLoaderGif} />
+        </div>
       
         <div className="investment">
             <div className="container">

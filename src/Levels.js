@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Redirect} from 'react-router-dom'
 import Header from './Header.js'
 import Footer from './Footer.js'
+import preLoaderGif from './images/preloader.gif'
 import $ from 'jquery';
 
 
@@ -19,6 +20,7 @@ const Levels = ({match}) => {
     const [selectedLevelId, setSelectedLevelId] = useState(0)
     const [dataInCloud, setDataInCloud] = useState({count_m: {free: 0}, count_l: {free: 0}})
     const [cloudShown, setCloudShown] = useState(false)
+    const [loading, setLoading] = useState(true)
 
 
     const coord = function(xy, orig_size, chngd_size) {
@@ -91,6 +93,7 @@ const Levels = ({match}) => {
           let ih = document.getElementById('coverImg').height
         //console.log('ih', ih)
         setImaheHeight(ih)
+        setLoading(false)
         //console.log('imaheHeight', imaheHeight)
         }, 2000);
 
@@ -333,8 +336,9 @@ const Levels = ({match}) => {
     return (
         <div className="level">
           <Header />
-            <h1>ID Piętra: {level.id}</h1>
-            <h1>Numer piętra: {level.number}</h1>
+          <div style={{display: loading ? 'flex' : 'none'}} className="preloader flex ai-c jc-c">
+            <img src={preLoaderGif} />
+          </div>
 
 
 
