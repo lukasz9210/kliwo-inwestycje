@@ -271,7 +271,9 @@ const Buildings = ({ match }) => {
         <img src={preLoaderGif} />
       </div>
 
+      <div className="container">
       <p className="bold-title">Najedź kursorem na piętro, aby sprawdzić liczbę wolnych lokali.<br />Kliknij, aby zobaczyć rzut pietra.</p>
+      </div>
 
 
       <div className="svg-container" style={{ height: imaheHeight }}>
@@ -357,7 +359,44 @@ const Buildings = ({ match }) => {
 
       <div className="container" >
 
-
+      <div className="building-details building-details-mobile">
+            <img src={investment.logo} alt={investment.name} />
+            <h4 className="building-details-name">{investment.name}</h4>
+            <h5 className="building-details-address">{investment.address}</h5>
+            <h4 className="building-details-building-name">{building.name}</h4>
+            <div className="building-details-list">
+              <ul>
+                <li className="flex ai-c">
+                  <img src={building.prop_1_icon} alt={building.prop_1_description} />
+                  <p>{building.prop_1_description}</p>
+                </li>
+                <li className="flex ai-c">
+                  <img src={building.prop_2_icon} alt={building.prop_2_description} />
+                  <p>{building.prop_2_description}</p>
+                </li>
+                <li className="flex ai-c">
+                  <img src={building.prop_3_icon} alt={building.prop_3_description} />
+                  <p>{building.prop_3_description}</p>
+                </li>
+                <li className="flex ai-c">
+                  <img src={building.prop_4_icon} alt={building.prop_4_description} />
+                  <p>{building.prop_4_description}</p>
+                </li>
+                <li className="flex ai-c">
+                  <img src={building.prop_5_icon} alt={building.prop_5_description} />
+                  <p>{building.prop_5_description}</p>
+                </li>
+                <li className="flex ai-c">
+                  <img src={building.prop_6_icon} alt={building.prop_6_description} />
+                  <p>{building.prop_6_description}</p>
+                </li>
+                <li className="flex ai-c">
+                  <img src={building.prop_7_icon} alt={building.prop_7_description} />
+                  <p>{building.prop_7_description}</p>
+                </li>
+              </ul>
+            </div>
+          </div>
 
 
         <div className="building-atricle flex jc-spb ai-c">

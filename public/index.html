@@ -665,7 +665,13 @@ button {
   font-weight: bold;
   margin-top: 25px;
 }
+.unitView-clause-mobile {
+  display: none;
+}
 
+.investment-benefits {
+  margin: 40px 0;
+}
 .investment-benefits-content {
   flex-wrap: wrap;
 }
@@ -749,11 +755,17 @@ button {
 .investment-details-mobile {
   display: none;
 }
+.building-details-mobile {
+  display: none;
+}
 .investment-details-name,
 .building-details-building-name,
 .level-details-name {
   font-weight: bold;
   font-size: 30px;
+}
+.level-details-mobile {
+  display: none;
 }
 .investment-details-address,
 .building-details-address,
@@ -792,6 +804,7 @@ button {
 }
 .building-atricle img {
   margin-left: 30px;
+  max-width: 35%;
 }
 
 /* level */
@@ -960,6 +973,12 @@ path {
 		padding: 5px;
 		width: 120px;
 	}
+  .building-details-list li {
+    margin: 10px 0;
+  }
+  .building-details-building-name {
+    margin-top: 25px;
+  }
 }
 
 
@@ -976,21 +995,44 @@ path {
 	.footer-bottom .footer-col-r > .flex .footer-col:first-child {
 		margin-right: 100px;
 	}
+  .building-atricle {
+    margin-top: 90px;
+  }
+  .unitView-right > .flex {
+    flex-direction: column;
+  }
+  .unitView-add-to-comparison-btn {
+    margin-top: 15px;
+  }
 }
 @media screen and (max-width: 1300px) {
 	.container {
 		width: 900px;
 	}
-  .investment-details {
+  .investment-details,
+  .building-details,
+  .level-details {
     display: none;
     width: 100%;
   }
-  .investment-details-mobile {
+  .level-details-mobile {
+    width: 330px;
+    margin-left: 0;
+  }
+  .investment-details-mobile,
+  .building-details-mobile,
+  .level-details-mobile {
     display: block;
   }
-  .investment .svg-container {
+  .investment .svg-container,
+  .building .svg-container,
+  .level .svg-container {
     display: flex;
     justify-content: center;
+    margin-bottom: 30px;
+  }
+  .level .svg-container {
+    margin-bottom: 0;
   }
 	.main-menu,
 	.header-top-big-btns {
@@ -1054,6 +1096,32 @@ path {
   .investment-box-right {
     padding-right: 30px;
     padding-left: 30px;
+  }
+  .building-atricle {
+    flex-direction: column;
+  }
+  .building-atricle img {
+    max-width: 100%;
+    margin-top: 30px;
+  }
+  .unitView-content {
+    flex-direction: column;
+  }
+  .unitView-left,
+  .unitView-right {
+    width: 100%;
+  }
+  .unitView-clause {
+    display: none;
+  }
+  .unitView-clause-mobile {
+    display: block;
+  }
+  .unitView-investment-data {
+    margin-top: 40px;
+  }
+  .unitView-right {
+    margin-left: 0;
   }
 }
 @media screen and (max-width: 1000px) {

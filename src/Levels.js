@@ -354,6 +354,9 @@ const Levels = ({ match }) => {
         <img src={preLoaderGif} />
       </div>
 
+      <div className="container">
+        <p className="bold-title">Kliknij na lokal, aby dowiedzieć się więcej.</p>
+      </div>
 
 
       <div className="svg-container" style={{ height: imaheHeight }}>
@@ -474,7 +477,52 @@ const Levels = ({ match }) => {
 
 
 
-
+    <div className="container">
+    <div className="level-details level-details-mobile">
+            <img src={investment.logo} alt={investment.name} />
+            <h4 className="level-details-name">{investment.name}</h4>
+            <h5 className="level-details-address">{investment.address}</h5>
+            <div className="level-search">
+              <div className="level-search-input">
+                <select defaultValue={52} onChange={selectBuildingChange}>
+                  {
+                    buildingsArray.map((b) => {
+                      let printSelect = selectCurrentBuilding(b.id)
+                      console.log('prineSelect', printSelect)
+                      return <option test={printSelect} selected={printSelect} value={b.id}>{b.name}</option>
+                    })
+                  }
+                </select>
+              </div>
+              <div className="level-search-input">
+                <select onChange={selectLevelChange}>
+                  {
+                    levelsInBuilding.map((l) => {
+                      return <option value={l.id}>{l.number} Piętro (DostęĻnych lokali {l.count_m.free})</option>
+                    })
+                  }
+                </select>
+              </div>
+            </div>
+            <div className="level-legend">
+              <p className="level-legend-title">Legenda</p>
+              <ul className="level-legend-items">
+                <li className="level-legend-avaliable flex ai-c">
+                  <span></span>
+                  <p>dostępne</p>
+                </li>
+                <li className="level-legend-reserved flex ai-c">
+                  <span></span>
+                  <p>zarezerwowane</p>
+                </li>
+                <li className="level-legend-sold flex ai-c">
+                  <span></span>
+                  <p>sprzedane</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+    </div>
 
 
 

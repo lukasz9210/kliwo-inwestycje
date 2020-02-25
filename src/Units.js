@@ -524,7 +524,10 @@ const Units = ({ match }) => {
           </div>
           {/* end of right */}
 
-
+          <div className="unitView-clause-mobile">
+              <h3 className="bold-title">Dodatkowe informacje</h3>
+              <div dangerouslySetInnerHTML={{ __html: clause.description }}></div>
+            </div>
 
         </div>
 
