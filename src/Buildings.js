@@ -281,10 +281,11 @@ const Buildings = ({ match }) => {
         <svg style={{ position: 'absolute' }} id="buildingSvgImg" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
           {
             levelsInBuilding.map((l, i) => {
-              //console.log('l', l)
+              console.log('lvl', l)
               let svg = l.coords
+              let lvlClass = l.count_m.free == '0' ? 'levelDisabled' : ''
               //console.log('svg', svg)
-              return <g onMouseOver={() => mouseOver(l)} onMouseLeave={() => mouseLeave()} id={`levelsvg${i + 1}`} onClick={() => { redirectToLevel(l.id) }} dangerouslySetInnerHTML={{ __html: svg }}>
+              return <g className={lvlClass} onMouseOver={() => mouseOver(l)} onMouseLeave={() => mouseLeave()} id={`levelsvg${i + 1}`} onClick={() => { redirectToLevel(l.id) }} dangerouslySetInnerHTML={{ __html: svg }}>
 
               </g>
             })
