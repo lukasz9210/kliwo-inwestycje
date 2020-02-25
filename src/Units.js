@@ -263,7 +263,13 @@ const Units = ({ match }) => {
   }
 
   const roomsSpaceAmount = () => {
-    let amount = Number(unit.room1_m2) + Number(unit.room2_m2) + Number(unit.room3_m2) + Number(unit.room4_m2) + Number(unit.room5_m2) + Number(unit.room6_m2) + Number(unit.room7_m2) + Number(unit.room8_m2) + Number(unit.room9_m2) + Number(unit.room10_m2)
+    let balconyNumber = findBalcony()
+    let balconySpace = 0
+    if (balconyNumber) {
+      balconySpace = unit[`room${balconyNumber}_m2`]
+      console.log('Balcony space', balconySpace)
+    }
+    let amount = Number(unit.room1_m2) + Number(unit.room2_m2) + Number(unit.room3_m2) + Number(unit.room4_m2) + Number(unit.room5_m2) + Number(unit.room6_m2) + Number(unit.room7_m2) + Number(unit.room8_m2) + Number(unit.room9_m2) + Number(unit.room10_m2) - Number(balconySpace)
     return amount
   }
 
