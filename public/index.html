@@ -209,9 +209,6 @@ button {
 	padding: 15px 0;
 	position: relative;
 }
-.header .container {
-	
-}
 .main-menu {
 	margin: 0 20px;
 }
@@ -369,147 +366,7 @@ button {
 
 /* END OF HEADER */
 
-/* MEDIA QUERIES */
 
-@media screen and (max-width: 1800px) {
-	.h-box-slogan {
-		top: 55px;
-	}
-}
-
-
-@media screen and (max-width: 1500px) {
-	.container {
-		width: 1100px;
-	}
-	.header-logo {
-		margin-right: 25px;
-	}
-	.main-menu {
-    	margin: 0 5px;
-	}
-	.header-top-big-btns a {
-		padding: 5px;
-		width: 120px;
-	}
-}
-
-
-@media screen and (max-width: 1400px) {
-	.container {
-		width: 1000px;
-	}
-	.header-logo {
-		max-width: 150px;
-	}
-	.h-fb {
-		max-width: 30px;
-	}
-	.footer-bottom .footer-col-r > .flex .footer-col:first-child {
-		margin-right: 100px;
-	}
-}
-@media screen and (max-width: 1300px) {
-	.container {
-		width: 900px;
-	}
-	.main-menu,
-	.header-top-big-btns {
-		display: none;
-	}
-	#hamburger-icon {
-		display: block;
-	}
-	.footer-top,
-	.footer-bottom {
-		flex-direction: column;
-		align-items: center;
-	}
-	.footer-col-l {
-		margin: 30px 0;
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-	}
-	.footer-col-r {
-		width: 100%;
-	}
-	.footer-bottom .footer-col-r > .flex {
-		justify-content: center;
-	}
-	.footer-bottom .footer-col-r .white-heading {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		width: 100%;
-	}
-	.footer-bottom-menu ul.menu {
-		width: 45%;
-	}
-}
-@media screen and (max-width: 1200px) {
-	.container {
-		width: 800px;
-	}
-	
-}
-@media screen and (max-width: 1100px) {
-	.container {
-		width: 700px;
-	}
-
-}
-@media screen and (max-width: 1000px) {
-	.container {
-		width: 600px;
-	}
-	.footer-bottom-menu ul.menu {
-		width: 90%;
-	}
-}
-@media screen and (max-width: 900px) {
-	.container {
-		width: 500px;
-	}
-	.footer-col-menu {
-		width: 100%;
-		margin-bottom: 30px;
-	}
-	.footer-top .footer-col-r.flex {
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-	.footer-bottom .footer-col-r > .flex {
-		flex-direction: column;
-	}
-	.footer-bottom .footer-col-r > .flex .marker-before {
-		margin-left: 25px;
-	}
-	.footer-top .footer-col-r.flex {
-		justify-content: flex-start;
-	}
-}
-@media screen and (max-width: 800px) {
-	.container {
-		width: 400px;
-	}
-}
-@media screen and (max-width: 700px) {
-	.container {
-		width: 100%;
-		/*margin: 0 20px;*/
-	}
-	.footer {
-		padding: 0 30px;
-	}
-}
-
-
-@media screen and (max-width: 500px) {
-
-}
-
-/* END OF MEDIA QUERIES */
 
 
 /*FOOTER*/
@@ -828,6 +685,8 @@ button {
 .investment-boxes {
   padding: 40px 0;
   overflow: hidden;
+  background-size: cover;
+  margin-top: 1px;
   /* filter: blur(8px);
   -webkit-filter: blur(8px); */
 }
@@ -846,6 +705,13 @@ button {
 }
 .investment-box-description {
   margin: 20px 0;
+}
+.investment-box-list.investment-box-list-cols {
+  display: flex;
+  flex-wrap: wrap;
+}
+.investment-box-list.investment-box-list-cols p {
+  font-weight: bold;
 }
 .investment-box-list-item {
   margin: 20px 0;
@@ -867,6 +733,8 @@ button {
 }
 .investment-box-right {
   align-self: flex-end;
+  padding-left: 130px;
+  padding-right: 0;
 }
 .investment-box-right:before {
   left: auto;
@@ -877,6 +745,9 @@ button {
   width: 37%;
   margin-left: auto;
   padding: 0 10% 0 35px;
+}
+.investment-details-mobile {
+  display: none;
 }
 .investment-details-name,
 .building-details-building-name,
@@ -894,7 +765,9 @@ button {
   font-size: 20px;
   margin: 25px 0;
 }
-
+.learn-more-btn {
+  width: 200px;
+}
 
 
 /* building */
@@ -1061,6 +934,192 @@ path {
   margin-top: 10px;
 }
 
+
+
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 1800px) {
+	.h-box-slogan {
+		top: 55px;
+	}
+}
+
+
+@media screen and (max-width: 1500px) {
+	.container {
+		width: 1100px;
+	}
+	.header-logo {
+		margin-right: 25px;
+	}
+	.main-menu {
+    	margin: 0 5px;
+	}
+	.header-top-big-btns a {
+		padding: 5px;
+		width: 120px;
+	}
+}
+
+
+@media screen and (max-width: 1400px) {
+	.container {
+		width: 1000px;
+	}
+	.header-logo {
+		max-width: 150px;
+	}
+	.h-fb {
+		max-width: 30px;
+	}
+	.footer-bottom .footer-col-r > .flex .footer-col:first-child {
+		margin-right: 100px;
+	}
+}
+@media screen and (max-width: 1300px) {
+	.container {
+		width: 900px;
+	}
+  .investment-details {
+    display: none;
+    width: 100%;
+  }
+  .investment-details-mobile {
+    display: block;
+  }
+  .investment .svg-container {
+    display: flex;
+    justify-content: center;
+  }
+	.main-menu,
+	.header-top-big-btns {
+		display: none;
+	}
+	#hamburger-icon {
+		display: block;
+	}
+	.footer-top,
+	.footer-bottom {
+		flex-direction: column;
+		align-items: center;
+	}
+	.footer-col-l {
+		margin: 30px 0;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+	.footer-col-r {
+		width: 100%;
+	}
+	.footer-bottom .footer-col-r > .flex {
+		justify-content: center;
+	}
+	.footer-bottom .footer-col-r .white-heading {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+	}
+	.footer-bottom-menu ul.menu {
+		width: 45%;
+	}
+}
+@media screen and (max-width: 1200px) {
+	.container {
+		width: 800px;
+	}
+	.investment-box {
+    width: 70%;
+  }
+}
+@media screen and (max-width: 1100px) {
+	.container {
+		width: 700px;
+	}
+  .investment-benefits-single {
+    width: 45%;
+  }
+  .investment-benefits-single-text {
+    margin-left: 20px;
+  }
+  .investment-boxes .container {
+    width: 100%;
+  }
+  .investment-box-left {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .investment-box-right {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+}
+@media screen and (max-width: 1000px) {
+	.container {
+		width: 600px;
+	}
+	.footer-bottom-menu ul.menu {
+		width: 90%;
+	}
+}
+@media screen and (max-width: 900px) {
+	.container {
+		width: 500px;
+	}
+	.footer-col-menu {
+		width: 100%;
+		margin-bottom: 30px;
+	}
+	.footer-top .footer-col-r.flex {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.footer-bottom .footer-col-r > .flex {
+		flex-direction: column;
+	}
+	.footer-bottom .footer-col-r > .flex .marker-before {
+		margin-left: 25px;
+	}
+	.footer-top .footer-col-r.flex {
+		justify-content: flex-start;
+	}
+  .investment-benefits-single {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 800px) {
+	.container {
+		width: 400px;
+	}
+}
+@media screen and (max-width: 700px) {
+	.container {
+		width: 100%;
+		/*margin: 0 20px;*/
+	}
+	.footer {
+		padding: 0 30px;
+	}
+  .investment-box-list-item img {
+    margin-right: 15px;
+  }
+  .investment-box-list-item {
+    width: 100%;
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+  .investment-box {
+    width: 100%;
+  }
+ 
+}
+
+/* END OF MEDIA QUERIES */
+
     </style>
 
   </head>
@@ -1117,7 +1176,32 @@ function coord(xy, orig_size, chngd_size) {
   
 
   
+  // let investments = {}
+	// fetch('http://kliwo.realizacje.grupaaf.pl/api/investments')
+	// .then(response => response.json())
+	// .then(res => {
+	// 	//console.log('res', res)
+	// 	investments = res.data.investments
+	// 	//console.log('investments', investments)
+	// 	appendListItems()
+	// })
 
+	// //appending list items with each investment
+	// const appendListItems = () => {
+	// 	const nodeItem = document.getElementById('menu-item-25')
+	// 	let investmentsListItems = '<ul class="sub-menu">'
+	// 	for (let investment in investments) {
+	// 		let i = investments[investment]
+	// 		investmentsListItems += `<li class="menu-item"><a href="http://localhost:3000/inwestycja/${i.id}">${i.name}</a></li>`
+	// 	}
+	// 	investmentsListItems += '</ul>'
+	// 	jQuery('#menu-item-25').addClass('menu-item-has-children')
+
+		
+	// 	nodeItem.insertAdjacentHTML('beforeend', investmentsListItems)
+
+	// 	console.log('investmentsListItems', investmentsListItems)
+	// }
 
 
       })

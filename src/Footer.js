@@ -3,7 +3,7 @@ const url = process.env.REACT_APP_BASE_URL
 
 const Footer = () => {
     return (
-        <footer class="footer" id="footer" style={{background: `url(${url}/wp-content/themes/kliwo/images/photos/background_stopka.jpg)`}}>
+        <footer class="footer" id="footer" style={{background: `url(http://kliwo.realizacje.grupaaf.pl/wp-content/themes/kliwo/images/photos/background_stopka.jpg)`}}>
 	<div class="container">
 		<div class="footer-top flex jc-spb">
 			<div class="footer-col footer-col-l">
