@@ -473,7 +473,7 @@ const Levels = ({ match }) => {
 
 
 
-      {redirect ? <Redirect to={`/mieszkanie/${redirectId}`} /> : null}
+      {redirect ? <Redirect push to={`/mieszkanie/${redirectId}`} /> : null}
 
 
 

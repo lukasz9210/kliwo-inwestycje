@@ -291,7 +291,7 @@ const Buildings = ({ match }) => {
             })
           }
         </svg>
-        {redirect ? <Redirect to={`/budynek/${redirectId}`} /> : null}
+        {redirect ? <Redirect push to={`/budynek/${redirectId}`} /> : null}
 
         <div style={{ display: cloudShown ? 'block' : 'none' }} className="svg-cloud">
           <p className="svg-cloud-title">Piętro: {dataInCloud.number}</p>

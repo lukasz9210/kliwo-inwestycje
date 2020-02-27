@@ -289,7 +289,7 @@ const Units = ({ match }) => {
       <div className="container">
         <div className="unitView-content flex">
           <div className="unitView-left w-50">
-            <div className="unitView-images flex">
+            <div className="unitView-images flex jc-c">
               <div className="unitView-images-container flex">
                 <div style={{ display: unit.available_wall == "1" ? '' : 'none' }} className="unitView-images-concepts">
                   <p className="unitView-images-concepts-title">Wybierz układ ścianek działowych</p>

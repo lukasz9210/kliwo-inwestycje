@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, Redirect } from 'react-router-dom'
-import parse from 'html-react-parser'
+import { Redirect } from 'react-router-dom'
 import roletyImg from './images/ico_rolety_zewnetrzne.png'
 import airConditioningImg from './images/ico_klimatyzacja.png'
 import heatingImg from './images/ico_ogrzewanie_podlogowe.png'
@@ -259,7 +258,7 @@ const Test = ({ match }) => {
               })
             }
           </svg>
-          {redirect ? <Redirect to={`/budynek/${redirectId}`} /> : null}
+          {redirect ? <Redirect push to={`/budynek/${redirectId}`} /> : null}
 
           <div style={{ display: cloudShown ? 'block' : 'none' }} className="svg-cloud">
             <p>{dataInCloud.name}</p>
