@@ -363,7 +363,7 @@ const Units = ({ match }) => {
               </div>
             </div>
 
-            <div className="unitView-rooms">
+            <div style={{display: unit.room7_floor !== 0 ? 'none' : ''}} className="unitView-rooms">
               <h4 className="bold-title">Zestawienie pomieszczeń lokalu</h4>
               <table className="rooms-table">
                 <thead>
@@ -450,6 +450,83 @@ const Units = ({ match }) => {
                 </tbody>
               </table>
             </div>
+
+
+            <div style={{display: unit.room7_floor === 0 ? 'none' : ''}} className="unitView-rooms unitView-rooms-one-column">
+              <h4 className="bold-title">Zestawienie pomieszczeń lokalu</h4>
+              <table className="rooms-table">
+                <thead>
+                  <tr>
+                    <th>Nr</th>
+                    <th>Pomieszczenie</th>
+                    <th>Powierzchnia</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style={{ display: unit.room_type1 === '0' || unit.room_type1 === '9' ? 'none' : '' }}>
+                    <td>1</td>
+                    <td>{showRoomName(unit.room_type1)}</td>
+                    <td>{unit.room1_m2} m<sup>2</sup></td>
+                  </tr>
+                  <tr style={{ display: unit.room_type2 === '0' || unit.room_type2 === '9' ? 'none' : '' }}>
+                    <td>2</td>
+                    <td>{showRoomName(unit.room_type2)}</td>
+                    <td>{unit.room2_m2} m<sup>2</sup></td>
+                  </tr>
+                  <tr style={{ display: unit.room_type3 === '0' || unit.room_type3 === '9' ? 'none' : '' }}>
+                    <td>3</td>
+                    <td>{showRoomName(unit.room_type3)}</td>
+                    <td>{unit.room3_m2} m<sup>2</sup></td>
+                  </tr>
+                  <tr style={{ display: unit.room_type4 === '0' || unit.room_type4 === '9' ? 'none' : '' }}>
+                    <td>4</td>
+                    <td>{showRoomName(unit.room_type4)}</td>
+                    <td>{unit.room4_m2} m<sup>2</sup></td>
+                  </tr>
+                  <tr style={{ display: unit.room_type5 === '0' || unit.room_type5 === '9' ? 'none' : '' }}>
+                    <td>5</td>
+                    <td>{showRoomName(unit.room_type5)}</td>
+                    <td>{unit.room5_m2} m<sup>2</sup></td>
+                  </tr>
+                  <tr style={{ display: unit.room_type6 === '0' || unit.room_type6 === '9' ? 'none' : '' }}>
+                    <td>6</td>
+                    <td>{showRoomName(unit.room_type6)}</td>
+                    <td>{unit.room6_m2} m<sup>2</sup></td>
+                  </tr>
+                  <tr style={{ display: unit.room_type7 === '0' || unit.room_type7 === '9' ? 'none' : '' }}>
+                    <td>7</td>
+                    <td>{showRoomName(unit.room_type7)}</td>
+                    <td>{unit.room7_m2} m<sup>2</sup></td>
+                  </tr>
+                  <tr style={{ display: unit.room_type8 === '0' || unit.room_type8 === '9' ? 'none' : '' }}>
+                    <td>8</td>
+                    <td>{showRoomName(unit.room_type8)}</td>
+                    <td>{unit.room8_m2} m<sup>2</sup></td>
+                  </tr>
+                  <tr style={{ display: unit.room_type9 === '0' || unit.room_type9 === '9' ? 'none' : '' }}>
+                    <td>9</td>
+                    <td>{showRoomName(unit.room_type9)}</td>
+                    <td>{unit.room9_m2} m<sup>2</sup></td>
+                  </tr>
+                  <tr style={{ display: unit.room_type10 === '0' || unit.room_type10 === '9' ? 'none' : '' }}>
+                    <td>10</td>
+                    <td>{showRoomName(unit.room_type10)}</td>
+                    <td>{unit.room10_m2} m<sup>2</sup></td>
+                  </tr>
+                  <tr className="rooms-table-summary">
+                    <td></td>
+                    <td>Powierzchnia (łącznie)</td>
+                    <td>{roomsSpaceAmount()} m<sup>2</sup></td>
+                  </tr>
+                  <tr style={{ display: findBalcony() ? '' : 'none' }}>
+                    <td></td>
+                    <td>Balkon</td>
+                    <td >{unit[`room${findBalcony()}_m2`]} m<sup>2</sup></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
 
             <h4 className="bold-title">Pobierz katalog z opisem lokalu</h4>
             <a target="blank" href={unit.pdf} className="download-pdf"><img src={downloadImg} alt="Pobierz pdf" />POBIERZ PDF</a>
