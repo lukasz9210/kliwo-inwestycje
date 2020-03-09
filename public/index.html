@@ -97,6 +97,9 @@ button {
 .ai-c {
   align-items: center;
 }
+.ai-fs {
+  align-items: flex-start;
+}
 
 .white-heading {
   font-size: 21px;
@@ -204,10 +207,20 @@ button {
 
 
 /* HEADER */
-
+#root {
+  padding-top: 90px;
+}
 .header {
 	padding: 15px 0;
 	position: relative;
+  -webkit-box-shadow: 0px 4px 7px 0px rgba(117,113,117,0.67);
+	-moz-box-shadow: 0px 4px 7px 0px rgba(117,113,117,0.67);
+	box-shadow: 0px 4px 7px 0px rgba(117,113,117,0.67);
+  z-index: 9999;
+  position: fixed;
+  width: 100%;
+  background: #fff;
+  top: 0;
 }
 .main-menu {
 	margin: 0 20px;
@@ -222,7 +235,7 @@ button {
 	display: block;
 	width: 1px;
 	height: 100%;
-	background: #E60000;
+	background: #B4B4B4;
 	position: absolute;
     top: 0;
     right: -4px;
@@ -256,8 +269,9 @@ button {
 .main-menu .sub-menu {
 	z-index: 20;
 	background: #fff;
-	width: 140%;
+	/* width: 140%; */
 	padding-top: 10px;
+  min-width: 220px;
 }
 .main-menu #menu-main-menu > li.menu-item-has-children {
 	position: relative;
@@ -278,7 +292,7 @@ button {
 	margin-top: -4px;
 }
 .sub-menu li {
-	padding: 10px;
+	padding: 15px;
 	border-top: 1px solid #B4B4B4;
 }
 .sub-menu li:last-child {
@@ -630,6 +644,10 @@ button {
   font-size: 30px;
   font-weight: bold;
 }
+.unitView-investment-data {
+  flex-direction: column;
+    align-items: flex-start;
+}
 .unitView-add-to-comparison-btn {
   display: flex;
   background: #fff;
@@ -722,11 +740,14 @@ button {
   font-weight: bold;
 }
 .investment-box-list-item {
-  margin: 20px 0;
+  margin: 30px 0;
   
 }
 .investment-box-list-item img {
   margin-right: 25px;
+}
+.investment-box-list-item-text strong {
+  text-transform: uppercase;
 }
 .investment-box-left:before,
 .investment-box-right:before {
@@ -762,9 +783,19 @@ button {
 }
 .investment-details-name,
 .building-details-building-name,
-.level-details-name {
+.level-details-name,
+.building-details-name {
   font-weight: bold;
   font-size: 30px;
+}
+.show-garage-img {
+  position: absolute;
+  z-index: 15;
+  bottom: 14px;
+  right: 41%;
+}
+.svg-container {
+  position: relative;
 }
 .level-details-mobile {
   display: none;
@@ -782,7 +813,54 @@ button {
 .learn-more-btn {
   width: 200px;
 }
-
+.back-to-building-btn {
+  display: inline-block;
+  padding: 10px 30px;
+  margin: 30px 0;
+}
+.info-box {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+}
+.info-box:hover .info-box-data {
+  display: block;
+}
+div.info-box span {
+  width: 15px;
+    height: 15px;
+    display: inline-block;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: none;
+    color: #7b707069;
+    border: 1px solid #7b707069;
+    text-align: center;
+}
+.info-box-data {
+  display: none;
+  position: absolute;
+    width: 240px;
+    background: #fff;
+    padding: 5px;
+    font-size: 14px;
+    top: -606%;
+    right: -225px;
+    border: 1px solid #7b707069;
+}
+.info-box-data img {
+  width: 10px;
+  margin-right: 5px;
+}
+.info-box-data a {
+  display: flex;
+  align-items: center;
+}
+.info-box-data p:last-child {
+  margin-top: 5px;
+}
 
 /* building */
 .building-details,
@@ -830,6 +908,21 @@ button {
 }
 .level-search-input {
   position: relative;
+  display: inline-block;
+}
+.level-search-input:after { 
+  content: '';
+    border: solid #e60000;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    position: absolute;
+    right: 11px;
+    top: 50%;
+    margin-top: -6px;
+    pointer-events: none;
 }
 .level-legend-items {
   margin: 15px 0;
@@ -873,28 +966,18 @@ path {
   stroke: #e60000;
   stroke-width: 1px;
 }
-.unitSold path {
+.unitSold path,
+.garageSold path {
   fill: #c1777778;
 }
 .unitReserved path {
   fill: #fff89880;
 }
-.unitFree path {
+.unitFree path,
+.garageFree path {
   fill: #bbf0b47d;
 }
-/* .level-search-input:after { 
-  content: '';
-  border: solid #E60000;
-  border-width: 0 2px 2px 0;
-  display: inline-block;
-  padding: 2px;
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-  position: absolute;
-  right: 7px;
-  top: 50%;
-  margin-top: -4px;
-} */
+
 
 
 .svg-cloud {
@@ -931,6 +1014,15 @@ path {
   position: absolute;
   left: 0;
   bottom: 10px;
+}
+.svg-cloud-box.svg-cloud-box-all-sold {
+  padding: 15px;
+}
+.svg-cloud-box.svg-cloud-box-all-sold span{
+  position: static;
+  color: #e60001;
+  font-size: 20px;
+  font-weight: bold;
 }
 .svg-cloud-table-cell {
   border: 1px solid #B4B4B4;

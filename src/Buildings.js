@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import Header from './Header.js'
 import Footer from './Footer.js'
 import preLoaderGif from './images/preloader.gif'
+import showGarages from './images/zobaczGaraze.png'
 import $ from 'jquery';
 
 const Buildings = ({ match }) => {
@@ -88,7 +89,7 @@ const Buildings = ({ match }) => {
       setImaheHeight(ih)
       setLoading(false)
       //console.log('imaheHeight', imaheHeight)
-    }, 2000);
+    }, 3000);
 
 
     //budynek
@@ -118,7 +119,7 @@ const Buildings = ({ match }) => {
         let svgText = pathElem.outerHTML
         //console.log('SVG TEXT', svgText)
         ///console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-        let newcoords = parser(svgText, [1405, 967], [svgContainerWidth, svgContainerHeight])
+        let newcoords = parser(svgText, [1920, 1321], [svgContainerWidth, svgContainerHeight])
         //console.log('newcoords', newcoords)
         pathElem.setAttribute('d', newcoords)
         //console.log('path po', pathElem)
@@ -135,7 +136,7 @@ const Buildings = ({ match }) => {
         $(this).removeClass('svgActive')
       })
 
-    }, 2000);
+    }, 3000);
     //koniec budynku
 
 
@@ -246,7 +247,10 @@ const Buildings = ({ match }) => {
   }
 
 
-  const redirectToLevel = id => {
+  const redirectToLevel = (id, avaliableFlats) => {
+    if (avaliableFlats == 0) {
+      return;
+    }
     setRedirectId(id)
     setRedirect(true)
   }
@@ -263,6 +267,10 @@ const Buildings = ({ match }) => {
     setCloudShown(false)
   }
 
+  const showAvaliableUnitsAmount = amount => {
+    return amount == 0 ? 'Sprzedane' : amount
+  }
+
 
   return (
     <div className="building">
@@ -277,6 +285,14 @@ const Buildings = ({ match }) => {
 
 
       <div className="svg-container" style={{ height: imaheHeight }}>
+        {
+          building.garage_number > 0 && (
+            <Link to={`/garaz/${match.params.buildingId}`}>
+              <img className="show-garage-img" src={showGarages} />
+            </Link>
+          )
+        }
+       
         <img id="coverImg" style={{ position: 'absolute', width: '60%' }} src={building.main_img} />
         <svg style={{ position: 'absolute' }} id="buildingSvgImg" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
           {
@@ -284,8 +300,8 @@ const Buildings = ({ match }) => {
               console.log('lvl', l)
               let svg = l.coords
               let lvlClass = l.count_m.free == '0' ? 'levelDisabled' : ''
-              //console.log('svg', svg)
-              return <g className={lvlClass} onMouseOver={() => mouseOver(l)} onMouseLeave={() => mouseLeave()} id={`levelsvg${i + 1}`} onClick={() => { redirectToLevel(l.id) }} dangerouslySetInnerHTML={{ __html: svg }}>
+              console.log('svg', svg)
+              return <g className={lvlClass} onMouseOver={() => mouseOver(l)} onMouseLeave={() => mouseLeave()} id={`levelsvg${i + 1}`} onClick={() => { redirectToLevel(l.id, l.count_m.free) }} dangerouslySetInnerHTML={{ __html: svg }}>
 
               </g>
             })
@@ -294,17 +310,29 @@ const Buildings = ({ match }) => {
         {redirect ? <Redirect push to={`/budynek/${redirectId}`} /> : null}
 
         <div style={{ display: cloudShown ? 'block' : 'none' }} className="svg-cloud">
-          <p className="svg-cloud-title">Piętro: {dataInCloud.number}</p>
-          <div className="svg-cloud-boxes flex">
+          {dataInCloud.number == 0 && (
+            <p className="svg-cloud-title">Parter</p>
+          )}
+          {dataInCloud.number != 0 && (
+            <p className="svg-cloud-title">Piętro: {dataInCloud.number}</p>
+          )}
+          <div style={{display: dataInCloud.count_m.free && dataInCloud.count_m.free ? '' : 'none'}} className="svg-cloud-boxes flex">
             <div className="svg-cloud-box w-50">
               <span>Dostępne mieszkania</span>
-              <span>{dataInCloud.count_m.free}</span>
+              <span>{showAvaliableUnitsAmount(dataInCloud.count_m.free)}</span>
             </div>
             <div className="svg-cloud-box w-50">
               <span>Dostępne lokale użytkowe</span>
-              <span>{dataInCloud.count_l.free}</span>
+              <span>{showAvaliableUnitsAmount(dataInCloud.count_l.free)}</span>
             </div>
           </div>
+
+          <div style={{display: dataInCloud.count_m.free && dataInCloud.count_m.free ? 'none' : ''}} className="svg-cloud-boxes flex">
+            <div className="svg-cloud-box svg-cloud-box-all-sold">
+              <span>Wszytskie mieszknia i lokalne usługowe zostały sprzedane</span>
+            </div>
+          </div>
+
         </div>
 
         <div className="container">
@@ -313,6 +341,7 @@ const Buildings = ({ match }) => {
             <h4 className="building-details-name">{investment.name}</h4>
             <h5 className="building-details-address">{investment.address}</h5>
             <h4 className="building-details-building-name">{building.name}</h4>
+            <p className="building-details-stage">{building.stage_description}</p>
             <div className="building-details-list">
               <ul>
                 <li className="flex ai-c">
@@ -365,6 +394,7 @@ const Buildings = ({ match }) => {
             <h4 className="building-details-name">{investment.name}</h4>
             <h5 className="building-details-address">{investment.address}</h5>
             <h4 className="building-details-building-name">{building.name}</h4>
+            <p className="building-details-stage">{building.stage_description}</p>
             <div className="building-details-list">
               <ul>
                 <li className="flex ai-c">

@@ -209,7 +209,7 @@ const Units = ({ match }) => {
         break;
       case '7': return 'Garderoba'
         break;
-      case '8': return 'Ścianki działowe'
+      case '8': return 'Ścianki działowe*'
         break;
       case '9': return 'Balkon'
         break;
@@ -270,12 +270,12 @@ const Units = ({ match }) => {
       console.log('Balcony space', balconySpace)
     }
     let amount = Number(unit.room1_m2) + Number(unit.room2_m2) + Number(unit.room3_m2) + Number(unit.room4_m2) + Number(unit.room5_m2) + Number(unit.room6_m2) + Number(unit.room7_m2) + Number(unit.room8_m2) + Number(unit.room9_m2) + Number(unit.room10_m2) - Number(balconySpace)
-    return amount
+    return Math.round((amount + Number.EPSILON) * 100) / 100
   }
 
   const roomsFloorSpaceSummery = () => {
     let amount = Number(unit.room1_floor) + Number(unit.room2_floor) + Number(unit.room3_floor) + Number(unit.room4_floor) + Number(unit.room5_floor) + Number(unit.room6_floor) + Number(unit.room7_floor) + Number(unit.room8_floor) + Number(unit.room9_floor) + Number(unit.room10_floor)
-    return amount
+    return Math.round((amount + Number.EPSILON) * 100) / 100
   }
 
   const handleMainImgUrl = url => {
@@ -286,7 +286,8 @@ const Units = ({ match }) => {
   return (
     <div className="unitView">
       <Header />
-      <div className="container">
+      <h2 style={{display: unit.status == "1" ? '' : 'none'}}>Nie masz dostęĻu do tego podglądu tego mieszkania.</h2>
+      <div style={{display: unit.status == "1" ? 'none' : ''}} className="container">
         <div className="unitView-content flex">
           <div className="unitView-left w-50">
             <div className="unitView-images flex jc-c">
@@ -322,7 +323,7 @@ const Units = ({ match }) => {
 
 
           <div className="unitView-right w-50">
-            <div className="flex ai-c">
+            <div className="flex jc-spb ai-fs">
               <div className="unitView-investment-data flex ai-c">
                 <img src={investment.logo} alt={investment.name} />
                 <div className="unitView-investment-details">
@@ -370,8 +371,8 @@ const Units = ({ match }) => {
                   <tr>
                     <th>Nr</th>
                     <th>Pomieszczenie</th>
-                    <th>Pow. użytkowa</th>
-                    <th>Pow. podłogi</th>
+                    <th>Pow. użytkowa<sup>**</sup></th>
+                    <th>Pow. podłogi<sup>***</sup></th>
                   </tr>
                 </thead>
                 <tbody>

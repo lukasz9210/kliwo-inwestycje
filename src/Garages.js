@@ -7,7 +7,7 @@ import phoneImg from './images/ico_phone.png'
 import $ from 'jquery';
 
 
-const Levels = ({ match }) => {
+const Garages = ({ match }) => {
   const [level, setLevel] = useState({})
   const [unitsInLevel, setUnitsInLevel] = useState([])
   const [redirect, setRedirect] = useState(false)
@@ -23,6 +23,11 @@ const Levels = ({ match }) => {
   const [cloudShown, setCloudShown] = useState(false)
   const [loading, setLoading] = useState(true)
   const [levelImgLoading, setLevelImgLoading] = useState(false)
+
+  const [garages, setGarages] = useState({})
+  const [garageArray, setGarageArray] = useState([])
+
+  const [buildingInGarage, setBuildingInGarage] = useState({}) //aktualny budynek
 
 
   const coord = function (xy, orig_size, chngd_size) {
@@ -87,9 +92,11 @@ const Levels = ({ match }) => {
 
 
   useEffect(() => {
-    fetchLevel(match.params.levelId)
-    fetchUnitsInLevel(match.params.levelId)
-    fetchBuildings()
+      fetchGarage()
+    // fetchLevel(match.params.levelId)
+    // fetchUnitsInLevel(match.params.levelId)
+    // fetchBuildings()
+    fetchBuilding()
 
     setTimeout(() => {
       let ih = document.getElementById('coverImg').height
@@ -133,7 +140,7 @@ const Levels = ({ match }) => {
         let svgText = pathElem.outerHTML
         //console.log('SVG TEXT', svgText)
         ///console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-        let newcoords = parser(svgText, [910, 745], [svgContainerWidth, svgContainerHeight])
+        let newcoords = parser(svgText, [583, 648], [svgContainerWidth, svgContainerHeight])
         //console.log('newcoords', newcoords)
         pathElem.setAttribute('d', newcoords)
         console.log('path po', pathElem)
@@ -157,30 +164,66 @@ const Levels = ({ match }) => {
   }, [])
 
 
+//   useEffect(() => {
+
+//     setSelectedBuildingId(level.building_id)
+//     fetchUnitsInLevel(level.id)
+//   }, [level])
+
+
+//   useEffect(() => {
+//     if (selectedBuildingId != 0) {
+//       fetchLevelsInBuilding()
+//     }
+//   }, [selectedBuildingId])
+
+
+//   useEffect(() => {
+//     let arr = Object.keys(buildings).map((k) => buildings[k])
+//     setBuildingsArray(arr)
+//   }, [buildings])
+
   useEffect(() => {
-
-    setSelectedBuildingId(level.building_id)
-    fetchUnitsInLevel(level.id)
-  }, [level])
-
-
-  useEffect(() => {
-    if (selectedBuildingId != 0) {
-      fetchLevelsInBuilding()
-    }
-  }, [selectedBuildingId])
-
-
-  useEffect(() => {
-    let arr = Object.keys(buildings).map((k) => buildings[k])
-    setBuildingsArray(arr)
-  }, [buildings])
-
+    let arr = Object.keys(garages).map((k) => garages[k])
+    setGarageArray(arr)
+  }, [garages])
 
   // fetch LEVEL
-  const fetchLevel = (levelId) => {
+//   const fetchLevel = (levelId) => {
+//     let details = {
+//       'id': levelId
+//     };
+
+//     let formBody = [];
+//     for (let property in details) {
+//       let encodedKey = encodeURIComponent(property);
+//       let encodedValue = encodeURIComponent(details[property]);
+//       formBody.push(encodedKey + "=" + encodedValue);
+//     }
+
+//     formBody = formBody.join("&");
+//     console.log('formBody', formBody)
+
+//     fetch('http://kliwo.realizacje.grupaaf.pl/api/levels-show', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+//       },
+//       body: formBody
+//     }).then(r => {
+//       return r.json()
+//     }).then(j => {
+//       setLevel(j.data.levels)
+//       setInvestment(j.data.investment)
+//       console.log('this level', j)
+//     })
+//   }
+
+
+//   fetch GARAGE
+  const fetchGarage = () => {
     let details = {
-      'id': levelId
+      'id': match.params.garageId
     };
 
     let formBody = [];
@@ -193,7 +236,7 @@ const Levels = ({ match }) => {
     formBody = formBody.join("&");
     console.log('formBody', formBody)
 
-    fetch('http://kliwo.realizacje.grupaaf.pl/api/levels-show', {
+    fetch('http://kliwo.realizacje.grupaaf.pl/api/building/garages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -202,17 +245,47 @@ const Levels = ({ match }) => {
     }).then(r => {
       return r.json()
     }).then(j => {
-      setLevel(j.data.levels)
-      setInvestment(j.data.investment)
-      console.log('this level', j)
+      setGarages(j.data.garages)
+      console.log('this garage', j)
     })
   }
 
 
   // fetch ALL UNITS in level
-  const fetchUnitsInLevel = levelId => {
+//   const fetchUnitsInLevel = levelId => {
+//     let details = {
+//       'id': levelId
+//     };
+
+//     let formBody = [];
+//     for (let property in details) {
+//       let encodedKey = encodeURIComponent(property);
+//       let encodedValue = encodeURIComponent(details[property]);
+//       formBody.push(encodedKey + "=" + encodedValue);
+//     }
+
+//     formBody = formBody.join("&");
+//     console.log('formBody', formBody)
+
+//     fetch('http://kliwo.realizacje.grupaaf.pl/api/levels-units-show', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+//       },
+//       body: formBody
+//     }).then(r => {
+//       return r.json()
+//     }).then(j => {
+//       const arr = Object.values(j.data.units)
+//       setUnitsInLevel(arr)
+//       //console.log('all units in this level', j)
+//     })
+//   }
+
+  // fetch BUILDING
+  const fetchBuilding = () => {
     let details = {
-      'id': levelId
+      'id': match.params.garageId
     };
 
     let formBody = [];
@@ -225,7 +298,7 @@ const Levels = ({ match }) => {
     formBody = formBody.join("&");
     console.log('formBody', formBody)
 
-    fetch('http://kliwo.realizacje.grupaaf.pl/api/levels-units-show', {
+    fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings-show', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -234,145 +307,142 @@ const Levels = ({ match }) => {
     }).then(r => {
       return r.json()
     }).then(j => {
-      const arr = Object.values(j.data.units)
-      setUnitsInLevel(arr)
-      //console.log('all units in this level', j)
+
+      setBuildingInGarage(j.data.building)
+      console.log('this building in garage', j)
     })
   }
 
-
-
   //fetch ALL BUILDINGS
-  const fetchBuildings = () => {
-    return fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings')
-      .then(response => response.json())
-      .then(json => {
-        console.log('All buildings', json.data.buildings)
-        setBuildings(json.data.buildings)
-      })
-  }
+//   const fetchBuildings = () => {
+//     return fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings')
+//       .then(response => response.json())
+//       .then(json => {
+//         console.log('All buildings', json.data.buildings)
+//         setBuildings(json.data.buildings)
+//       })
+//   }
 
 
   // fetch ALL LEVELS in building
-  const fetchLevelsInBuilding = () => {
-    let details = {
-      'id': selectedBuildingId
-    };
+//   const fetchLevelsInBuilding = () => {
+//     let details = {
+//       'id': selectedBuildingId
+//     };
 
-    let formBody = [];
-    for (let property in details) {
-      let encodedKey = encodeURIComponent(property);
-      let encodedValue = encodeURIComponent(details[property]);
-      formBody.push(encodedKey + "=" + encodedValue);
-    }
+//     let formBody = [];
+//     for (let property in details) {
+//       let encodedKey = encodeURIComponent(property);
+//       let encodedValue = encodeURIComponent(details[property]);
+//       formBody.push(encodedKey + "=" + encodedValue);
+//     }
 
-    formBody = formBody.join("&");
-    console.log('formBody', formBody)
+//     formBody = formBody.join("&");
+//     console.log('formBody', formBody)
 
-    fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings-show-levels', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      body: formBody
-    }).then(r => {
-      return r.json()
-    }).then(j => {
-      const arr = Object.values(j.data.levels)
-      setLevelsInBuilding(arr)
-      console.log('all levels in selected building', j)
-    })
-  }
+//     fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings-show-levels', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+//       },
+//       body: formBody
+//     }).then(r => {
+//       return r.json()
+//     }).then(j => {
+//       const arr = Object.values(j.data.levels)
+//       setLevelsInBuilding(arr)
+//       console.log('all levels in selected building', j)
+//     })
+//   }
 
-  const redirectToUnit = (id, status) => {
-    if(status == 1) return;
-    setRedirectId(id)
-    setRedirect(true)
-  }
-
-
-  const selectCurrentBuilding = id => {
-    if (id === level.building_id) {
-      //console.log('selected')
-      return true
-    } else {
-      //console.log('not selected')
-      return false
-    }
-  }
-
-  const selectCurrentLevel = id => {
-    if (id === level.id) {
-      //console.log('selected')
-      return true
-    } else {
-      //console.log('not selected')
-      return false
-    }
-  }
+//   const redirectToUnit = id => {
+//     setRedirectId(id)
+//     setRedirect(true)
+//   }
 
 
-  const selectBuildingChange = e => {
-    setSelectedBuildingId(e.target.value)
+//   const selectCurrentBuilding = id => {
+//     if (id === level.building_id) {
+//       //console.log('selected')
+//       return true
+//     } else {
+//       //console.log('not selected')
+//       return false
+//     }
+//   }
 
-  }
-
-  const selectLevelChange = e => {
-    setLevelImgLoading(true)
-    setSelectedLevelId(e.target.value)
-    //fetch level with id e.target.value
-    fetchLevel(e.target.value)
-
-
-
-    setTimeout(() => {
-      console.log('SKALOWANIE')
-      //svg container/image
-      let svgContainer = document.getElementById('levelSvgImg')  //kontener svg
-      const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
-      console.log('svgContainer', svgContainer)
-
-      //cover img width and height
+//   const selectCurrentLevel = id => {
+//     if (id === level.id) {
+//       //console.log('selected')
+//       return true
+//     } else {
+//       //console.log('not selected')
+//       return false
+//     }
+//   }
 
 
-      //actual width and height of svg container
-      //console.log('WIDTH SVGCONT', svgContainer)
-      let svgContainerWidth = Math.round(svgContainer.width.baseVal.value / 0.6)
-      let svgContainerHeight = svgContainer.height.baseVal.value
-      //console.log('svgContainerWidth', svgContainerWidth)
-      //console.log('svgContainerHeight', svgContainerHeight)
+//   const selectBuildingChange = e => {
+//     setSelectedBuildingId(e.target.value)
 
-      let gElems = svgContainer.querySelectorAll('g')
-      console.log('gElems', gElems)
+//   }
 
-      gElems.forEach((g, i) => {
-        let pathElem = g.querySelector('path')
-        console.log('path przed', pathElem)
-        let svgText = pathElem.outerHTML
-        //console.log('SVG TEXT', svgText)
-        ///console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-        let newcoords = parser(svgText, [910, 745], [svgContainerWidth, svgContainerHeight])
-        //console.log('newcoords', newcoords)
-        pathElem.setAttribute('d', newcoords)
-        console.log('path po', pathElem)
-      })
-
-      $('path').mouseenter(function () {
-        //jQuery(this).find('path').addClass('svgActive')
-        $(this).addClass('svgActive')
-        console.log("PATH JQUERY", this)
-      })
-
-      $('path').mouseleave(function () {
-        //jQuery(this).find('path').addClass('svgActive')
-        $(this).removeClass('svgActive')
-      })
-      setLevelImgLoading(false)
-    }, 3000);
+//   const selectLevelChange = e => {
+//     setLevelImgLoading(true)
+//     setSelectedLevelId(e.target.value)
+//     //fetch level with id e.target.value
+//     fetchLevel(e.target.value)
 
 
 
-  }
+//     setTimeout(() => {
+//       console.log('SKALOWANIE')
+//       //svg container/image
+//       let svgContainer = document.getElementById('levelSvgImg')  //kontener svg
+//       const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
+//       console.log('svgContainer', svgContainer)
+
+//       //cover img width and height
+
+
+//       //actual width and height of svg container
+//       //console.log('WIDTH SVGCONT', svgContainer)
+//       let svgContainerWidth = Math.round(svgContainer.width.baseVal.value / 0.6)
+//       let svgContainerHeight = svgContainer.height.baseVal.value
+//       //console.log('svgContainerWidth', svgContainerWidth)
+//       //console.log('svgContainerHeight', svgContainerHeight)
+
+//       let gElems = svgContainer.querySelectorAll('g')
+//       console.log('gElems', gElems)
+
+//       gElems.forEach((g, i) => {
+//         let pathElem = g.querySelector('path')
+//         console.log('path przed', pathElem)
+//         let svgText = pathElem.outerHTML
+//         //console.log('SVG TEXT', svgText)
+//         ///console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
+//         let newcoords = parser(svgText, [910, 745], [svgContainerWidth, svgContainerHeight])
+//         //console.log('newcoords', newcoords)
+//         pathElem.setAttribute('d', newcoords)
+//         console.log('path po', pathElem)
+//       })
+
+//       $('path').mouseenter(function () {
+//         //jQuery(this).find('path').addClass('svgActive')
+//         $(this).addClass('svgActive')
+//         console.log("PATH JQUERY", this)
+//       })
+
+//       $('path').mouseleave(function () {
+//         //jQuery(this).find('path').addClass('svgActive')
+//         $(this).removeClass('svgActive')
+//       })
+//       setLevelImgLoading(false)
+//     }, 3000);
+
+
+
+//   }
 
 
   const mouseOver = data => {
@@ -428,22 +498,20 @@ const Levels = ({ match }) => {
       <img src={preLoaderGif} />
       </div> */}
         <div style={{position: 'relative'}} className="container">
-        <img id="coverImg" style={{ position: 'absolute', width: '60%' }} src={level.img_names} />
+        <img id="coverImg" style={{ position: 'absolute', width: '60%' }} src={buildingInGarage.garage_image} />
         <svg style={{ position: 'absolute' }} id="levelSvgImg" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
           {
-            unitsInLevel.map((u, i) => {
-              let unitClass = ''
-              if (u.status == 1) {
-                unitClass = 'unitSold'
-              } else if (u.status == 2) {
-                unitClass = 'unitReserved'
-              } else if (u.status == 3) {
-                unitClass = 'unitFree'
+            garageArray.map((g, i) => {
+              let garageClass = ''
+              if (g.available == 1) {
+                garageClass = 'garageFree'
+              } else if (g.available == 0) {
+                garageClass = 'garageSold'
               }
               //console.log('u', u)
-              let svg = u.coords
-              //console.log('svg', svg)
-              return <g style={{display: u.published == '1' ? '' : 'none', display: levelImgLoading ? 'none' : '' }} onMouseOver={() => mouseOver(u)} onMouseLeave={() => mouseLeave()} className={unitClass} id={`unitsvg${i + 1}`} onClick={() => { redirectToUnit(u.id, u.status) }} dangerouslySetInnerHTML={{ __html: svg }}>
+              let svg = g.svg
+              console.log('svg', svg)
+              return <g onMouseOver={() => mouseOver(g)} onMouseLeave={() => mouseLeave()} id={`unitsvg${i + 1}`} className={garageClass} dangerouslySetInnerHTML={{ __html: svg }}>
 
               </g>
             })
@@ -452,40 +520,11 @@ const Levels = ({ match }) => {
         </div>
 
         <div style={{ display: cloudShown ? '' : 'none' }} className="svg-cloud svg-cloud-level">
-          <p className="svg-cloud-title">Mieszkanie {dataInCloud.name}</p>
-          <div className="svg-cloud-table">
-            <div className="svg-cloud-table-row flex">
-              <div className="svg-cloud-table-cell w-50">
-                <span className="bold">Powierzchnia</span>
-                <span>{dataInCloud.space} m<sup>2</sup></span>
-              </div>
-              <div className="svg-cloud-table-cell w-50">
-                <span className="bold">liczba pokoi</span>
-                <span>{dataInCloud.rooms}</span>
-              </div>
-            </div>
-            <div className="svg-cloud-table-row flex">
-              <div className="svg-cloud-table-cell w-33">
-                <span className="bold">Cena</span>
-                <span>{dataInCloud.price} zł</span>
-              </div>
-              <div className="svg-cloud-table-cell w-33">
-                <span className="bold">CENA ZA m²</span>
-                <span>{dataInCloud.priceperm2} zł</span>
-              </div>
-              <div className="svg-cloud-table-cell w-33">
-                <span className="bold">Piętro</span>
-                <span>{dataInCloud.level_number}</span>
-              </div>
-            </div>
-          </div>
-          <div className="svg-cloud-level-status flex jc-c">
-            {printStatus(dataInCloud)}
-          </div>
+         
         </div>
 
 
-        <div className="container">
+        {/* <div className="container">
           <div className="level-details">
             <img src={investment.logo} alt={investment.name} />
             <h4 className="level-details-name">{investment.name}</h4>
@@ -534,7 +573,7 @@ const Levels = ({ match }) => {
             <a className="btn back-to-building-btn" href="javascript:history.back()">Wróć do widoku budynku</a>
 
           </div>
-        </div>
+        </div> */}
 
 
 
@@ -546,11 +585,9 @@ const Levels = ({ match }) => {
 
 
 
-      {redirect ? <Redirect push to={`/mieszkanie/${redirectId}`} /> : null}
 
 
-
-    <div className="container">
+    {/* <div className="container">
     <div className="level-details level-details-mobile">
             <img src={investment.logo} alt={investment.name} />
             <h4 className="level-details-name">{investment.name}</h4>
@@ -596,7 +633,7 @@ const Levels = ({ match }) => {
               </ul>
             </div>
           </div>
-    </div>
+    </div> */}
 
 
 
@@ -607,4 +644,4 @@ const Levels = ({ match }) => {
   )
 }
 
-export default Levels
+export default Garages

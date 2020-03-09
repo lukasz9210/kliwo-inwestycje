@@ -107,7 +107,7 @@ const Test = ({ match }) => {
       setImaheHeight(ih)
       setLoading(false)
       console.log('imaheHeight', imaheHeight)
-    }, 2000);
+    }, 3000);
 
 
     //inwestycja
@@ -141,7 +141,7 @@ const Test = ({ match }) => {
         pathElem.setAttribute('d', newcoords)
         //console.log('path po', pathElem)
       })
-    }, 2000);
+    }, 3000);
     //koniec inwestycji
 
 
