@@ -95,7 +95,7 @@ const Garages = ({ match }) => {
       fetchGarage()
     // fetchLevel(match.params.levelId)
     // fetchUnitsInLevel(match.params.levelId)
-    // fetchBuildings()
+    fetchBuildings()
     fetchBuilding()
 
     setTimeout(() => {
@@ -171,17 +171,17 @@ const Garages = ({ match }) => {
 //   }, [level])
 
 
-//   useEffect(() => {
-//     if (selectedBuildingId != 0) {
-//       fetchLevelsInBuilding()
-//     }
-//   }, [selectedBuildingId])
+  useEffect(() => {
+    if (selectedBuildingId != 0) {
+      fetchLevelsInBuilding()
+    }
+  }, [selectedBuildingId])
 
 
-//   useEffect(() => {
-//     let arr = Object.keys(buildings).map((k) => buildings[k])
-//     setBuildingsArray(arr)
-//   }, [buildings])
+  useEffect(() => {
+    let arr = Object.keys(buildings).map((k) => buildings[k])
+    setBuildingsArray(arr)
+  }, [buildings])
 
   useEffect(() => {
     let arr = Object.keys(garages).map((k) => garages[k])
@@ -189,35 +189,35 @@ const Garages = ({ match }) => {
   }, [garages])
 
   // fetch LEVEL
-//   const fetchLevel = (levelId) => {
-//     let details = {
-//       'id': levelId
-//     };
+  const fetchLevel = (levelId) => {
+    let details = {
+      'id': levelId
+    };
 
-//     let formBody = [];
-//     for (let property in details) {
-//       let encodedKey = encodeURIComponent(property);
-//       let encodedValue = encodeURIComponent(details[property]);
-//       formBody.push(encodedKey + "=" + encodedValue);
-//     }
+    let formBody = [];
+    for (let property in details) {
+      let encodedKey = encodeURIComponent(property);
+      let encodedValue = encodeURIComponent(details[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
 
-//     formBody = formBody.join("&");
-//     console.log('formBody', formBody)
+    formBody = formBody.join("&");
+    console.log('formBody', formBody)
 
-//     fetch('http://kliwo.realizacje.grupaaf.pl/api/levels-show', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-//       },
-//       body: formBody
-//     }).then(r => {
-//       return r.json()
-//     }).then(j => {
-//       setLevel(j.data.levels)
-//       setInvestment(j.data.investment)
-//       console.log('this level', j)
-//     })
-//   }
+    fetch('http://kliwo.realizacje.grupaaf.pl/api/levels-show', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body: formBody
+    }).then(r => {
+      return r.json()
+    }).then(j => {
+      setLevel(j.data.levels)
+      setInvestment(j.data.investment)
+      console.log('this level', j)
+    })
+  }
 
 
 //   fetch GARAGE
@@ -313,52 +313,52 @@ const Garages = ({ match }) => {
     })
   }
 
-  //fetch ALL BUILDINGS
-//   const fetchBuildings = () => {
-//     return fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings')
-//       .then(response => response.json())
-//       .then(json => {
-//         console.log('All buildings', json.data.buildings)
-//         setBuildings(json.data.buildings)
-//       })
-//   }
+  // fetch ALL BUILDINGS
+  const fetchBuildings = () => {
+    return fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings')
+      .then(response => response.json())
+      .then(json => {
+        console.log('All buildings', json.data.buildings)
+        setBuildings(json.data.buildings)
+      })
+  }
 
 
   // fetch ALL LEVELS in building
-//   const fetchLevelsInBuilding = () => {
-//     let details = {
-//       'id': selectedBuildingId
-//     };
+  const fetchLevelsInBuilding = () => {
+    let details = {
+      'id': selectedBuildingId
+    };
 
-//     let formBody = [];
-//     for (let property in details) {
-//       let encodedKey = encodeURIComponent(property);
-//       let encodedValue = encodeURIComponent(details[property]);
-//       formBody.push(encodedKey + "=" + encodedValue);
-//     }
+    let formBody = [];
+    for (let property in details) {
+      let encodedKey = encodeURIComponent(property);
+      let encodedValue = encodeURIComponent(details[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
 
-//     formBody = formBody.join("&");
-//     console.log('formBody', formBody)
+    formBody = formBody.join("&");
+    console.log('formBody', formBody)
 
-//     fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings-show-levels', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-//       },
-//       body: formBody
-//     }).then(r => {
-//       return r.json()
-//     }).then(j => {
-//       const arr = Object.values(j.data.levels)
-//       setLevelsInBuilding(arr)
-//       console.log('all levels in selected building', j)
-//     })
-//   }
+    fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings-show-levels', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body: formBody
+    }).then(r => {
+      return r.json()
+    }).then(j => {
+      const arr = Object.values(j.data.levels)
+      setLevelsInBuilding(arr)
+      console.log('all levels in selected building', j)
+    })
+  }
 
-//   const redirectToUnit = id => {
-//     setRedirectId(id)
-//     setRedirect(true)
-//   }
+  const redirectToUnit = id => {
+    setRedirectId(id)
+    setRedirect(true)
+  }
 
 
 //   const selectCurrentBuilding = id => {
@@ -382,67 +382,67 @@ const Garages = ({ match }) => {
 //   }
 
 
-//   const selectBuildingChange = e => {
-//     setSelectedBuildingId(e.target.value)
+  const selectBuildingChange = e => {
+    setSelectedBuildingId(e.target.value)
 
-//   }
+  }
 
-//   const selectLevelChange = e => {
-//     setLevelImgLoading(true)
-//     setSelectedLevelId(e.target.value)
-//     //fetch level with id e.target.value
-//     fetchLevel(e.target.value)
-
-
-
-//     setTimeout(() => {
-//       console.log('SKALOWANIE')
-//       //svg container/image
-//       let svgContainer = document.getElementById('levelSvgImg')  //kontener svg
-//       const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
-//       console.log('svgContainer', svgContainer)
-
-//       //cover img width and height
-
-
-//       //actual width and height of svg container
-//       //console.log('WIDTH SVGCONT', svgContainer)
-//       let svgContainerWidth = Math.round(svgContainer.width.baseVal.value / 0.6)
-//       let svgContainerHeight = svgContainer.height.baseVal.value
-//       //console.log('svgContainerWidth', svgContainerWidth)
-//       //console.log('svgContainerHeight', svgContainerHeight)
-
-//       let gElems = svgContainer.querySelectorAll('g')
-//       console.log('gElems', gElems)
-
-//       gElems.forEach((g, i) => {
-//         let pathElem = g.querySelector('path')
-//         console.log('path przed', pathElem)
-//         let svgText = pathElem.outerHTML
-//         //console.log('SVG TEXT', svgText)
-//         ///console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-//         let newcoords = parser(svgText, [910, 745], [svgContainerWidth, svgContainerHeight])
-//         //console.log('newcoords', newcoords)
-//         pathElem.setAttribute('d', newcoords)
-//         console.log('path po', pathElem)
-//       })
-
-//       $('path').mouseenter(function () {
-//         //jQuery(this).find('path').addClass('svgActive')
-//         $(this).addClass('svgActive')
-//         console.log("PATH JQUERY", this)
-//       })
-
-//       $('path').mouseleave(function () {
-//         //jQuery(this).find('path').addClass('svgActive')
-//         $(this).removeClass('svgActive')
-//       })
-//       setLevelImgLoading(false)
-//     }, 3000);
+  const selectLevelChange = e => {
+    setLevelImgLoading(true)
+    setSelectedLevelId(e.target.value)
+    //fetch level with id e.target.value
+    fetchLevel(e.target.value)
 
 
 
-//   }
+    setTimeout(() => {
+      console.log('SKALOWANIE')
+      //svg container/image
+      let svgContainer = document.getElementById('levelSvgImg')  //kontener svg
+      const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
+      console.log('svgContainer', svgContainer)
+
+      //cover img width and height
+
+
+      //actual width and height of svg container
+      //console.log('WIDTH SVGCONT', svgContainer)
+      let svgContainerWidth = Math.round(svgContainer.width.baseVal.value / 0.6)
+      let svgContainerHeight = svgContainer.height.baseVal.value
+      //console.log('svgContainerWidth', svgContainerWidth)
+      //console.log('svgContainerHeight', svgContainerHeight)
+
+      let gElems = svgContainer.querySelectorAll('g')
+      console.log('gElems', gElems)
+
+      gElems.forEach((g, i) => {
+        let pathElem = g.querySelector('path')
+        console.log('path przed', pathElem)
+        let svgText = pathElem.outerHTML
+        //console.log('SVG TEXT', svgText)
+        ///console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
+        let newcoords = parser(svgText, [910, 745], [svgContainerWidth, svgContainerHeight])
+        //console.log('newcoords', newcoords)
+        pathElem.setAttribute('d', newcoords)
+        console.log('path po', pathElem)
+      })
+
+      $('path').mouseenter(function () {
+        //jQuery(this).find('path').addClass('svgActive')
+        $(this).addClass('svgActive')
+        console.log("PATH JQUERY", this)
+      })
+
+      $('path').mouseleave(function () {
+        //jQuery(this).find('path').addClass('svgActive')
+        $(this).removeClass('svgActive')
+      })
+      setLevelImgLoading(false)
+    }, 3000);
+
+
+
+  }
 
 
   const mouseOver = data => {
@@ -524,19 +524,17 @@ const Garages = ({ match }) => {
         </div>
 
 
-        {/* <div className="container">
+        <div className="container">
           <div className="level-details">
-            <img src={investment.logo} alt={investment.name} />
+            {/* <img src={investment.logo} alt={investment.name} />
             <h4 className="level-details-name">{investment.name}</h4>
-            <h5 className="level-details-address">{investment.address}</h5>
+            <h5 className="level-details-address">{investment.address}</h5> */}
             <div className="level-search">
               <div className="level-search-input">
                 <select onChange={selectBuildingChange}>
                   {
                     buildingsArray.map((b) => {
-                      let printSelect = selectCurrentBuilding(b.id)
-                      console.log('prineSelect', printSelect)
-                      return <option selected={printSelect} value={b.id}>{b.name}</option>
+                      return <option value={b.id}>{b.name}</option>
                     })
                   }
                 </select>
@@ -545,9 +543,7 @@ const Garages = ({ match }) => {
                 <select onChange={selectLevelChange}>
                   {
                     levelsInBuilding.map((l) => {
-                      let printSelectLevel = selectCurrentLevel(l.id)
-                      console.log('prineSelect', printSelectLevel)
-                      return <option selected={printSelectLevel} value={l.id}>{l.number} Piętro (Dostępnych lokali {l.count_m.free})</option>
+                      return <option value={l.id}>{l.number} Piętro (Dostępnych lokali {l.count_m.free})</option>
                     })
                   }
                 </select>
@@ -573,7 +569,7 @@ const Garages = ({ match }) => {
             <a className="btn back-to-building-btn" href="javascript:history.back()">Wróć do widoku budynku</a>
 
           </div>
-        </div> */}
+        </div>
 
 
 

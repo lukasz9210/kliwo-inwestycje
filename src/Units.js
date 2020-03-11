@@ -536,43 +536,91 @@ const Units = ({ match }) => {
               <h4 className="bold-title">Dostosuj lokal do swoich potrzeb</h4>
               <div className="adjust-boxes">
 
-                <div style={{ display: unit.available_wall === '1' ? '' : 'none' }} className="adjust-box">
+                <div style={{ display: unit.available_wall === '0' ? 'none' : '' }} className="adjust-box">
                   <div className="adjust-box-header flex ai-c">
                     <img src={wallsImg} alt="Układ ścianek działowych" />
-                    <h6 className="adjust-box-title arrow-after">Wybierz układ ścianek działowych</h6>
+                    {unit.available_wall == '1' && (
+                      <h6 className="adjust-box-title arrow-after">Wybierz układ ścianek działowych</h6>
+                    )}
+                    {unit.available_wall == '2' && (
+                      <h6 className="adjust-box-title arrow-after">Ścianki działowe wybudowane</h6>
+                    )}
+                    
                   </div>
                   <div className="adjust-box-body">
-                    <p>Możesz wybrać projekt zamieszczony na naszej stronie internetowej lub przedstawić własną propozycję. O szczegóły zapytaj naszego konsultanta.</p>
+                  {unit.available_wall == '1' && (
+                      <p>Możesz wybrać projekt zamieszczony na naszej stronie internetowej lub przedstawić własną propozycję. O szczegóły zapytaj naszego konsultanta.</p>
+                    )}
+                    {unit.available_wall == '2' && (
+                      <p>Opcja wybudowania ścianek działowych według Twojego projektu nie jest już dostępna</p>
+                    )}
+                    
                   </div>
                 </div>
 
-                <div style={{ display: unit.available_electric === '1' ? '' : 'none' }} className="adjust-box">
+                <div style={{ display: unit.available_electric === '0' ? 'none' : '' }} className="adjust-box">
                   <div className="adjust-box-header flex ai-c">
                     <img src={electricImg} alt="Układ ścianek działowych" />
-                    <h6 className="adjust-box-title arrow-after">Ustal rozkład instalacji elektrycznej</h6>
+                    {unit.available_electric == '1' && (
+                      <h6 className="adjust-box-title arrow-after">Ustal rozkład instalacji elektrycznej</h6>
+                    )}
+                    {unit.available_electric == '2' && (
+                      <h6 className="adjust-box-title arrow-after">Instalacja elektryczna wykonana</h6>
+                    )}
+                    
                   </div>
                   <div className="adjust-box-body">
-                    <p>Możesz przedstawić własny projekt wykonania instalacji elektrycznej. O szczegóły zapytaj naszego konsultanta.</p>
+                  {unit.available_electric == '1' && (
+                      <p>Możesz przedstawić własny projekt wykonania instalacji elektrycznej. O szczegóły zapytaj naszego konsultanta.</p>
+                    )}
+                    {unit.available_electric == '2' && (
+                      <p>Opcja wykonania instalacji elektrycznej według Twojego projektu nie jest już dostępna</p>
+                    )}
+                    
                   </div>
                 </div>
 
-                <div style={{ display: unit.available_hydraulic === '1' ? '' : 'none' }} className="adjust-box">
+                <div style={{ display: unit.available_hydraulic === '0' ? 'none' : '' }} className="adjust-box">
                   <div className="adjust-box-header flex ai-c">
                     <img src={hydraulicImg} alt="Układ ścianek działowych" />
-                    <h6 className="adjust-box-title arrow-after">Ustal rozkład instalacji hydraulicznej</h6>
+                    {unit.available_hydraulic == '1' && (
+                      <h6 className="adjust-box-title arrow-after">Ustal rozkład instalacji hydraulicznej</h6>
+                    )}
+                    {unit.available_hydraulic == '2' && (
+                      <h6 className="adjust-box-title arrow-after">Instalacja hydrauliczna ukończona</h6>
+                    )}
+                    
                   </div>
                   <div className="adjust-box-body">
-                    <p>Możesz przedstawić własny projekt wykonania instalacjihydraulicznej. O szczegóły zapytaj naszego konsultanta.</p>
+                  {unit.available_hydraulic == '1' && (
+                      <p>Możesz przedstawić własny projekt wykonania instalacjihydraulicznej. O szczegóły zapytaj naszego konsultanta.</p>
+                    )}
+                    {unit.available_hydraulic == '2' && (
+                      <p>Opcja wykonania instalacji hydraulicznej według Twojego projektu nie jest już dostępna</p>
+                    )}
+                    
                   </div>
                 </div>
 
-                <div style={{ display: unit.available_heating === '1' ? '' : 'none' }} className="adjust-box">
+                <div style={{ display: unit.available_heating === '0' ? 'none' : '' }} className="adjust-box">
                   <div className="adjust-box-header flex ai-c">
                     <img src={heatingImg} alt="Układ ścianek działowych" />
-                    <h6 className="adjust-box-title arrow-after">Dostosuj zasięg ogrzewania podłogowego</h6>
+                    {unit.available_heating == '1' && (
+                      <h6 className="adjust-box-title arrow-after">Dostosuj zasięg ogrzewania podłogowego</h6>
+                    )}
+                    {unit.available_heating == '2' && (
+                      <h6 className="adjust-box-title arrow-after">Instalacja ogrzewania podłogowego wykonana</h6>
+                    )}
+                    
                   </div>
                   <div className="adjust-box-body">
-                    <p>Możesz zrezygnować z grzejników w pokojach i bezpłatnie rozszerzyć zasięg ogrzewania podłogowego na całą powierzchnię lokalu bądź pozostawić grzejniki i powiększyć rozmiar instalacji za dodatkową opłatą. O szczegóły zapytaj naszego konsultanta.</p>
+                  {unit.available_heating == '1' && (
+                      <p>Możesz zrezygnować z grzejników w pokojach i bezpłatnie rozszerzyć zasięg ogrzewania podłogowego na całą powierzchnię lokalu bądź pozostawić grzejniki i powiększyć rozmiar instalacji za dodatkową opłatą. O szczegóły zapytaj naszego konsultanta.</p>
+                    )}
+                    {unit.available_heating == '2' && (
+                      <p>Opcja wykonania instalacji ogrzewania podłogowego według Twojego projektu nie jest już dostępna</p>
+                    )}
+                    
                   </div>
                 </div>
 

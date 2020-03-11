@@ -124,9 +124,10 @@ const Buildings = ({ match }) => {
         pathElem.setAttribute('d', newcoords)
         //console.log('path po', pathElem)
       })
-
+      
       $('path').mouseenter(function () {
         //jQuery(this).find('path').addClass('svgActive')
+        
         $(this).addClass('svgActive')
         console.log("PATH JQUERY", this)
       })
@@ -317,19 +318,21 @@ const Buildings = ({ match }) => {
             <p className="svg-cloud-title">Piętro: {dataInCloud.number}</p>
           )}
           <div style={{display: dataInCloud.count_m.free && dataInCloud.count_m.free ? '' : 'none'}} className="svg-cloud-boxes flex">
-            <div className="svg-cloud-box w-50">
-              <span>Dostępne mieszkania</span>
+            <div className="svg-cloud-box">
+              <span>Liczba dostępnych mieszkań</span>
               <span>{showAvaliableUnitsAmount(dataInCloud.count_m.free)}</span>
             </div>
-            <div className="svg-cloud-box w-50">
-              <span>Dostępne lokale użytkowe</span>
-              <span>{showAvaliableUnitsAmount(dataInCloud.count_l.free)}</span>
+            {dataInCloud.number == 0 && (
+              <div className="svg-cloud-box">
+                <span>Liczba dostępnych lokali użytkowych</span>
+                <span>{showAvaliableUnitsAmount(dataInCloud.count_l.free)}</span>
             </div>
+            )}
           </div>
 
           <div style={{display: dataInCloud.count_m.free && dataInCloud.count_m.free ? 'none' : ''}} className="svg-cloud-boxes flex">
             <div className="svg-cloud-box svg-cloud-box-all-sold">
-              <span>Wszytskie mieszknia i lokalne usługowe zostały sprzedane</span>
+              <span>Wszytskie lokalne zostały sprzedane</span>
             </div>
           </div>
 
