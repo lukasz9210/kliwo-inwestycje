@@ -107,7 +107,7 @@ const Test = ({ match }) => {
       setImaheHeight(ih)
       setLoading(false)
       console.log('imaheHeight', imaheHeight)
-    }, 3000);
+    }, 3500);
 
 
     //inwestycja
@@ -141,7 +141,7 @@ const Test = ({ match }) => {
         pathElem.setAttribute('d', newcoords)
         //console.log('path po', pathElem)
       })
-    }, 3000);
+    }, 3500);
     //koniec inwestycji
 
 
@@ -328,7 +328,7 @@ const Test = ({ match }) => {
 
 
 
-        <div id="investment-boxes" className="investment-boxes" style={{ backgroundImage: 'url(https://kliwo.pl/images/kliwo/budynki/budynki-trzebnica-cz-b5.jpg)' }}>
+        <div id="investment-boxes" className="investment-boxes" style={{ backgroundImage: 'url(http://kliwo.realizacje.grupaaf.pl/wp-content/uploads/2020/02/B5.jpg)' }}>
           <div className="container flex">
             <div className="investment-box investment-box-left" >
               <div className="investment-box-content">
@@ -381,23 +381,6 @@ const Test = ({ match }) => {
                 </div>
               </div>
             </div>
-
-
-          
-
-
-            
-          </div>
-        </div>
-
-
-
-
-        <div className="investment-boxes" style={{ backgroundImage: 'url(https://kliwo.pl/images/kliwo/budynki/budynki-trzebnica-cz-b5.jpg)' }}>
-          <div className="container flex">
-            
-
-        
 
 
             <div className="investment-box investment-box-left" >
@@ -459,16 +442,8 @@ const Test = ({ match }) => {
               </div>
             </div>
 
-          </div>
-        </div>
 
 
-
-
-
-        <div className="investment-boxes" style={{ backgroundImage: 'url(https://kliwo.pl/images/kliwo/budynki/budynki-trzebnica-cz-b5.jpg)' }}>
-          <div className="container flex">
-            
             <div className="investment-box investment-box-left" >
               <div className="investment-box-content">
                 <p className="bold-title">Miejsca postojowe w garażu podziemnym</p>
@@ -516,18 +491,6 @@ const Test = ({ match }) => {
               </div>
             </div>
 
-          </div>
-        </div>
-
-
-
-
-
-
-        <div className="investment-boxes" style={{ backgroundImage: 'url(https://kliwo.pl/images/kliwo/budynki/budynki-trzebnica-cz-b5.jpg)' }}>
-          <div className="container flex">
-
-
 
             <div className="investment-box investment-box-left" >
               <div className="investment-box-content">
@@ -563,11 +526,21 @@ const Test = ({ match }) => {
                 </div>
               </div>
             </div>
+
+
             
-
-
           </div>
         </div>
+
+
+
+
+
+
+
+
+
+
 
 
 

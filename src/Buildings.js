@@ -89,7 +89,7 @@ const Buildings = ({ match }) => {
       setImaheHeight(ih)
       setLoading(false)
       //console.log('imaheHeight', imaheHeight)
-    }, 3000);
+    }, 3500);
 
 
     //budynek
@@ -137,7 +137,7 @@ const Buildings = ({ match }) => {
         $(this).removeClass('svgActive')
       })
 
-    }, 3000);
+    }, 3500);
     //koniec budynku
 
 
@@ -332,7 +332,7 @@ const Buildings = ({ match }) => {
 
           <div style={{display: dataInCloud.count_m.free && dataInCloud.count_m.free ? 'none' : ''}} className="svg-cloud-boxes flex">
             <div className="svg-cloud-box svg-cloud-box-all-sold">
-              <span>Wszytskie lokalne zostały sprzedane</span>
+              <span>Wszystkie lokalne zostały sprzedane</span>
             </div>
           </div>
 

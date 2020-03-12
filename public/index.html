@@ -714,6 +714,7 @@ button {
   overflow: hidden;
   background-size: cover;
   margin-top: 1px;
+  background-attachment: fixed;
   /* filter: blur(8px);
   -webkit-filter: blur(8px); */
 }
@@ -928,18 +929,21 @@ div.info-box span {
 .level-legend-items {
   margin: 15px 0;
 }
-.level-legend-items span {
+.level-legend-items span,
+.garage-legend-avaliable span {
   width: 12px;
   height: 12px;
   margin-right: 10px;
 }
-.level-legend-avaliable span {
+.level-legend-avaliable span,
+.garage-legend-avaliable span {
   background-color: #BBF0B5;
 }
 .level-legend-reserved span {
   background-color: #FFF898;
 }
-.level-legend-sold span {
+.level-legend-sold span,
+.garage-legend-sold span {
   background-color: #e6000094;
 }
 .level-legend-title {
@@ -978,8 +982,19 @@ path {
 .garageFree path {
   fill: #58db49a6;
 }
-
-
+.svg-cloud-garage {
+  border: 1px solid #B4B4B4;
+}
+.svg-cloud-garage-title {
+  font-size: 20px;
+}
+.svg-cloud-garage-disabled {
+  margin: 20px 0;
+}
+.svg-cloud-garage-disabled p {
+  font-size: 15px;
+  margin-left: 10px;
+}
 
 .svg-cloud {
   position: absolute;
@@ -988,6 +1003,18 @@ path {
   margin: 20px;
   padding: 10px;
   max-width: 340px;
+}
+.svg-cloud.svg-cloud-level {
+  right: 35%;
+  top: -60px;
+}
+.svg-cloud-level .svg-cloud-table-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.svg-cloud-level .svg-cloud-table-cell {
+  font-size: 15px;
 }
 .svg-cloud-title {
   text-align: center;
@@ -1045,7 +1072,11 @@ path {
 .svg-cloud-level-status {
   margin-top: 10px;
 }
-
+.unit-access-denied-title {
+  margin: 50px 0;
+  font-size: 26px;
+  font-weight: bold;
+}
 
 
 

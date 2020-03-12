@@ -157,6 +157,14 @@ const Units = ({ match }) => {
     })
   }
 
+  const formatBigNumber = x => {
+    console.log('X LICZBA', x)
+    if (x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+    
+}
+
 
 
   // fetch CLAUSE
@@ -286,7 +294,9 @@ const Units = ({ match }) => {
   return (
     <div className="unitView">
       <Header />
-      <h2 style={{display: unit.status == "1" ? '' : 'none'}}>Nie masz dostęĻu do tego podglądu tego mieszkania.</h2>
+      <div style={{display: unit.status == "1" ? '' : 'none'}} className="container">
+      <p className="unit-access-denied-title" >Nie masz dostępu do tego podglądu tego mieszkania.</p>
+      </div>
       <div style={{display: unit.status == "1" ? 'none' : ''}} className="container">
         <div className="unitView-content flex">
           <div className="unitView-left w-50">
@@ -351,11 +361,11 @@ const Units = ({ match }) => {
               <div className="info-row flex">
                 <div className="info-cell w-33">
                   <span className="info-cell-title">Cena łączna</span>
-                  <span className="info-cell-data">{unit.price}</span>
+                  <span className="info-cell-data">{formatBigNumber(unit.price)}</span>
                 </div>
                 <div className="info-cell w-33">
                   <span className="info-cell-title">Cena za m<sup>2</sup></span>
-                  <span className="info-cell-data">{unit.priceperm2}</span>
+                  <span className="info-cell-data">{formatBigNumber(unit.priceperm2)}</span>
                 </div>
                 <div className="info-cell w-33">
                   <span className="info-cell-title">Piętro</span>

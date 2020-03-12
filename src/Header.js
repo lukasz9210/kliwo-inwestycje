@@ -54,7 +54,7 @@ const Header = () => {
 								<li id="menu-item-343" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-343"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=340">O nas</a></li>
 								<li id="menu-item-38" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-38"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=28">Zrealizowane inwestycje</a></li>
 								<li id="menu-item-37" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-37"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=32">Najczęstsze pytania</a></li>
-								<li id="menu-item-36" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=34">Aktualoności</a></li>
+								<li id="menu-item-36" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-36"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=34">Aktualności</a></li>
 							</ul>
 						</li>
 							<li id="menu-item-25" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-25"><a href="#">Inwestycje</a></li>

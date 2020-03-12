@@ -4,6 +4,7 @@ import Header from './Header.js'
 import Footer from './Footer.js'
 import preLoaderGif from './images/preloader.gif'
 import phoneImg from './images/ico_phone.png'
+import disableImg from './images/ico-garaz_wozek.png'
 import $ from 'jquery';
 
 
@@ -104,11 +105,11 @@ const Garages = ({ match }) => {
       setImaheHeight(ih)
 
       //console.log('imaheHeight', imaheHeight)
-    }, 3000);
+    }, 3500);
 
     setTimeout(() => {
       setLoading(false)
-    }, 3000)
+    }, 3500)
 
 
 
@@ -157,7 +158,7 @@ const Garages = ({ match }) => {
         $(this).removeClass('svgActive')
       })
 
-    }, 3000);
+    }, 3500);
     //koniec piEtra
 
 
@@ -438,7 +439,7 @@ const Garages = ({ match }) => {
         $(this).removeClass('svgActive')
       })
       setLevelImgLoading(false)
-    }, 3000);
+    }, 3500);
 
 
 
@@ -454,6 +455,28 @@ const Garages = ({ match }) => {
   const mouseLeave = data => {
     console.log('cloud NOT SHOWN')
     setCloudShown(false)
+  }
+
+  const printGarageStatusClass = data => {
+    if(data) {
+      if(data.available == 1) {
+        return 'garage-legend-avaliable'
+      } 
+      if(data.available == 0) {
+        return 'garage-legend-sold'
+      }
+    }
+  }
+
+  const printGarageStatusText = data => {
+    if(data) {
+      if(data.available == 1) {
+        return 'Dostępne'
+      }
+      if(data.available == 0) {
+        return 'Sprzedane'
+      }
+    }
   }
 
   const printStatus = data => {
@@ -519,8 +542,18 @@ const Garages = ({ match }) => {
         </svg>
         </div>
 
-        <div style={{ display: cloudShown ? '' : 'none' }} className="svg-cloud svg-cloud-level">
-         
+        <div style={{ display: cloudShown ? '' : 'none' }} className="svg-cloud svg-cloud-garage">
+          <p className="svg-cloud-garage-title">Stanowisko postojowe {dataInCloud.number}</p>
+          {dataInCloud.status == 0 && (
+            <div className="svg-cloud-garage-disabled flex ai-c">
+              <img src={disableImg} />
+              <p>Miejsce postojowe dla osoby z niepełnosprawnością</p>
+            </div>
+          )}
+          <p className={`${printGarageStatusClass(dataInCloud)} flex jc-c ai-c`}>
+            <span></span>
+            <p>{printGarageStatusText(dataInCloud)}</p>
+          </p>
         </div>
 
 

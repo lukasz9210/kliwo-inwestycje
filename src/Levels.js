@@ -97,11 +97,11 @@ const Levels = ({ match }) => {
       setImaheHeight(ih)
 
       //console.log('imaheHeight', imaheHeight)
-    }, 3000);
+    }, 3500);
 
     setTimeout(() => {
       setLoading(false)
-    }, 3000)
+    }, 3500)
 
 
 
@@ -150,7 +150,7 @@ const Levels = ({ match }) => {
         $(this).removeClass('svgActive')
       })
 
-    }, 3000);
+    }, 3500);
     //koniec piEtra
 
 
@@ -386,6 +386,13 @@ const Levels = ({ match }) => {
     setCloudShown(false)
   }
 
+  const formatBigNumber = x => {
+    console.log('X LICZBA', x)
+    if (x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
+  }
+
   const printStatus = data => {
     let statusClass = ''
     let statusName = ''
@@ -467,11 +474,22 @@ const Levels = ({ match }) => {
             <div className="svg-cloud-table-row flex">
               <div className="svg-cloud-table-cell w-33">
                 <span className="bold">Cena</span>
-                <span>{dataInCloud.price} zł</span>
+                {dataInCloud.logic_price == 0 && (
+                  <span>{formatBigNumber(dataInCloud.price)} zł</span>
+                )}
+                {dataInCloud.logic_price != 0 && (
+                  <span>Dane niedostępne</span>
+                )}
+                
               </div>
               <div className="svg-cloud-table-cell w-33">
                 <span className="bold">CENA ZA m²</span>
-                <span>{dataInCloud.priceperm2} zł</span>
+                {dataInCloud.logic_priceperm2 == 0 && (
+                  <span>{formatBigNumber(dataInCloud.priceperm2)} zł</span>
+                )}
+                {dataInCloud.logic_priceperm2 != 0 && (
+                  <span>Dane niedostępne</span>
+                )}
               </div>
               <div className="svg-cloud-table-cell w-33">
                 <span className="bold">Piętro</span>
