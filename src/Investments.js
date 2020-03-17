@@ -33,9 +33,14 @@ const Test = ({ match }) => {
   const [buildings, setBuildings] = useState([])
   const [redirectId, setRedirectId] = useState()
   const [imaheHeight, setImaheHeight] = useState(0)
+  const [imaheHeightMobile, setImaheHeightMobile] = useState(0)
   const [cloudShown, setCloudShown] = useState(false)
   const [dataInCloud, setDataInCloud] = useState({})
   const [loading, setLoading] = useState(true)
+
+  
+
+  let windowWidth = 0
 
 
   const coord = function (xy, orig_size, chngd_size) {
@@ -99,18 +104,29 @@ const Test = ({ match }) => {
 
 
   useEffect(() => {
+    windowWidth = window.innerWidth
+    console.log('windowWidth', windowWidth)
     fetchInvestment()
     fetchBuildingsInInvestment()
     setTimeout(() => {
       let ih = document.getElementById('coverImg').height
+      // let abcd = document.getElementById('investment-svg-mobile')
+      // console.log('abcd', abcd)
+      let ihmobile = document.getElementById('investment-svg-mobile').height
+      console.log('ihmobile', ihmobile)
       console.log('ih', ih)
       setImaheHeight(ih)
+      setImaheHeightMobile(ihmobile)
       setLoading(false)
-      console.log('imaheHeight', imaheHeight)
-    }, 3500);
+      
+    }, 5000);
 
 
     //inwestycja
+    //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
+    if(windowWidth > 1300) {
+      console.log("WIEKSZY EKRAN")
+      //inwestycja
     //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
     setTimeout(() => {
       //console.log('DONE')
@@ -123,10 +139,10 @@ const Test = ({ match }) => {
       let coverImgHeight = coverImg.height
 
       //actual width and height of svg container
-      let svgContainerWidth = Math.round(svgContainer.width.baseVal.value / 0.6)
+      let svgContainerWidth = Math.round(svgContainer.width.baseVal.value) / 0.6
       let svgContainerHeight = svgContainer.height.baseVal.value
-      //console.log('svgContainerWidth', svgContainerWidth)
-      //console.log('svgContainerHeight', svgContainerHeight)
+      console.log('svgContainerWidth', svgContainerWidth)
+      console.log('svgContainerHeight', svgContainerHeight)
 
       let gElems = svgContainer.querySelectorAll('g')
       //console.log('gElems', gElems)
@@ -141,8 +157,45 @@ const Test = ({ match }) => {
         pathElem.setAttribute('d', newcoords)
         //console.log('path po', pathElem)
       })
-    }, 3500);
+    }, 5000);
     //koniec inwestycji
+
+    } else {
+      console.log("MNIEJSZY EKRAN")
+      setTimeout(() => {
+        //console.log('DONE')
+        //svg container/image
+        let svgContainer = document.getElementById('svg2')  //kontener svg
+        const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
+  
+        //cover img width and height
+        let coverImgWidth = coverImg.width
+        let coverImgHeight = coverImg.height
+  
+        //actual width and height of svg container
+        let svgContainerWidth = Math.round(svgContainer.width.baseVal.value)
+        let svgContainerHeight = svgContainer.height.baseVal.value
+        console.log('svgContainerWidth', svgContainerWidth)
+        console.log('svgContainerHeight', svgContainerHeight)
+  
+        let gElems = svgContainer.querySelectorAll('g')
+        //console.log('gElems', gElems)
+  
+        gElems.forEach((g, i) => {
+          let pathElem = g.querySelector('path')
+          //console.log('path przed', pathElem)
+          let svgText = pathElem.outerHTML
+          //console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
+          let newcoords = parser(svgText, [1230, 846], [svgContainerWidth, svgContainerHeight])
+          //console.log('newcoords', newcoords)
+          pathElem.setAttribute('d', newcoords)
+          //console.log('path po', pathElem)
+        })
+      }, 5000);
+      //koniec inwestycji
+
+    }
+  
 
 
 
@@ -244,9 +297,9 @@ const Test = ({ match }) => {
           <p className="bold-title">Kliknij na wybrany budynek, aby poznać szczegóły.</p>
         </div>
 
-        <div className="svg-container" style={{ height: imaheHeight }}>
-          <img id="coverImg" style={{ position: 'absolute', width: '60%' }} src={investment.svg} />
-          <svg style={{ position: 'absolute' }} id="svg1" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
+        <div className="svg-container investment-svg-desktop" style={{ height: imaheHeight }}>
+          <img className="" id="coverImg" style={{ position: 'absolute', width: '60%' }} src={investment.svg} />
+          <svg className="" style={{ position: 'absolute' }} id="svg1" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
             {
               buildings.map((b, i) => {
                 //console.log('b', b)
@@ -258,6 +311,49 @@ const Test = ({ match }) => {
               })
             }
           </svg>
+
+        
+
+
+          {redirect ? <Redirect push to={`/budynek/${redirectId}`} /> : null}
+
+          <div style={{ display: cloudShown ? 'block' : 'none' }} className="svg-cloud">
+            <p>{dataInCloud.name}</p>
+          </div>
+
+          <div className="investment-details">
+            <img src={investment.logo} alt={investment.name} />
+            <h4 className="investment-details-name">{investment.name}</h4>
+            <h5 className="investment-details-address">{investment.address}</h5>
+            <p className="investment-details-description">{investment.description}</p>
+            <a className="btn learn-more-btn" href="#investment-boxes">Dowiedz się więcej</a>
+          </div>
+
+        </div>
+
+
+
+
+
+            {/* MOBILE */}
+        <div className="svg-container investment-svg-mobile" style={{ height: imaheHeightMobile }}>
+          <img className="" id="investment-svg-mobile" style={{ position: 'absolute', width: '100%' }} src={investment.svg} />
+          <svg className="" style={{ position: 'absolute' }} id="svg2" width="100%" height={imaheHeightMobile} xmlns="http://www.w3.org/2000/svg">
+            {
+              buildings.map((b, i) => {
+                //console.log('b', b)
+                let svg = b.svg
+                //console.log('svg', svg)
+                return <g onMouseOver={() => mouseOver(b)} onMouseLeave={() => mouseLeave()} id={`buildingsvg${i + 1}`} onClick={() => { redirectToBuilding(b.id) }} dangerouslySetInnerHTML={{ __html: svg }}>
+
+                </g>
+              })
+            }
+          </svg>
+
+          
+
+
           {redirect ? <Redirect push to={`/budynek/${redirectId}`} /> : null}
 
           <div style={{ display: cloudShown ? 'block' : 'none' }} className="svg-cloud">

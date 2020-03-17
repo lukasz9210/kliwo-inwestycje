@@ -62,7 +62,7 @@ const Header = () => {
 							<li id="menu-item-45" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=40">Kontakt</a></li>
 						</ul></div>			</nav>
 					<div class="header-top-big-btns">
-						<a href="">Wyszukiwarka mieszkań</a>
+						<a href="http://inwestycje.kliwo.pl/wyszukiwarka/">Wyszukiwarka mieszkań</a>
 						<a href="">Porównywarka mieszkań</a>
 					</div>
 
@@ -87,7 +87,7 @@ const Header = () => {
 					<li id="menu-item-74" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-74"><a href="#">Inwestycje</a></li>
 					<li id="menu-item-75" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=42">Finansowanie</a></li>
 					<li id="menu-item-76" class="border-red menu-item menu-item-type-post_type menu-item-object-page menu-item-76"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=40">Kontakt</a></li>
-					<li id="menu-item-80" class="border-red menu-item menu-item-type-custom menu-item-object-custom menu-item-80"><a href="#">Wyszukiwarka mieszkań</a></li>
+					<li id="menu-item-80" class="border-red menu-item menu-item-type-custom menu-item-object-custom menu-item-80"><a href="http://inwestycje.kliwo.pl/wyszukiwarka/">Wyszukiwarka mieszkań</a></li>
 					<li id="menu-item-81" class="border-red menu-item menu-item-type-custom menu-item-object-custom menu-item-81"><a href="#">Porównywarka mieszkań</a></li>
 				</ul></div>			</nav>
 
