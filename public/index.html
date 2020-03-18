@@ -1083,9 +1083,12 @@ path {
 /* MEDIA QUERIES */
 
 @media screen and (min-width: 1300px) {
-	.investment-svg-mobile {
-  display: none;
-}
+	.investment-svg-mobile,
+  .building-svg-mobile,
+  .level-svg-mobile {
+    display: none;
+  }
+
 }
 
 @media screen and (max-width: 1800px) {
@@ -1203,11 +1206,19 @@ path {
 	.footer-bottom-menu ul.menu {
 		width: 45%;
 	}
-  .svg-container.investment-svg-desktop {
+  .svg-container.investment-svg-desktop,
+  .svg-container.building-svg-desktop,
+  .svg-container.level-svg-desktop {
     display: none;
   }
-  .investment-svg-mobile {
+  .investment-svg-mobile,
+  .building-svg-mobile,
+  .level-svg-mobile {
     display: block;
+  }
+  .show-garage-img {
+    bottom: 25px;
+    right: 1%;
   }
 }
 @media screen and (max-width: 1200px) {
