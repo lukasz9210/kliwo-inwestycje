@@ -483,7 +483,7 @@ const Test = ({ match }) => {
               <div className="investment-box-content">
                 <p className="bold-title">Ekologiczne rozwiązania</p>
                 <div className="investment-box-description">
-                  <p>Mając na względzie energooszczędne i proekologiczne rozwiązania, wyposażamy wszystkie budynki wchodzące w skład Osiedla Czereśniowego w system kolektorów słonecznych, które będą wspomagać podgrzewanie wody użytkowej. Korzystając z naszej oferty mieszkaniowej, zyskujesz podwójnie – możesz obniżyć koszty utrzymania mieszkania i żyć w zgodzie z otaczającym nas ekosystemem.</p>
+                  <p>Mając na względzie energooszczędne i proekologiczne rozwiązania, wyposażamy wszystkie budynki wchodzące w skład Osiedla Czereśniowego w system kolektorów słonecznych, które będą wspomagać podgrzewanie wody użytkowej. Korzystając z naszej oferty mieszkaniowej, zyskujesz podwójnie – możesz obniżyć koszty utrzymania mieszkania i żyć w zgodzie z otaczającym nas ekosystemem.</p>
                 </div>
                 <div className="investment-box-list">
                   <div className="investment-box-list-item flex ai-c">
@@ -562,7 +562,7 @@ const Test = ({ match }) => {
               <div className="investment-box-content">
                 <p className="bold-title">Dogodna lokalizacja</p>
                 <div className="investment-box-description">
-                  <p>Osiedle Czereśniowe to inwestycja realizowana w pobliżu przepięknego Lasu Bukowego. Mieszkańcy będą mogli korzystać z wszelkich wygód życia w mieście, a jednocześnie cieszyć się spokojem i bliskością natury. Wciąż rozwijająca się infrastruktura oraz przemyślana lokalizacja z dostępem do pobliskich punktów usługowych, obiektów sportowych oraz budynków o przeznaczeniu społeczno-kulturalnym, jak również możliwość szybkiego dojazdu do centrum miasta pozwoliły na stworzenie miejsca przyjaznego rodzinom, gwarantującego komfort codziennego życia.</p>
+                  <p>Osiedle Czereśniowe to inwestycja realizowana w pobliżu przepięknego Lasu Bukowego. Mieszkańcy będą mogli korzystać z wszelkich wygód życia w mieście, a jednocześnie cieszyć się spokojem i bliskością natury. Wciąż rozwijająca się infrastruktura oraz przemyślana lokalizacja z dostępem do pobliskich punktów usługowych, obiektów sportowych oraz budynków o przeznaczeniu społeczno-kulturalnym, jak również możliwość szybkiego dojazdu do centrum miasta pozwoliły na stworzenie miejsca przyjaznego rodzinom, gwarantującego komfort codziennego życia.</p>
                 </div>
                 <div className="investment-box-list investment-box-list-cols">
                   <div className="investment-box-list-item w-50 flex ai-c">

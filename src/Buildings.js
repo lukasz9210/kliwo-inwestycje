@@ -371,7 +371,7 @@ const Buildings = ({ match }) => {
             })
           }
         </svg>
-        {redirect ? <Redirect push to={`/budynek/${redirectId}`} /> : null}
+        {/* {redirect ? <Redirect push to={`/budynek/${redirectId}`} /> : null} */}
 
         <div style={{ display: cloudShown ? 'block' : 'none' }} className="svg-cloud">
           {dataInCloud.number == 0 && (
@@ -476,7 +476,7 @@ const Buildings = ({ match }) => {
             })
           }
         </svg>
-        {redirect ? <Redirect push to={`/budynek/${redirectId}`} /> : null}
+        {/* {redirect ? <Redirect push to={`/budynek/${redirectId}`} /> : null} */}
 
         <div style={{ display: cloudShown ? 'block' : 'none' }} className="svg-cloud">
           {dataInCloud.number == 0 && (
@@ -558,7 +558,7 @@ const Buildings = ({ match }) => {
 
 
 
-      {redirect ? <Redirect to={`/pietro/${redirectId}`} /> : null}
+      {redirect ? <Redirect push to={`/pietro/${redirectId}`} /> : null}
 
 
       <div className="container" >

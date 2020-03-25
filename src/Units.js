@@ -56,6 +56,9 @@ const Units = ({ match }) => {
 
   useEffect(() => {
     findBalcony()
+    findBalcony1()
+    findBalcony2()
+    findTerrace()
     //console.log('findBalcony', findBalcony())
     setMainImgUrl(unit.img)
   }, [unit])
@@ -263,21 +266,71 @@ const Units = ({ match }) => {
   }
 
   const findBalcony = () => {
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 12; i++) {
       let propName = `room_type${i}`
       if (unit[propName] === '9') return i
     }
     return false
   }
 
+  const findBalcony1 = () => {
+    for (let i = 1; i <= 12; i++) {
+      let propName = `room_type${i}`
+      if (unit[propName] === '29') return i
+    }
+    return false
+  }
+
+  const findBalcony2 = () => {
+    for (let i = 1; i <= 12; i++) {
+      let propName = `room_type${i}`
+      if (unit[propName] === '30') return i
+    }
+    return false
+  }
+
+  const findTerrace = () => {
+    for (let i = 1; i <= 12; i++) {
+      let propName = `room_type${i}`
+      if (unit[propName] === '10') return i
+    }
+    return false
+  }
+
+  const showLevelName = number => {
+    if(number == 0) {
+      return 'Parter'
+    } else {
+      return number
+    }
+  }
+
   const roomsSpaceAmount = () => {
     let balconyNumber = findBalcony()
+    let balconyNumber1 = findBalcony1()
+    let balconyNumber2 = findBalcony2()
+    let terraceNumber = findTerrace()
     let balconySpace = 0
+    let balconySpace1 = 0
+    let balconySpace2 = 0
+    let terraceSpace = 0
     if (balconyNumber) {
       balconySpace = unit[`room${balconyNumber}_m2`]
       console.log('Balcony space', balconySpace)
     }
-    let amount = Number(unit.room1_m2) + Number(unit.room2_m2) + Number(unit.room3_m2) + Number(unit.room4_m2) + Number(unit.room5_m2) + Number(unit.room6_m2) + Number(unit.room7_m2) + Number(unit.room8_m2) + Number(unit.room9_m2) + Number(unit.room10_m2) - Number(balconySpace)
+    if (balconyNumber1) {
+      balconySpace1 = unit[`room${balconyNumber1}_m2`]
+      console.log('Balcony space', balconySpace1)
+    }
+    if (balconyNumber2) {
+      balconySpace2 = unit[`room${balconyNumber2}_m2`]
+      console.log('Balcony space', balconySpace2)
+    }
+    if (terraceNumber) {
+      terraceSpace = unit[`room${terraceNumber}_m2`]
+     
+    }
+    let amount = Number(unit.room1_m2) + Number(unit.room2_m2) + Number(unit.room3_m2) + Number(unit.room4_m2) + Number(unit.room5_m2) + Number(unit.room6_m2) + Number(unit.room7_m2) + Number(unit.room8_m2) + Number(unit.room9_m2) + Number(unit.room10_m2) - Number(balconySpace) - Number(balconySpace1) - Number(balconySpace2) - Number(terraceSpace)
     return Math.round((amount + Number.EPSILON) * 100) / 100
   }
 
@@ -302,7 +355,7 @@ const Units = ({ match }) => {
           <div className="unitView-left w-50">
             <div className="unitView-images flex jc-c">
               <div className="unitView-images-container flex">
-                <div style={{ display: unit.available_wall == "1" ? '' : 'none' }} className="unitView-images-concepts">
+                {/* <div style={{ display: unit.available_wall == "1" ? '' : 'none' }} className="unitView-images-concepts">
                   <p className="unitView-images-concepts-title">Wybierz układ ścianek działowych</p>
                   <div className="concepts-signle" onClick={() => handleMainImgUrl(unit.concept1)}>
                     <img src={unit.concept1} alt="" />
@@ -316,7 +369,7 @@ const Units = ({ match }) => {
                   <div className="concepts-signle" onClick={() => handleMainImgUrl(unit.concept4)}>
                     <img src={unit.concept3} alt="" />
                   </div>
-                </div>
+                </div> */}
                 <div className="unitView-main-img">
                   <img src={mainImgUrl} alt="" />
                 </div>
@@ -369,12 +422,12 @@ const Units = ({ match }) => {
                 </div>
                 <div className="info-cell w-33">
                   <span className="info-cell-title">Piętro</span>
-                  <span className="info-cell-data">{level.number}</span>
+                  <span className="info-cell-data">{showLevelName(level.number)}</span>
                 </div>
               </div>
             </div>
 
-            <div style={{display: unit.room7_floor !== 0 ? 'none' : ''}} className="unitView-rooms">
+            <div style={{display: unit.room1_floor == 0 ? 'none' : ''}} className="unitView-rooms">
               <h4 className="bold-title">Zestawienie pomieszczeń lokalu</h4>
               <table className="rooms-table">
                 <thead>
@@ -386,61 +439,61 @@ const Units = ({ match }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style={{ display: unit.room_type1 === '0' || unit.room_type1 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type1 === '0' || unit.room_type1 === '9' || unit.room_type1 === '10' || unit.room_type1 === '29' || unit.room_type1 === '30' ? 'none' : '' }}>
                     <td>1</td>
                     <td>{showRoomName(unit.room_type1)}</td>
                     <td>{unit.room1_m2} m<sup>2</sup></td>
                     <td>{unit.room1_floor} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type2 === '0' || unit.room_type2 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type2 === '0' || unit.room_type2 === '9' || unit.room_type2 === '10' || unit.room_type2 === '29' || unit.room_type2 === '30' ? 'none' : '' }}>
                     <td>2</td>
                     <td>{showRoomName(unit.room_type2)}</td>
                     <td>{unit.room2_m2} m<sup>2</sup></td>
                     <td>{unit.room2_floor} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type3 === '0' || unit.room_type3 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type3 === '0' || unit.room_type3 === '9' || unit.room_type3 === '10' || unit.room_type3 === '29' || unit.room_type3 === '30' ? 'none' : '' }}>
                     <td>3</td>
                     <td>{showRoomName(unit.room_type3)}</td>
                     <td>{unit.room3_m2} m<sup>2</sup></td>
                     <td>{unit.room3_floor} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type4 === '0' || unit.room_type4 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type4 === '0' || unit.room_type4 === '9' || unit.room_type4 === '10' || unit.room_type4 === '29' || unit.room_type4 === '30' ? 'none' : '' }}>
                     <td>4</td>
                     <td>{showRoomName(unit.room_type4)}</td>
                     <td>{unit.room4_m2} m<sup>2</sup></td>
                     <td>{unit.room4_floor} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type5 === '0' || unit.room_type5 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type5 === '0' || unit.room_type5 === '9' || unit.room_type5 === '10' || unit.room_type5 === '29' || unit.room_type5 === '30' ? 'none' : '' }}>
                     <td>5</td>
                     <td>{showRoomName(unit.room_type5)}</td>
                     <td>{unit.room5_m2} m<sup>2</sup></td>
                     <td>{unit.room5_floor} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type6 === '0' || unit.room_type6 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type6 === '0' || unit.room_type6 === '9' || unit.room_type6 === '10' || unit.room_type6 === '29' || unit.room_type6 === '30' ? 'none' : '' }}>
                     <td>6</td>
                     <td>{showRoomName(unit.room_type6)}</td>
                     <td>{unit.room6_m2} m<sup>2</sup></td>
                     <td>{unit.room6_floor} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type7 === '0' || unit.room_type7 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type7 === '0' || unit.room_type7 === '9' || unit.room_type7 === '10' || unit.room_type7 === '29' || unit.room_type7 === '30' ? 'none' : '' }}>
                     <td>7</td>
                     <td>{showRoomName(unit.room_type7)}</td>
                     <td>{unit.room7_m2} m<sup>2</sup></td>
                     <td>{unit.room7_floor} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type8 === '0' || unit.room_type8 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type8 === '0' || unit.room_type8 === '9' || unit.room_type8 === '10' || unit.room_type8 === '29' || unit.room_type8 === '30' ? 'none' : '' }}>
                     <td>8</td>
                     <td>{showRoomName(unit.room_type8)}</td>
                     <td>{unit.room8_m2} m<sup>2</sup></td>
                     <td>{unit.room8_floor} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type9 === '0' || unit.room_type9 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type9 === '0' || unit.room_type9 === '9' || unit.room_type9 === '10' || unit.room_type9 === '29' || unit.room_type9 === '30' ? 'none' : '' }}>
                     <td>9</td>
                     <td>{showRoomName(unit.room_type9)}</td>
                     <td>{unit.room9_m2} m<sup>2</sup></td>
                     <td>{unit.room9_floor} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type10 === '0' || unit.room_type10 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type10 === '0' || unit.room_type10 === '9' || unit.room_type10 === '10' || unit.room_type10 === '29' || unit.room_type10 === '30' ? 'none' : '' }}>
                     <td>10</td>
                     <td>{showRoomName(unit.room_type10)}</td>
                     <td>{unit.room10_m2} m<sup>2</sup></td>
@@ -458,12 +511,30 @@ const Units = ({ match }) => {
                     <td >{unit[`room${findBalcony()}_m2`]} m<sup>2</sup></td>
                     <td></td>
                   </tr>
+                  <tr style={{ display: findBalcony1() ? '' : 'none' }}>
+                    <td></td>
+                    <td>Balkon 1</td>
+                    <td >{unit[`room${findBalcony1()}_m2`]} m<sup>2</sup></td>
+                    <td></td>
+                  </tr>
+                  <tr style={{ display: findBalcony2() ? '' : 'none' }}>
+                    <td></td>
+                    <td>Balkon 2</td>
+                    <td >{unit[`room${findBalcony2()}_m2`]} m<sup>2</sup></td>
+                    <td></td>
+                  </tr>
+                  <tr style={{ display: findTerrace() ? '' : 'none' }}>
+                    <td></td>
+                    <td>Tarsa</td>
+                    <td >{unit[`room${findTerrace()}_m2`]} m<sup>2</sup></td>
+                    <td></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
 
 
-            <div style={{display: unit.room7_floor === 0 ? 'none' : ''}} className="unitView-rooms unitView-rooms-one-column">
+            <div style={{display: unit.room1_floor != 0 ? 'none' : ''}} className="unitView-rooms unitView-rooms-one-column">
               <h4 className="bold-title">Zestawienie pomieszczeń lokalu</h4>
               <table className="rooms-table">
                 <thead>
@@ -474,52 +545,52 @@ const Units = ({ match }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style={{ display: unit.room_type1 === '0' || unit.room_type1 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type1 === '0' || unit.room_type1 === '9' || unit.room_type1 === '10' || unit.room_type1 === '29' || unit.room_type1 === '30' ? 'none' : '' }}>
                     <td>1</td>
                     <td>{showRoomName(unit.room_type1)}</td>
                     <td>{unit.room1_m2} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type2 === '0' || unit.room_type2 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type2 === '0' || unit.room_type2 === '9' || unit.room_type2 === '10' || unit.room_type2 === '29' || unit.room_type2 === '30' ? 'none' : '' }}>
                     <td>2</td>
                     <td>{showRoomName(unit.room_type2)}</td>
                     <td>{unit.room2_m2} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type3 === '0' || unit.room_type3 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type3 === '0' || unit.room_type3 === '9' || unit.room_type3 === '10' || unit.room_type3 === '29' || unit.room_type3 === '30' ? 'none' : '' }}>
                     <td>3</td>
                     <td>{showRoomName(unit.room_type3)}</td>
                     <td>{unit.room3_m2} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type4 === '0' || unit.room_type4 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type4 === '0' || unit.room_type4 === '9' || unit.room_type4 === '10' || unit.room_type4 === '29' || unit.room_type4 === '30' ? 'none' : '' }}>
                     <td>4</td>
                     <td>{showRoomName(unit.room_type4)}</td>
                     <td>{unit.room4_m2} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type5 === '0' || unit.room_type5 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type5 === '0' || unit.room_type5 === '9' || unit.room_type5 === '10' || unit.room_type5 === '29' || unit.room_type5 === '30' ? 'none' : '' }}>
                     <td>5</td>
                     <td>{showRoomName(unit.room_type5)}</td>
                     <td>{unit.room5_m2} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type6 === '0' || unit.room_type6 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type6 === '0' || unit.room_type6 === '9' || unit.room_type6 === '10' || unit.room_type6 === '29' || unit.room_type6 === '30' ? 'none' : '' }}>
                     <td>6</td>
                     <td>{showRoomName(unit.room_type6)}</td>
                     <td>{unit.room6_m2} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type7 === '0' || unit.room_type7 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type7 === '0' || unit.room_type7 === '9' || unit.room_type7 === '10' || unit.room_type7 === '29' || unit.room_type7 === '30' ? 'none' : '' }}>
                     <td>7</td>
                     <td>{showRoomName(unit.room_type7)}</td>
                     <td>{unit.room7_m2} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type8 === '0' || unit.room_type8 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type8 === '0' || unit.room_type8 === '9' || unit.room_type8 === '10' || unit.room_type8 === '29' || unit.room_type8 === '30' ? 'none' : '' }}>
                     <td>8</td>
                     <td>{showRoomName(unit.room_type8)}</td>
                     <td>{unit.room8_m2} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type9 === '0' || unit.room_type9 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type9 === '0' || unit.room_type9 === '9' || unit.room_type9 === '10' || unit.room_type9 === '29' || unit.room_type9 === '30' ? 'none' : '' }}>
                     <td>9</td>
                     <td>{showRoomName(unit.room_type9)}</td>
                     <td>{unit.room9_m2} m<sup>2</sup></td>
                   </tr>
-                  <tr style={{ display: unit.room_type10 === '0' || unit.room_type10 === '9' ? 'none' : '' }}>
+                  <tr style={{ display: unit.room_type10 === '0' || unit.room_type10 === '9' || unit.room_type10 === '10' || unit.room_type10 === '29' || unit.room_type10 === '30' ? 'none' : '' }}>
                     <td>10</td>
                     <td>{showRoomName(unit.room_type10)}</td>
                     <td>{unit.room10_m2} m<sup>2</sup></td>
@@ -533,6 +604,21 @@ const Units = ({ match }) => {
                     <td></td>
                     <td>Balkon</td>
                     <td >{unit[`room${findBalcony()}_m2`]} m<sup>2</sup></td>
+                  </tr>
+                  <tr style={{ display: findBalcony1() ? '' : 'none' }}>
+                    <td></td>
+                    <td>Balkon 1</td>
+                    <td >{unit[`room${findBalcony1()}_m2`]} m<sup>2</sup></td>
+                  </tr>
+                  <tr style={{ display: findBalcony2() ? '' : 'none' }}>
+                    <td></td>
+                    <td>Balkon 2</td>
+                    <td >{unit[`room${findBalcony2()}_m2`]} m<sup>2</sup></td>
+                  </tr>
+                  <tr style={{ display: findTerrace() ? '' : 'none' }}>
+                    <td></td>
+                    <td>Taras</td>
+                    <td >{unit[`room${findTerrace()}_m2`]} m<sup>2</sup></td>
                   </tr>
                 </tbody>
               </table>
@@ -559,7 +645,7 @@ const Units = ({ match }) => {
                   </div>
                   <div className="adjust-box-body">
                   {unit.available_wall == '1' && (
-                      <p>Możesz wybrać projekt zamieszczony na naszej stronie internetowej lub przedstawić własną propozycję. O szczegóły zapytaj naszego konsultanta.</p>
+                      <p>Możesz przedstawić własny projekt wykonania ścianek działowych. O szczegóły zapytaj naszego konsultanta.</p>
                     )}
                     {unit.available_wall == '2' && (
                       <p>Opcja wybudowania ścianek działowych według Twojego projektu nie jest już dostępna</p>

@@ -104,7 +104,7 @@ const Levels = ({ match }) => {
         setImaheHeightMobile(ihmobile)
 
       //console.log('imaheHeight', imaheHeight)
-    }, 3500);
+    }, 4500);
 
     setTimeout(() => {
       setLoading(false)
@@ -544,7 +544,7 @@ const Levels = ({ match }) => {
       </div>
 
       {/* DESKTOP */}
-      <div className="svg-container level-svg-desktop" style={{ height: imaheHeight }}>
+      <div className="svg-container level-svg-desktop" >
       {/* <div style={{display: levelImgLoading ? '' : ''}} className="">
       <img src={preLoaderGif} />
       </div> */}
@@ -628,7 +628,7 @@ const Levels = ({ match }) => {
                   {
                     buildingsArray.map((b) => {
                       let printSelect = selectCurrentBuilding(b.id)
-                      console.log('prineSelect', printSelect)
+                      //console.log('prineSelect', printSelect)
                       return <option selected={printSelect} value={b.id}>{b.name}</option>
                     })
                   }
@@ -639,7 +639,7 @@ const Levels = ({ match }) => {
                   {
                     levelsInBuilding.map((l) => {
                       let printSelectLevel = selectCurrentLevel(l.id)
-                      console.log('prineSelect', printSelectLevel)
+                      //console.log('prineSelect', printSelectLevel)
                       return <option selected={printSelectLevel} value={l.id}>{l.number} Piętro (Dostępnych lokali {l.count_m.free})</option>
                     })
                   }
@@ -761,7 +761,7 @@ const Levels = ({ match }) => {
                   {
                     buildingsArray.map((b) => {
                       let printSelect = selectCurrentBuilding(b.id)
-                      console.log('prineSelect', printSelect)
+                      //console.log('prineSelect', printSelect)
                       return <option selected={printSelect} value={b.id}>{b.name}</option>
                     })
                   }
@@ -772,7 +772,7 @@ const Levels = ({ match }) => {
                   {
                     levelsInBuilding.map((l) => {
                       let printSelectLevel = selectCurrentLevel(l.id)
-                      console.log('prineSelect', printSelectLevel)
+                      //console.log('prineSelect', printSelectLevel)
                       return <option selected={printSelectLevel} value={l.id}>{l.number} Piętro (Dostępnych lokali {l.count_m.free})</option>
                     })
                   }
@@ -823,7 +823,7 @@ const Levels = ({ match }) => {
                   {
                     buildingsArray.map((b) => {
                       let printSelect = selectCurrentBuilding(b.id)
-                      console.log('prineSelect', printSelect)
+                      //console.log('prineSelect', printSelect)
                       return <option selected={printSelect} value={b.id}>{b.name}</option>
                     })
                   }
