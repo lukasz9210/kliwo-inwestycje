@@ -298,6 +298,10 @@ const Test = ({ match }) => {
         </div>
 
         <div className="svg-container investment-svg-desktop" style={{ height: imaheHeight }}>
+          <div className="mapBox" id="investB1" >Kliknij i sprawdź!</div>
+          <div className="mapBox" id="investB4" >Kliknij i sprawdź!</div>
+          <div className="mapBox" id="investB5" >Kliknij i sprawdź!</div>
+
           <img className="" id="coverImg" style={{ position: 'absolute', width: '60%' }} src={investment.svg} />
           <svg className="" style={{ position: 'absolute' }} id="svg1" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
             {
@@ -337,6 +341,9 @@ const Test = ({ match }) => {
 
             {/* MOBILE */}
         <div className="svg-container investment-svg-mobile" style={{ height: imaheHeightMobile }}>
+        <div className="mapBox" id="investB1" >Kliknij i sprawdź!</div>
+        <div className="mapBox" id="investB4" >Kliknij i sprawdź!</div>
+        <div className="mapBox" id="investB5" >Kliknij i sprawdź!</div>
           <img className="" id="investment-svg-mobile" style={{ position: 'absolute', width: '100%' }} src={investment.svg} />
           <svg className="" style={{ position: 'absolute' }} id="svg2" width="100%" height={imaheHeightMobile} xmlns="http://www.w3.org/2000/svg">
             {

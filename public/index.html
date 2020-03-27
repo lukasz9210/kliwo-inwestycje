@@ -934,7 +934,79 @@ div.info-box span {
 .info-box-data p:last-child {
   margin-top: 5px;
 }
+#investB1,
+#investB4,
+#investB5 {
+  background: #e60000;
+    position: absolute;
+    z-index: 99;
+    bottom: 59%;
+    right: 48%;
+    color: #fff;
+    max-width: 95px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    animation-name: bounce-horizontal;
+        animation-timing-function: ease;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+}
+#investB1:before,
+#investB4:before,
+#investB5:before {
+  content: '';
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top: 40px solid #e60000;
+    display: block;
+    position: absolute;
+    left: -35px;
+    transform: rotate(90deg);
+    top: 50%;
+    margin-top: -25px;
+}
+#investB4 {
+  bottom: 26%;
+  right: 53%;
+  animation-name: bounce-horizontal-reverse;
+}
+#investB4:before {
+  transform: rotate(-90deg);
+  left: auto;
+  right: -35px;
+}
+#investB5 {
+  bottom: 6%;
+  right: 47%;
+  animation-name: bounce-vertical;
+}
+#investB5:before {
+  transform: rotate(180deg);
+    top: -25px;
+    left: 50%;
+    margin-left: -10px;
+}
 
+@keyframes bounce-horizontal {
+        0%   { transform: translateX(0); }
+        30%  { transform: translateX(50px); }
+        50%  { transform: translateX(0); }
+        100% { transform: translateX(0); }
+}
+@keyframes bounce-horizontal-reverse {
+        0%   { transform: translateX(0); }
+        30%  { transform: translateX(-50px); }
+        50%  { transform: translateX(0); }
+        100% { transform: translateX(0); }
+}
+@keyframes bounce-vertical {
+        0%   { transform: translateY(0); }
+        30%  { transform: translateY(50px); }
+        50%  { transform: translateY(0); }
+        100% { transform: translateY(0); }
+}
 /* #buildingsvg1 {
   position: relative;
   left: 50%;
@@ -1254,7 +1326,17 @@ path {
 	}
 }
 
-
+@media screen and (max-width: 1700px) {
+  #investB1 {
+    bottom: 58%;
+    right: 47%;
+  }
+}
+@media screen and (max-width: 1600px) {
+  #investB5 {
+    bottom: 4%;
+  }
+}
 @media screen and (max-width: 1500px) {
 	.container {
 		width: 1100px;
@@ -1274,6 +1356,14 @@ path {
   }
   .building-details-building-name {
     margin-top: 25px;
+  }
+  #investB1 {    
+    bottom: 57%;
+    right: 44%;
+  }
+  #investB4 {
+    bottom: 25%;
+    right: 54%;
   }
 }
 
@@ -1302,6 +1392,10 @@ path {
   }
   .unitView-add-to-comparison-btn {
     margin-top: 15px;
+  }
+  #investB5 {
+    bottom: 2%;
+    right: 46%;
   }
 }
 @media screen and (max-width: 1300px) {
@@ -1403,6 +1497,18 @@ path {
     bottom: 25px;
     right: 1%;
   }
+  #investB1 {
+    bottom: 58%;
+    right: 13%;
+  }
+  #investB4 {
+    bottom: 26%;
+    right: 23%;
+  }
+  #investB5 {
+    bottom: 7%;
+    right: 12%;
+  }
 }
 @media screen and (max-width: 1200px) {
 	.container {
@@ -1465,6 +1571,13 @@ path {
   .unitView-right {
     margin-left: 0;
   }
+  #investB1 {
+    bottom: 59%;
+    right: 11%;
+  }
+  #investB5 {
+    bottom: 5%;
+  }
 }
 @media screen and (max-width: 1000px) {
 	.container {
@@ -1506,11 +1619,26 @@ path {
   .investment-benefits-single {
     width: 100%;
   }
+  #investB1 {
+    bottom: 57%;
+    right: 8%;
+  }
+  #investB5 {
+    bottom: 2%;
+    right: 10%;
+  }
 }
 @media screen and (max-width: 800px) {
 	.container {
 		width: 400px;
 	}
+  #investB4 {
+    bottom: 24%;
+    right: 23%;
+  }
+  #investB5 {
+    bottom: 0%;
+  }
 }
 @media screen and (max-width: 700px) {
 	.container {
@@ -1526,14 +1654,67 @@ path {
   .investment-box-list-item {
     width: 100%;
   }
+  #investB1,
+  #investB4,
+  #investB5 {
+    font-size: 14px;
+    max-width: 70px;
+    animation: none;
+  }
 }
 
-
+@media screen and (max-width: 600px) {
+  #investB1 {
+    bottom: 57%;
+    right: 5%;
+  }
+  #investB4 {
+    bottom: 24%;
+    right: 27%;
+  }
+  #investB5 {
+    bottom: -4%;
+  }
+}
 @media screen and (max-width: 500px) {
   .investment-box {
     width: 100%;
   }
- 
+  #investB1 {
+    bottom: 56%;
+    right: 0%;
+    transform: scale(0.6);
+  }
+  #investB4 {
+    transform: scale(0.7);
+  }
+  #investB5 {
+    transform: scale(0.7);
+    right: 8%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  #investB1 {
+    transform: scale(0.5);
+    bottom: 55%;
+  }
+  #investB4 {
+    transform: scale(0.5);
+    bottom: 22%;
+    right: 22%;
+  }
+  #investB5 {
+    transform: scale(0.5);
+  }
+}
+@media screen and (max-width: 300px) {
+  #investB1,
+  #investB4,
+  #investB5 {
+    transform: scale(0.3);
+    display: none;
+  }
 }
 
 /* END OF MEDIA QUERIES */
