@@ -202,9 +202,14 @@ const Buildings = ({ match }) => {
 
     }
     
-
+    window.addEventListener('resize', redirectAfterResize);
 
   }, [])
+
+  const redirectAfterResize = () => {
+    console.log("RESIZED!!")
+    window.location.reload();
+  }
 
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import Header from './Header.js'
 import Footer from './Footer.js'
 import preLoaderGif from './images/preloader.gif'
@@ -24,6 +24,7 @@ const Levels = ({ match }) => {
   const [cloudShown, setCloudShown] = useState(false)
   const [loading, setLoading] = useState(true)
   const [levelImgLoading, setLevelImgLoading] = useState(false)
+  const [isredirectAfterResize, setIsRedirectAfterResize] = useState(false)
 
   let windowWidth = 0
 
@@ -210,9 +211,19 @@ const Levels = ({ match }) => {
 
     }
     //koniec piEtra
+    window.addEventListener('resize', redirectAfterResize);
 
 
   }, [])
+
+  const redirectAfterResize = () => {
+    console.log("RESIZED!!")
+    window.location.reload();
+
+
+    setIsRedirectAfterResize(true)
+
+  }
 
 
   useEffect(() => {
@@ -663,7 +674,7 @@ const Levels = ({ match }) => {
                 </li>
               </ul>
             </div>
-            <a className="btn back-to-building-btn" href="javascript:history.back()">Wróć do widoku budynku</a>
+            <Link to={`/budynek/${level.building_id}`} className="btn back-to-building-btn">Wróć do widoku budynku</Link>
 
           </div>
         </div>
@@ -796,7 +807,7 @@ const Levels = ({ match }) => {
                 </li>
               </ul>
             </div>
-            <a className="btn back-to-building-btn" href="javascript:history.back()">Wróć do widoku budynku</a>
+            <Link to={`/budynek/${level.building_id}`} className="btn back-to-building-btn">Wróć do widoku budynku</Link>
            
 
           </div>
@@ -806,10 +817,12 @@ const Levels = ({ match }) => {
 
 
 
-
+      
 
       {redirect ? <Redirect push to={`/mieszkanie/${redirectId}`} /> : null}
 
+      
+     
 
 
     <div className="container">
@@ -857,7 +870,7 @@ const Levels = ({ match }) => {
                 </li>
               </ul>
             </div>
-            <a className="btn back-to-building-btn" href="javascript:history.back()">Wróć do widoku budynku</a>
+            <Link to={`/budynek/${level.building_id}`} className="btn back-to-building-btn">Wróć do widoku budynku</Link>
           </div>
     </div>
 

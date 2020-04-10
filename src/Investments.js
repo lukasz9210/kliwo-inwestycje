@@ -197,9 +197,15 @@ const Test = ({ match }) => {
     }
   
 
-
+    window.addEventListener('resize', redirectAfterResize);
 
   }, [])
+
+  const redirectAfterResize = () => {
+    console.log("RESIZED!!")
+    window.location.reload();
+  }
+  
 
   const fetchInvestment = () => {
     let details = {
@@ -478,7 +484,7 @@ const Test = ({ match }) => {
                   <div className="investment-box-list-item flex ai-c">
                     <img src={cleanPolicy} alt="" />
                     <div className="investment-box-list-item-text">
-                      <p><strong>PRZEJRZYSTA POLITYKA SPRZEDAŻOWA</strong> - gwarancja jasnych warunków sprzedaży nieruchomości</p>
+                      <p><strong>przejrzysta polityka sprzedaowa</strong> - gwarancja jasnych warunków sprzedaży nieruchomości</p>
                     </div>
                   </div>
                 </div>
@@ -496,7 +502,7 @@ const Test = ({ match }) => {
                   <div className="investment-box-list-item flex ai-c">
                     <img src={proEcoImg} alt="" />
                     <div className="investment-box-list-item-text">
-                      <p><strong>PROEKOLOGICZNE OSIEDLE</strong> - niższe koszty utrzymania mieszkania</p>
+                      <p><strong>proekologiczne osiedle</strong> - niższe koszty utrzymania mieszkania</p>
                     </div>
                   </div>
                   <div className="investment-box-list-item flex ai-c">

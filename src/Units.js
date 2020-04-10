@@ -344,6 +344,43 @@ const Units = ({ match }) => {
   }
 
 
+  const addToComparison = () => {
+    let comparedUnits = []
+    if(typeof window !== 'undefined') {
+        if(localStorage.getItem('kliwoUnits')) {
+            comparedUnits = JSON.parse(localStorage.getItem('kliwoUnits'))
+        }
+        if(comparedUnits.length >= 4) {
+          alert("Nie mona porównać więcej niz 4 mieszkania!")
+          return
+        }
+
+        let unitDoubled
+        if(comparedUnits.length > 0) {
+          unitDoubled = comparedUnits.find(el => {
+            return unit.id === el.id
+          })
+        }
+        if(unitDoubled) {
+          alert("To mieszkanie jest ju dodane do porównywarki!")
+          return
+        }
+
+        console.log('unit1', unit)
+        comparedUnits.push({
+            ...unit,
+            level: level.number
+        })
+        comparedUnits = Array.from(new Set(comparedUnits.map(u => u.id))).map(id => {
+            return comparedUnits.find(u => u.id === id)
+        })
+        localStorage.setItem('kliwoUnits', JSON.stringify(comparedUnits))
+        alert(`Dodałeś mieszkanie ${unit.name} do porównywarki`)
+        // next()
+    }
+}
+
+
   return (
     <div className="unitView">
       <Header />
@@ -394,7 +431,7 @@ const Units = ({ match }) => {
                   <p className="unitView-investment-details-address">{investment.address}</p>
                 </div>
               </div>
-              <button className="unitView-add-to-comparison-btn"><img src={plusImg} alt="Dodaj do porównania" />Dodaj do porównania</button>
+              <button onClick={addToComparison} className="unitView-add-to-comparison-btn"><img src={plusImg} alt="Dodaj do porównania" />Dodaj do porównania</button>
             </div>
 
             <h4 className="unitView-unit-name">

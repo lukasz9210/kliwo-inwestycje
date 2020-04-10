@@ -15,8 +15,8 @@ const Footer = () => {
 				<div class="footer-col footer-col-menu">
 					<nav>
 						<div class="menu-footer-menu-1-container"><ul id="menu-footer-menu-1" class="menu"><li id="menu-item-46" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-46"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=32">Najczęstsze pytania</a></li>
-<li id="menu-item-47" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-47"><a href="#">Wyszukiwarka mieszkań</a></li>
-<li id="menu-item-49" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-49"><a href="#">Inwestycje w realizacji</a></li>
+<li id="menu-item-47" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-47"><a href="/wyszukiwarka">Wyszukiwarka mieszkań</a></li>
+<li id="menu-item-49" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-49"><a href="/inwestycja/23">Inwestycje w realizacji</a></li>
 <li id="menu-item-48" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-48"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=42">Finansowanie</a></li>
 </ul></div>					</nav>
 				</div>

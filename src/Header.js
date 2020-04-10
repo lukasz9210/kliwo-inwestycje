@@ -62,8 +62,8 @@ const Header = () => {
 							<li id="menu-item-45" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=40">Kontakt</a></li>
 						</ul></div>			</nav>
 					<div class="header-top-big-btns">
-						<a href="http://inwestycje.kliwo.pl/wyszukiwarka/">Wyszukiwarka mieszkań</a>
-						<a href="">Porównywarka mieszkań</a>
+						<a href="/wyszukiwarka/">Wyszukiwarka mieszkań</a>
+						<a href="/porownywarka/">Porównywarka mieszkań</a>
 					</div>
 
 

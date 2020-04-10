@@ -562,7 +562,8 @@ const Garages = ({ match }) => {
             {/* <img src={investment.logo} alt={investment.name} />
             <h4 className="level-details-name">{investment.name}</h4>
             <h5 className="level-details-address">{investment.address}</h5> */}
-            <div className="level-search">
+
+            {/* <div className="level-search">
               <div className="level-search-input">
                 <select onChange={selectBuildingChange}>
                   {
@@ -581,7 +582,8 @@ const Garages = ({ match }) => {
                   }
                 </select>
               </div>
-            </div>
+            </div> */}
+            
             <div className="level-legend">
               <p className="level-legend-title">Legenda</p>
               <ul className="level-legend-items">
