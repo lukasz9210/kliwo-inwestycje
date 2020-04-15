@@ -17,11 +17,6 @@ import infrastructureImg from './images/ico_rekreacja-uslugi.png'
 import sportImg from './images/ico_rekreacja-kultura-sport.png'
 import shopsImg from './images/ico_biznez-uslugi.png'
 import picterousImg from './images/ico_lasy.png'
-
-
-
-
-
 import Header from './Header.js'
 import Footer from './Footer.js'
 import $ from 'jquery';
@@ -41,6 +36,7 @@ const Test = ({ match }) => {
   
 
   let windowWidth = 0
+  let widthofScreen = 0
 
 
   const coord = function (xy, orig_size, chngd_size) {
@@ -197,11 +193,15 @@ const Test = ({ match }) => {
     }
   
 
-    window.addEventListener('resize', redirectAfterResize);
+    $(document).ready(function() {
+      widthofScreen = $(window).width();
+      window.addEventListener('resize', redirectAfterResize);
+    })
 
   }, [])
 
   const redirectAfterResize = () => {
+    if ($(window).width()==widthofScreen) return; 
     console.log("RESIZED!!")
     window.location.reload();
   }

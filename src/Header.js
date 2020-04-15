@@ -79,16 +79,17 @@ const Header = () => {
 			<nav class="main-menu-mobile">
 				<div class="menu-main-menu-mobile-container"><ul id="menu-main-menu-mobile" class="menu"><li id="menu-item-73" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-73"><a href="#">Solidny deweloper</a>
 					<ul class="sub-menu">
-						<li id="menu-item-79" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-79"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=26">historia</a></li>
-						<li id="menu-item-78" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-78"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=28">zrealizowane-inwestycje</a></li>
-						<li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-77"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=32">najczestsze-pytania</a></li>
+						<li id="menu-item-79" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-79"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=26">Historia</a></li>
+						<li id="menu-item-456" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-456"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=34">Aktualnosci</a></li>
+						<li id="menu-item-78" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-78"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=28">Zrealizowane inwestycje</a></li>
+						<li id="menu-item-77" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-77"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=32">Najczestsze pytania</a></li>
 					</ul>
 				</li>
 					<li id="menu-item-74" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-74"><a href="#">Inwestycje</a></li>
 					<li id="menu-item-75" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-75"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=42">Finansowanie</a></li>
 					<li id="menu-item-76" class="border-red menu-item menu-item-type-post_type menu-item-object-page menu-item-76"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=40">Kontakt</a></li>
-					<li id="menu-item-80" class="border-red menu-item menu-item-type-custom menu-item-object-custom menu-item-80"><a href="http://inwestycje.kliwo.pl/wyszukiwarka/">Wyszukiwarka mieszkań</a></li>
-					<li id="menu-item-81" class="border-red menu-item menu-item-type-custom menu-item-object-custom menu-item-81"><a href="#">Porównywarka mieszkań</a></li>
+					<li id="menu-item-80" class="border-red menu-item menu-item-type-custom menu-item-object-custom menu-item-80"><a href="/wyszukiwarka/">Wyszukiwarka mieszkań</a></li>
+					<li id="menu-item-81" class="border-red menu-item menu-item-type-custom menu-item-object-custom menu-item-81"><a href="/porownywarka">Porównywarka mieszkań</a></li>
 				</ul></div>			</nav>
 
 		</header>

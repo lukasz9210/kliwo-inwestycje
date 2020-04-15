@@ -27,6 +27,7 @@ const Levels = ({ match }) => {
   const [isredirectAfterResize, setIsRedirectAfterResize] = useState(false)
 
   let windowWidth = 0
+  let widthofScreen = 0
 
   const coord = function (xy, orig_size, chngd_size) {
     const x_scale = chngd_size[0] / orig_size[0];
@@ -211,12 +212,17 @@ const Levels = ({ match }) => {
 
     }
     //koniec piEtra
-    window.addEventListener('resize', redirectAfterResize);
+
+    $(document).ready(function() {
+      widthofScreen = $(window).width();
+      window.addEventListener('resize', redirectAfterResize);
+    })
 
 
   }, [])
 
   const redirectAfterResize = () => {
+    if ($(window).width()==widthofScreen) return; 
     console.log("RESIZED!!")
     window.location.reload();
 
