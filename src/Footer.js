@@ -22,7 +22,7 @@ const Footer = () => {
 				</div>
 				<div class="footer-col footer-col-menu">
 					<nav>
-						<div class="menu-footer-menu-2-container"><ul id="menu-footer-menu-2" class="menu"><li id="menu-item-52" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=26">Historia</a></li>
+						<div class="menu-footer-menu-2-container"><ul id="menu-footer-menu-2" class="menu"><li id="menu-item-342" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-342"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=340">O nas</a></li>
 <li id="menu-item-50" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-50"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=34">Aktualności</a></li>
 <li id="menu-item-51" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-51"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=28">Zrealizowane inwestycje</a></li>
 <li id="menu-item-53" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-53"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=40">Kontakt</a></li>
@@ -74,7 +74,7 @@ const Footer = () => {
 
 		<div class="footer-bottom-menu">
 			<nav>
-				<div class="menu-footer-menu-3-container"><ul id="menu-footer-menu-3" class="menu"><li id="menu-item-59" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-59"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=54">Regulamin serwisu</a></li>
+				<div class="menu-footer-menu-3-container"><ul id="menu-footer-menu-3" class="menu"><li id="menu-item-59" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-59"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=440">Regulamin serwisu</a></li>
 <li id="menu-item-58" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-58"><a href="http://kliwo.realizacje.grupaaf.pl/?page_id=56">Polityka prywatności</a></li>
 </ul></div>			</nav>
 		</div>

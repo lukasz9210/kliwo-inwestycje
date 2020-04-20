@@ -17,6 +17,7 @@ const Garages = ({ match }) => {
   const [buildings, setBuildings] = useState({})
   const [buildingsArray, setBuildingsArray] = useState([])
   const [imaheHeight, setImaheHeight] = useState(0)
+  const [imageWidth, setImageWidth] = useState(0)
   const [selectedBuildingId, setSelectedBuildingId] = useState(0) //initial selected is current building
   const [levelsInBuilding, setLevelsInBuilding] = useState([])
   const [selectedLevelId, setSelectedLevelId] = useState(0)
@@ -93,6 +94,157 @@ const Garages = ({ match }) => {
     return tmp_arr.join(' ') + ' Z';
   }
 
+  // useEffect(() => {
+  //   for (var key in buildingInGarage) {
+  //     if (buildingInGarage.hasOwnProperty(key)) {
+        
+  //              //testy
+  //   let img = document.createElement('img');
+  //   img.src = buildingInGarage.garage_image
+  //   img.style.width = '60%'
+
+  //   let poll = setInterval(function () {
+  //     if (img.width) {
+  //       clearInterval(poll);
+  //       console.log(img.height, img.width);
+  //     }
+  //   }, 10);
+
+  //   img.onload = function () { console.log('Fully loaded'); } 
+
+  //     }
+  // }
+
+   
+
+    
+  // }, [buildingInGarage])
+
+
+  useEffect(() => {
+    if(imaheHeight && imageWidth) {
+
+      windowWidth = window.innerWidth
+
+      if(windowWidth > 1300) {
+    
+          //piEtro
+        //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
+          console.log('SKALOWANIE DUŻY')
+          //svg container/image
+          let svgContainer = document.getElementById('levelSvgImg')  //kontener svg
+          const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
+          //console.log('svgContainer', svgContainer)
+    
+          //cover img width and height
+    
+    
+          //actual width and height of svg container
+          //console.log('WIDTH SVGCONT', svgContainer)
+          let svgContainerWidth = imageWidth
+          let svgContainerHeight = imaheHeight
+          //console.log('svgContainerWidth', svgContainerWidth)
+          //console.log('svgContainerHeight', svgContainerHeight)
+    
+          let gElems = svgContainer.querySelectorAll('g')
+          console.log('svgContainer obok g glems', svgContainer)
+          console.log('gElems', gElems)  // problemem jest to e g elems nie zdazy zaladowaćź wszytskich elementow g do tablicy. Trzeba zatrzymać wykonywanie do monetu a length tablicy będzie większe od 0
+
+          let gElemsCheck = setInterval(() => {
+            console.log("laduje g elem", gElems.length)
+            if(gElems.length) {
+              console.log("G ELEM ZALADOWANE", gElems)
+              clearInterval(gElemsCheck)
+              gElems.forEach((g, i) => {
+                let pathElem = g.querySelector('path')
+                //console.log('path przed D', i, pathElem)
+                let svgText = pathElem.outerHTML
+                //console.log('SVG TEXT', svgText)
+                console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
+                let newcoords = parser(svgText, [583, 648], [svgContainerWidth, svgContainerHeight])
+                //console.log('newcoords', newcoords)
+                pathElem.setAttribute('d', newcoords)
+                //console.log('path po D', i, pathElem)
+              })
+
+            }
+          }, 20)
+    
+          
+    
+          $('path').mouseenter(function () {
+            //jQuery(this).find('path').addClass('svgActive')
+            $(this).addClass('svgActive')
+            //console.log("PATH JQUERY", this)
+          })
+    
+          $('path').mouseleave(function () {
+            //jQuery(this).find('path').addClass('svgActive')
+            $(this).removeClass('svgActive')
+          })
+    
+     
+    
+      } else {
+    
+          //piEtro
+        //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
+      
+          console.log('SKALOWANIE MALY')
+          //svg container/image
+          let svgContainer = document.getElementById('levelSvgImgMobile')  //kontener svg
+          const coverImg = document.getElementById('coverImgMobile')  // zdjęcie pod svg
+         
+          
+          //cover img width and height
+    
+    
+    
+          //actual width and height of svg container
+          //console.log('WIDTH SVGCONT', svgContainer)
+          let svgContainerWidth = Math.round(coverImg.offsetWidth)
+          let svgContainerHeight = coverImg.offsetHeight
+    
+          setMobileSvgHeight(svgContainerHeight)
+          //console.log('svgContainerWidth', svgContainerWidth)
+          //console.log('svgContainerHeight', svgContainerHeight)
+          //console.log('coverImg', svgContainerWidth)
+    
+          let gElems = svgContainer.querySelectorAll('g')
+          //console.log('gElems', gElems)
+    
+          gElems.forEach((g, i) => {
+            let pathElem = g.querySelector('path')
+            //console.log('path przed M', pathElem)
+            let svgText = pathElem.outerHTML
+            //console.log('SVG TEXT', svgText)
+            //console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
+            let newcoords = parser(svgText, [583, 648], [svgContainerWidth, svgContainerHeight])
+            //console.log('newcoords', newcoords)
+            pathElem.setAttribute('d', newcoords)
+            //console.log('path po MM', pathElem)
+          })
+    
+          $('path').mouseenter(function () {
+            //jQuery(this).find('path').addClass('svgActive')
+            $(this).addClass('svgActive')
+            //console.log("PATH JQUERY", this)
+          })
+    
+          $('path').mouseleave(function () {
+            //jQuery(this).find('path').addClass('svgActive')
+            $(this).removeClass('svgActive')
+          })
+    
+     
+    
+      }
+
+
+    }
+   }, [imaheHeight, imageWidth])
+
+
 
 
 
@@ -103,125 +255,23 @@ const Garages = ({ match }) => {
     fetchBuildings()
     fetchBuilding()
 
-    setTimeout(() => {
+
+    let ihElem = document.getElementById('coverImg') // wysokość img dla desktopu
+     let interval = setInterval(() => {
       let ih = document.getElementById('coverImg').height
-      console.log('ih', ih)
-      setImaheHeight(ih)
-
-      //console.log('imaheHeight', imaheHeight)
-    }, 6500);
-
-    setTimeout(() => {
-      setLoading(false)
-    }, 6500)
-
-
-    windowWidth = window.innerWidth
-
-  if(windowWidth > 1300) {
-
-      //piEtro
-    //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
-    setTimeout(() => {
-      console.log('SKALOWANIE DUŻY')
-      //svg container/image
-      let svgContainer = document.getElementById('levelSvgImg')  //kontener svg
-      const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
-      console.log('svgContainer', svgContainer)
-
-      //cover img width and height
-
-
-      //actual width and height of svg container
-      //console.log('WIDTH SVGCONT', svgContainer)
-      let svgContainerWidth = Math.round(svgContainer.width.baseVal.value / 0.6)
-      let svgContainerHeight = svgContainer.height.baseVal.value
-      //console.log('svgContainerWidth', svgContainerWidth)
-      //console.log('svgContainerHeight', svgContainerHeight)
-
-      let gElems = svgContainer.querySelectorAll('g')
-      console.log('gElems', gElems)
-
-      gElems.forEach((g, i) => {
-        let pathElem = g.querySelector('path')
-        console.log('path przed D', i, pathElem)
-        let svgText = pathElem.outerHTML
-        //console.log('SVG TEXT', svgText)
-        ///console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-        let newcoords = parser(svgText, [583, 648], [svgContainerWidth, svgContainerHeight])
-        //console.log('newcoords', newcoords)
-        pathElem.setAttribute('d', newcoords)
-        console.log('path po D', i, pathElem)
-      })
-
-      $('path').mouseenter(function () {
-        //jQuery(this).find('path').addClass('svgActive')
-        $(this).addClass('svgActive')
-        console.log("PATH JQUERY", this)
-      })
-
-      $('path').mouseleave(function () {
-        //jQuery(this).find('path').addClass('svgActive')
-        $(this).removeClass('svgActive')
-      })
-
-    }, 6500);
-
-  } else {
-
-      //piEtro
-    //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
-    setTimeout(() => {
-      console.log('SKALOWANIE MALY')
-      //svg container/image
-      let svgContainer = document.getElementById('levelSvgImgMobile')  //kontener svg
-      const coverImg = document.getElementById('coverImgMobile')  // zdjęcie pod svg
-     
-      
-      //cover img width and height
+      let iw = document.getElementById('coverImg').width
+      if(ih) {
+        setImaheHeight(ih)
+        setImageWidth(iw)
+        console.log("IH JEST", ih)
+        setLoading(false)
+        clearInterval(interval)
+        
+      }
+     }, 10)
 
 
 
-      //actual width and height of svg container
-      //console.log('WIDTH SVGCONT', svgContainer)
-      let svgContainerWidth = Math.round(coverImg.offsetWidth)
-      let svgContainerHeight = coverImg.offsetHeight
-
-      setMobileSvgHeight(svgContainerHeight)
-      //console.log('svgContainerWidth', svgContainerWidth)
-      //console.log('svgContainerHeight', svgContainerHeight)
-      console.log('coverImg', svgContainerWidth)
-
-      let gElems = svgContainer.querySelectorAll('g')
-      //console.log('gElems', gElems)
-
-      gElems.forEach((g, i) => {
-        let pathElem = g.querySelector('path')
-        console.log('path przed M', pathElem)
-        let svgText = pathElem.outerHTML
-        //console.log('SVG TEXT', svgText)
-        console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-        let newcoords = parser(svgText, [583, 648], [svgContainerWidth, svgContainerHeight])
-        //console.log('newcoords', newcoords)
-        pathElem.setAttribute('d', newcoords)
-        console.log('path po MM', pathElem)
-      })
-
-      $('path').mouseenter(function () {
-        //jQuery(this).find('path').addClass('svgActive')
-        $(this).addClass('svgActive')
-        //console.log("PATH JQUERY", this)
-      })
-
-      $('path').mouseleave(function () {
-        //jQuery(this).find('path').addClass('svgActive')
-        $(this).removeClass('svgActive')
-      })
-
-    }, 6500);
-
-  }
-    //koniec piEtra
 
     $(document).ready(function() {
       widthofScreen = $(window).width();
@@ -232,7 +282,7 @@ const Garages = ({ match }) => {
 
   const redirectAfterResize = () => {
     if ($(window).width()==widthofScreen) return; 
-    console.log("RESIZED!!")
+    //console.log("RESIZED!!")
     window.location.reload();
   }
 
@@ -275,7 +325,7 @@ const Garages = ({ match }) => {
     }
 
     formBody = formBody.join("&");
-    console.log('formBody', formBody)
+    //console.log('formBody', formBody)
 
     fetch('http://kliwo.realizacje.grupaaf.pl/api/levels-show', {
       method: 'POST',
@@ -288,7 +338,7 @@ const Garages = ({ match }) => {
     }).then(j => {
       setLevel(j.data.levels)
       setInvestment(j.data.investment)
-      console.log('this level', j)
+      //console.log('this level', j)
     })
   }
 
@@ -307,7 +357,7 @@ const Garages = ({ match }) => {
     }
 
     formBody = formBody.join("&");
-    console.log('formBody', formBody)
+    //console.log('formBody', formBody)
 
     fetch('http://kliwo.realizacje.grupaaf.pl/api/building/garages', {
       method: 'POST',
@@ -319,7 +369,7 @@ const Garages = ({ match }) => {
       return r.json()
     }).then(j => {
       setGarages(j.data.garages)
-      console.log('this garage', j)
+      //console.log('this garage', j)
     })
   }
 
@@ -339,7 +389,7 @@ const Garages = ({ match }) => {
     }
 
     formBody = formBody.join("&");
-    console.log('formBody', formBody)
+    //console.log('formBody', formBody)
 
     fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings-show', {
       method: 'POST',
@@ -352,7 +402,7 @@ const Garages = ({ match }) => {
     }).then(j => {
 
       setBuildingInGarage(j.data.building)
-      console.log('this building in garage', j)
+      //console.log('this building in garage', j)
     })
   }
 
@@ -361,7 +411,7 @@ const Garages = ({ match }) => {
     return fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings')
       .then(response => response.json())
       .then(json => {
-        console.log('All buildings', json.data.buildings)
+        //console.log('All buildings', json.data.buildings)
         setBuildings(json.data.buildings)
       })
   }
@@ -381,7 +431,7 @@ const Garages = ({ match }) => {
     }
 
     formBody = formBody.join("&");
-    console.log('formBody', formBody)
+    //console.log('formBody', formBody)
 
     fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings-show-levels', {
       method: 'POST',
@@ -394,35 +444,13 @@ const Garages = ({ match }) => {
     }).then(j => {
       const arr = Object.values(j.data.levels)
       setLevelsInBuilding(arr)
-      console.log('all levels in selected building', j)
+      //console.log('all levels in selected building', j)
     })
   }
 
-  const redirectToUnit = id => {
-    setRedirectId(id)
-    setRedirect(true)
-  }
 
 
-//   const selectCurrentBuilding = id => {
-//     if (id === level.building_id) {
-//       //console.log('selected')
-//       return true
-//     } else {
-//       //console.log('not selected')
-//       return false
-//     }
-//   }
 
-//   const selectCurrentLevel = id => {
-//     if (id === level.id) {
-//       //console.log('selected')
-//       return true
-//     } else {
-//       //console.log('not selected')
-//       return false
-//     }
-//   }
 
 
   const selectBuildingChange = e => {
@@ -542,13 +570,13 @@ const Garages = ({ match }) => {
 
 
   const mouseOver = data => {
-    console.log('cloud SHOWN')
+    //console.log('cloud SHOWN')
     setDataInCloud(data)
     setCloudShown(true)
   }
 
   const mouseLeave = data => {
-    console.log('cloud NOT SHOWN')
+    //console.log('cloud NOT SHOWN')
     setCloudShown(false)
   }
 

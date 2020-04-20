@@ -362,7 +362,7 @@ const Units = ({ match }) => {
           })
         }
         if(unitDoubled) {
-          alert("To mieszkanie jest ju dodane do porównywarki!")
+          alert("To mieszkanie jest już dodane do porównywarki!")
           return
         }
 
