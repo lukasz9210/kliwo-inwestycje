@@ -388,6 +388,9 @@ const Levels = ({ match }) => {
 
 
   const selectBuildingChange = e => {
+    let selectedBuilding = document.getElementById('buildingSelect').value
+    let selectedLevel = document.getElementById('levelSelect').value
+    console.log('selectedBuilding and lvl', selectedBuilding, selectedLevel)
     setSelectedBuildingId(e.target.value)
 
   }
@@ -641,7 +644,7 @@ const Levels = ({ match }) => {
             <h5 className="level-details-address">{investment.address}</h5>
             <div className="level-search">
               <div className="level-search-input">
-                <select onChange={selectBuildingChange}>
+                <select id="buildingSelect" onChange={selectBuildingChange}>
                   {
                     buildingsArray.map((b) => {
                       let printSelect = selectCurrentBuilding(b.id)
@@ -652,7 +655,7 @@ const Levels = ({ match }) => {
                 </select>
               </div>
               <div className="level-search-input">
-                <select onChange={selectLevelChange}>
+                <select id="levelSelect" onChange={selectLevelChange}>
                   {
                     levelsInBuilding.map((l) => {
                       let printSelectLevel = selectCurrentLevel(l.id)
