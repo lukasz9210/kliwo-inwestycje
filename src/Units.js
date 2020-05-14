@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import wallsImg from './images/ico_scianki.png'
 import electricImg from './images/ico_instalacja.png'
 import hydraulicImg from './images/ico_hydraulika.png'
@@ -8,6 +8,7 @@ import unitImg from './images/ico_komorkalokatorska.png'
 import GarageImg from './images/ico_zakupgarazu.png'
 import plusImg from './images/ico_plus.png'
 import downloadImg from './images/ico_download.png'
+import Message from './Message.js'
 import Header from './Header.js'
 import Footer from './Footer.js'
 import $ from 'jquery';
@@ -15,31 +16,26 @@ import $ from 'jquery';
 
 const Units = ({ match }) => {
   const [unit, setUnit] = useState({})
-  const [roomsArray, setRoomsArray] = useState([])
   const [clauseId, setClauseId] = useState(0)
   const [clause, setClause] = useState({})
   const [mainImgUrl, setMainImgUrl] = useState('')
   const [investmentId, setInvestmentId] = useState(0)
   const [investment, setInvestment] = useState({})
   const [level, setLevel] = useState({})
-
-
+  const [showMessage, setShowMessage] = useState('translateY-500px')
+  const [msgText, setMsgText] = useState('')
+  const [messageStatus, setMessageStatus] = useState('')
 
   useEffect(() => {
     fetchUnit()
-
-    //add event listeners
     $(document).ready(function () {
       $('.options-box-header').click(function () {
         $(this).next().slideToggle()
       })
-
       $('.adjust-box-header').click(function () {
         $(this).next().slideToggle()
       })
     })
-
-
   }, [])
 
   useEffect(() => {
@@ -59,55 +55,24 @@ const Units = ({ match }) => {
     findBalcony1()
     findBalcony2()
     findTerrace()
-    //console.log('findBalcony', findBalcony())
     setMainImgUrl(unit.img)
   }, [unit])
 
 
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if(unit.room1.room_type !== 'undefined') {
-  //       setRoomsArray([unit.room1, unit.room2, unit.room3, unit.room4, unit.room5, unit.room6, unit.room7, unit.room8, unit.room9, unit.room10])
-  //     }
-  //   }, 4000);
-
-  //   }, [unit])
-
-  //   useEffect(() => {
-  //     if(roomsArray[1].room_type !== 'undefined') {
-  //       console.log('tutaj', roomsArray)
-  //       let arr = roomsArray.map((r,i) => {
-  //         if(r.room_type === '0') roomsArray.splice(i, 1)
-  //       })
-  //       console.log('arr', arr)
-  //     }
-  //    }, [roomsArray])
-
-
-
-  const logState = () => {
-    console.log('clause ud', unit.clause_id)
-  }
-
-
   // fetch UNIT
   const fetchUnit = () => {
-    let details = {
+    const details = {
       'id': match.params.unitId
     };
-
     let formBody = [];
     for (let property in details) {
       let encodedKey = encodeURIComponent(property);
       let encodedValue = encodeURIComponent(details[property]);
       formBody.push(encodedKey + "=" + encodedValue);
     }
-
     formBody = formBody.join("&");
     console.log('formBody', formBody)
-
-    fetch('http://kliwo.realizacje.grupaaf.pl/api/units-show', {
+    fetch('http://kliwo.pl/api/units-show', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -121,30 +86,23 @@ const Units = ({ match }) => {
       setInvestmentId(j.data.unit.investment_id)
       setLevel(j.data.level)
       console.log('this unit', j)
-
-
     })
   }
 
-
-
   // fetch INVESTMENT
   const fetchInvestment = () => {
-    let details = {
+    const details = {
       'id': investmentId
     };
-
     let formBody = [];
     for (let property in details) {
       let encodedKey = encodeURIComponent(property);
       let encodedValue = encodeURIComponent(details[property]);
       formBody.push(encodedKey + "=" + encodedValue);
     }
-
     formBody = formBody.join("&");
     console.log('formBody', formBody)
-
-    fetch('http://kliwo.realizacje.grupaaf.pl/api/investments-show', {
+    fetch('http://kliwo.pl/api/investments-show', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -155,8 +113,6 @@ const Units = ({ match }) => {
     }).then(j => {
       setInvestment(j.data.investments)
       console.log('investment', j)
-
-
     })
   }
 
@@ -165,28 +121,23 @@ const Units = ({ match }) => {
     if (x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
-    
-}
-
+  }
 
 
   // fetch CLAUSE
   const fetchClause = () => {
-    let details = {
+    const details = {
       'id': clauseId
     };
-
     let formBody = [];
     for (let property in details) {
       let encodedKey = encodeURIComponent(property);
       let encodedValue = encodeURIComponent(details[property]);
       formBody.push(encodedKey + "=" + encodedValue);
     }
-
     formBody = formBody.join("&");
     console.log('formBody', formBody)
-
-    fetch('http://kliwo.realizacje.grupaaf.pl/api/clause', {
+    fetch('http://kliwo.pl/api/clause', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -267,7 +218,7 @@ const Units = ({ match }) => {
 
   const findBalcony = () => {
     for (let i = 1; i <= 12; i++) {
-      let propName = `room_type${i}`
+      const propName = `room_type${i}`
       if (unit[propName] === '9') return i
     }
     return false
@@ -275,7 +226,7 @@ const Units = ({ match }) => {
 
   const findBalcony1 = () => {
     for (let i = 1; i <= 12; i++) {
-      let propName = `room_type${i}`
+      const propName = `room_type${i}`
       if (unit[propName] === '29') return i
     }
     return false
@@ -283,7 +234,7 @@ const Units = ({ match }) => {
 
   const findBalcony2 = () => {
     for (let i = 1; i <= 12; i++) {
-      let propName = `room_type${i}`
+      const propName = `room_type${i}`
       if (unit[propName] === '30') return i
     }
     return false
@@ -291,14 +242,14 @@ const Units = ({ match }) => {
 
   const findTerrace = () => {
     for (let i = 1; i <= 12; i++) {
-      let propName = `room_type${i}`
+      const propName = `room_type${i}`
       if (unit[propName] === '10') return i
     }
     return false
   }
 
   const showLevelName = number => {
-    if(number == 0) {
+    if (number == 0) {
       return 'Parter'
     } else {
       return number
@@ -306,10 +257,10 @@ const Units = ({ match }) => {
   }
 
   const roomsSpaceAmount = () => {
-    let balconyNumber = findBalcony()
-    let balconyNumber1 = findBalcony1()
-    let balconyNumber2 = findBalcony2()
-    let terraceNumber = findTerrace()
+    const balconyNumber = findBalcony()
+    const balconyNumber1 = findBalcony1()
+    const balconyNumber2 = findBalcony2()
+    const terraceNumber = findTerrace()
     let balconySpace = 0
     let balconySpace1 = 0
     let balconySpace2 = 0
@@ -328,66 +279,70 @@ const Units = ({ match }) => {
     }
     if (terraceNumber) {
       terraceSpace = unit[`room${terraceNumber}_m2`]
-     
+
     }
-    let amount = Number(unit.room1_m2) + Number(unit.room2_m2) + Number(unit.room3_m2) + Number(unit.room4_m2) + Number(unit.room5_m2) + Number(unit.room6_m2) + Number(unit.room7_m2) + Number(unit.room8_m2) + Number(unit.room9_m2) + Number(unit.room10_m2) - Number(balconySpace) - Number(balconySpace1) - Number(balconySpace2) - Number(terraceSpace)
+    const amount = Number(unit.room1_m2) + Number(unit.room2_m2) + Number(unit.room3_m2) + Number(unit.room4_m2) + Number(unit.room5_m2) + Number(unit.room6_m2) + Number(unit.room7_m2) + Number(unit.room8_m2) + Number(unit.room9_m2) + Number(unit.room10_m2) - Number(balconySpace) - Number(balconySpace1) - Number(balconySpace2) - Number(terraceSpace)
     return Math.round((amount + Number.EPSILON) * 100) / 100
   }
 
   const roomsFloorSpaceSummery = () => {
-    let amount = Number(unit.room1_floor) + Number(unit.room2_floor) + Number(unit.room3_floor) + Number(unit.room4_floor) + Number(unit.room5_floor) + Number(unit.room6_floor) + Number(unit.room7_floor) + Number(unit.room8_floor) + Number(unit.room9_floor) + Number(unit.room10_floor)
+    const amount = Number(unit.room1_floor) + Number(unit.room2_floor) + Number(unit.room3_floor) + Number(unit.room4_floor) + Number(unit.room5_floor) + Number(unit.room6_floor) + Number(unit.room7_floor) + Number(unit.room8_floor) + Number(unit.room9_floor) + Number(unit.room10_floor)
     return Math.round((amount + Number.EPSILON) * 100) / 100
-  }
-
-  const handleMainImgUrl = url => {
-    setMainImgUrl(url)
   }
 
 
   const addToComparison = () => {
     let comparedUnits = []
-    if(typeof window !== 'undefined') {
-        if(localStorage.getItem('kliwoUnits')) {
-            comparedUnits = JSON.parse(localStorage.getItem('kliwoUnits'))
-        }
-        if(comparedUnits.length >= 4) {
-          alert("Nie mona porównać więcej niz 4 mieszkania!")
-          return
-        }
-
-        let unitDoubled
-        if(comparedUnits.length > 0) {
-          unitDoubled = comparedUnits.find(el => {
-            return unit.id === el.id
-          })
-        }
-        if(unitDoubled) {
-          alert("To mieszkanie jest już dodane do porównywarki!")
-          return
-        }
-
-        console.log('unit1', unit)
-        comparedUnits.push({
-            ...unit,
-            level: level.number
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('kliwoUnits')) {
+        comparedUnits = JSON.parse(localStorage.getItem('kliwoUnits'))
+      }
+      if (comparedUnits.length >= 4) {
+        handleShowMessage('Nie można porównać więcej niz 4 mieszkania!', 'danger')
+        return
+      }
+      let unitDoubled
+      if (comparedUnits.length > 0) {
+        unitDoubled = comparedUnits.find(el => {
+          return unit.id === el.id
         })
-        comparedUnits = Array.from(new Set(comparedUnits.map(u => u.id))).map(id => {
-            return comparedUnits.find(u => u.id === id)
-        })
-        localStorage.setItem('kliwoUnits', JSON.stringify(comparedUnits))
-        alert(`Dodałeś mieszkanie ${unit.name} do porównywarki`)
-        // next()
+      }
+      if (unitDoubled) {
+        handleShowMessage('To mieszkanie jest już dodane do porównywarki!', 'danger')
+        return
+      }
+      console.log('unit1', unit)
+      comparedUnits.push({
+        ...unit,
+        level: level.number
+      })
+      comparedUnits = Array.from(new Set(comparedUnits.map(u => u.id))).map(id => {
+        return comparedUnits.find(u => u.id === id)
+      })
+      localStorage.setItem('kliwoUnits', JSON.stringify(comparedUnits))
+      handleShowMessage(`Dodałeś mieszkanie ${unit.name} do porównywarki`, 'success')
+      // next()
     }
-}
+  }
+
+  const handleShowMessage = (msg, status) => {
+    setShowMessage('translateY0')
+    setMessageStatus(status)
+    setMsgText(msg)
+    setTimeout(() => {
+      setShowMessage('translateY-500px')
+    }, 4000)
+  }
 
 
   return (
     <div className="unitView">
+      <Message show={showMessage} msg={msgText} status={messageStatus} />
       <Header />
-      <div style={{display: unit.status == "1" ? '' : 'none'}} className="container">
-      <p className="unit-access-denied-title" >Nie masz dostępu do tego podglądu tego mieszkania.</p>
+      <div style={{ display: unit.status == "1" ? '' : 'none' }} className="container">
+        <p className="unit-access-denied-title" >Nie masz dostępu do tego podglądu tego mieszkania.</p>
       </div>
-      <div style={{display: unit.status == "1" ? 'none' : ''}} className="container">
+      <div style={{ display: unit.status == "1" ? 'none' : '' }} className="container">
         <div className="unitView-content flex">
           <div className="unitView-left w-50">
             <div className="unitView-images flex jc-c">
@@ -412,16 +367,11 @@ const Units = ({ match }) => {
                 </div>
               </div>
             </div>
-
             <div className="unitView-clause">
               <h3 className="bold-title">Dodatkowe informacje</h3>
               <div dangerouslySetInnerHTML={{ __html: clause.description }}></div>
             </div>
-
           </div>
-
-
-
           <div className="unitView-right w-50">
             <div className="flex jc-spb ai-fs">
               <div className="unitView-investment-data flex ai-c">
@@ -433,7 +383,6 @@ const Units = ({ match }) => {
               </div>
               <button onClick={addToComparison} className="unitView-add-to-comparison-btn"><img src={plusImg} alt="Dodaj do porównania" />Dodaj do porównania</button>
             </div>
-
             <h4 className="unitView-unit-name">
               Mieszkanie <span>{unit.name}</span>
             </h4>
@@ -463,8 +412,7 @@ const Units = ({ match }) => {
                 </div>
               </div>
             </div>
-
-            <div style={{display: unit.room1_floor == 0 ? 'none' : ''}} className="unitView-rooms">
+            <div style={{ display: unit.room1_floor == 0 ? 'none' : '' }} className="unitView-rooms">
               <h4 className="bold-title">Zestawienie pomieszczeń lokalu</h4>
               <table className="rooms-table">
                 <thead>
@@ -569,9 +517,7 @@ const Units = ({ match }) => {
                 </tbody>
               </table>
             </div>
-
-
-            <div style={{display: unit.room1_floor != 0 ? 'none' : ''}} className="unitView-rooms unitView-rooms-one-column">
+            <div style={{ display: unit.room1_floor != 0 ? 'none' : '' }} className="unitView-rooms unitView-rooms-one-column">
               <h4 className="bold-title">Zestawienie pomieszczeń lokalu</h4>
               <table className="rooms-table">
                 <thead>
@@ -660,15 +606,11 @@ const Units = ({ match }) => {
                 </tbody>
               </table>
             </div>
-
-
             <h4 className="bold-title">Pobierz katalog z opisem lokalu</h4>
             <a target="blank" href={unit.pdf} className="download-pdf"><img src={downloadImg} alt="Pobierz pdf" />POBIERZ PDF</a>
-
             <div className="adjust">
               <h4 className="bold-title">Dostosuj lokal do swoich potrzeb</h4>
               <div className="adjust-boxes">
-
                 <div style={{ display: unit.available_wall === '0' ? 'none' : '' }} className="adjust-box">
                   <div className="adjust-box-header flex ai-c">
                     <img src={wallsImg} alt="Układ ścianek działowych" />
@@ -678,19 +620,16 @@ const Units = ({ match }) => {
                     {unit.available_wall == '2' && (
                       <h6 className="adjust-box-title arrow-after">Ścianki działowe wybudowane</h6>
                     )}
-                    
                   </div>
                   <div className="adjust-box-body">
-                  {unit.available_wall == '1' && (
+                    {unit.available_wall == '1' && (
                       <p>Możesz przedstawić własny projekt wykonania ścianek działowych. O szczegóły zapytaj naszego konsultanta.</p>
                     )}
                     {unit.available_wall == '2' && (
                       <p>Opcja wybudowania ścianek działowych według Twojego projektu nie jest już dostępna</p>
                     )}
-                    
                   </div>
                 </div>
-
                 <div style={{ display: unit.available_electric === '0' ? 'none' : '' }} className="adjust-box">
                   <div className="adjust-box-header flex ai-c">
                     <img src={electricImg} alt="Układ ścianek działowych" />
@@ -700,19 +639,16 @@ const Units = ({ match }) => {
                     {unit.available_electric == '2' && (
                       <h6 className="adjust-box-title arrow-after">Instalacja elektryczna wykonana</h6>
                     )}
-                    
                   </div>
                   <div className="adjust-box-body">
-                  {unit.available_electric == '1' && (
+                    {unit.available_electric == '1' && (
                       <p>Możesz przedstawić własny projekt wykonania instalacji elektrycznej. O szczegóły zapytaj naszego konsultanta.</p>
                     )}
                     {unit.available_electric == '2' && (
                       <p>Opcja wykonania instalacji elektrycznej według Twojego projektu nie jest już dostępna</p>
                     )}
-                    
                   </div>
                 </div>
-
                 <div style={{ display: unit.available_hydraulic === '0' ? 'none' : '' }} className="adjust-box">
                   <div className="adjust-box-header flex ai-c">
                     <img src={hydraulicImg} alt="Układ ścianek działowych" />
@@ -722,19 +658,16 @@ const Units = ({ match }) => {
                     {unit.available_hydraulic == '2' && (
                       <h6 className="adjust-box-title arrow-after">Instalacja hydrauliczna ukończona</h6>
                     )}
-                    
                   </div>
                   <div className="adjust-box-body">
-                  {unit.available_hydraulic == '1' && (
+                    {unit.available_hydraulic == '1' && (
                       <p>Możesz przedstawić własny projekt wykonania instalacjihydraulicznej. O szczegóły zapytaj naszego konsultanta.</p>
                     )}
                     {unit.available_hydraulic == '2' && (
                       <p>Opcja wykonania instalacji hydraulicznej według Twojego projektu nie jest już dostępna</p>
                     )}
-                    
                   </div>
                 </div>
-
                 <div style={{ display: unit.available_heating === '0' ? 'none' : '' }} className="adjust-box">
                   <div className="adjust-box-header flex ai-c">
                     <img src={heatingImg} alt="Układ ścianek działowych" />
@@ -744,24 +677,18 @@ const Units = ({ match }) => {
                     {unit.available_heating == '2' && (
                       <h6 className="adjust-box-title arrow-after">Instalacja ogrzewania podłogowego wykonana</h6>
                     )}
-                    
                   </div>
                   <div className="adjust-box-body">
-                  {unit.available_heating == '1' && (
+                    {unit.available_heating == '1' && (
                       <p>Możesz zrezygnować z grzejników w pokojach i bezpłatnie rozszerzyć zasięg ogrzewania podłogowego na całą powierzchnię lokalu bądź pozostawić grzejniki i powiększyć rozmiar instalacji za dodatkową opłatą. O szczegóły zapytaj naszego konsultanta.</p>
                     )}
                     {unit.available_heating == '2' && (
                       <p>Opcja wykonania instalacji ogrzewania podłogowego według Twojego projektu nie jest już dostępna</p>
                     )}
-                    
                   </div>
                 </div>
-
-
               </div>
             </div>
-
-
             <div className="unitView-options">
               <h4 className="bold-title">Skorzystaj z dodatkowych opcji</h4>
               <div className="options-boxes">
@@ -781,23 +708,18 @@ const Units = ({ match }) => {
                     <h6 className="options-box-title">Zakup miejsce postojowe<br />w garażu podziemnym</h6>
                   </div>
                 </div>
-
               </div>
             </div>
-
-
           </div>
           {/* end of right */}
-
           <div className="unitView-clause-mobile">
-              <h3 className="bold-title">Dodatkowe informacje</h3>
-              <div dangerouslySetInnerHTML={{ __html: clause.description }}></div>
-            </div>
-
+            <h3 className="bold-title">Dodatkowe informacje</h3>
+            <div dangerouslySetInnerHTML={{ __html: clause.description }}></div>
+          </div>
         </div>
-
-
-
+        <div className="flex jc-c">
+          <Link className="btn back-to-lvl-btn" to={`/pietro/${unit.level_id}`}>Wróć do widoku piętra</Link>
+        </div>
       </div>
       <Footer />
     </div>

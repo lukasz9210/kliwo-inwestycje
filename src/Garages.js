@@ -6,360 +6,135 @@ import preLoaderGif from './images/preloader.gif'
 import phoneImg from './images/ico_phone.png'
 import disableImg from './images/ico-garaz_wozek.png'
 import $ from 'jquery';
+import { parser } from './helpers.js'
 
 
 const Garages = ({ match }) => {
-  const [level, setLevel] = useState({})
-  const [unitsInLevel, setUnitsInLevel] = useState([])
-  const [redirect, setRedirect] = useState(false)
-  const [redirectId, setRedirectId] = useState()
-  const [investment, setInvestment] = useState({})
-  const [buildings, setBuildings] = useState({})
-  const [buildingsArray, setBuildingsArray] = useState([])
   const [imaheHeight, setImaheHeight] = useState(0)
   const [imageWidth, setImageWidth] = useState(0)
-  const [selectedBuildingId, setSelectedBuildingId] = useState(0) //initial selected is current building
-  const [levelsInBuilding, setLevelsInBuilding] = useState([])
-  const [selectedLevelId, setSelectedLevelId] = useState(0)
   const [dataInCloud, setDataInCloud] = useState({ count_m: { free: 0 }, count_l: { free: 0 } })
   const [cloudShown, setCloudShown] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [levelImgLoading, setLevelImgLoading] = useState(false)
-
   const [garages, setGarages] = useState({})
   const [garageArray, setGarageArray] = useState([])
-
   const [buildingInGarage, setBuildingInGarage] = useState({}) //aktualny budynek
-
   const [mobileSvgHeight, setMobileSvgHeight] = useState()
-
   let windowWidth = 0
   let widthofScreen = 0
 
-  const coord = function (xy, orig_size, chngd_size) {
-    const x_scale = chngd_size[0] / orig_size[0];
-    const y_scale = chngd_size[1] / orig_size[1];
-    let coo = [];
-    for (let i = 0; i < xy.length; i += 2) {
-      coo.push(xy[i] * x_scale);
-      coo.push(xy[i + 1] * y_scale);
-    }
-    // console.log('coo', coo)
-    return coo;
-  }
-
-
-  const parser = function (text, o, ch) {
-    let parser = new DOMParser();
-    let xmlDoc = parser.parseFromString(text, "text/xml");
-
-    let d = xmlDoc.getElementsByTagName('path')[0].getAttribute('d');
-
-    let arr = d.toUpperCase().replace(/,/g, ' ').replace(/-/g, ' -').split(' ');
-
-    arr = arr.filter(val => val != '');
-
-    let k = 0;
-    while (k < arr.length) {
-      if ((arr[k].length > 1) && (arr[k].match(/[A-Z]/i))) {
-        let tmp = arr[k];
-        arr[k] = arr[k].substr(0, 1);
-        arr.splice(k + 1, 0, tmp.substr(1, tmp.length));
-      }
-      k += 1;
-    }
-
-    let tmp_arr = [];
-    let i = 0;
-    while (i < arr.length) {
-      let tmp = [];
-      if (arr[i].match(/[A-Z]/i)) {
-        let j = i;
-        while (j < arr.length - 1) {
-          tmp.push(arr[j]);
-          //console.log('tmp', tmp)
-          if (arr[j + 1].match(/[A-Z]/i)) {
-            let tmp2 = coord(tmp, o, ch);
-            tmp2 = tmp2.filter(val => !Number.isNaN(val));
-            tmp_arr.push(arr[i] + tmp2.join(' '));
-            i = j;
-            break;
-          }
-          j += 1
-        }
-      }
-      i += 1;
-    }
-    //console.log('tmp_arr', tmp_arr) 
-    return tmp_arr.join(' ') + ' Z';
-  }
-
-  // useEffect(() => {
-  //   for (var key in buildingInGarage) {
-  //     if (buildingInGarage.hasOwnProperty(key)) {
-        
-  //              //testy
-  //   let img = document.createElement('img');
-  //   img.src = buildingInGarage.garage_image
-  //   img.style.width = '60%'
-
-  //   let poll = setInterval(function () {
-  //     if (img.width) {
-  //       clearInterval(poll);
-  //       console.log(img.height, img.width);
-  //     }
-  //   }, 10);
-
-  //   img.onload = function () { console.log('Fully loaded'); } 
-
-  //     }
-  // }
-
-   
-
-    
-  // }, [buildingInGarage])
-
 
   useEffect(() => {
-    if(imaheHeight && imageWidth) {
-
+    if (imaheHeight && imageWidth) {
       windowWidth = window.innerWidth
+      if (windowWidth > 1300) {
+        const svgContainer = document.getElementById('levelSvgImg')  //kontener svg
+        const svgContainerWidth = imageWidth
+        const svgContainerHeight = imaheHeight
+        const gElems = svgContainer.querySelectorAll('g')
+        
 
-      if(windowWidth > 1300) {
-    
-          //piEtro
-        //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
-          console.log('SKALOWANIE DUŻY')
-          //svg container/image
-          let svgContainer = document.getElementById('levelSvgImg')  //kontener svg
-          const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
-          //console.log('svgContainer', svgContainer)
-    
-          //cover img width and height
-    
-    
-          //actual width and height of svg container
-          //console.log('WIDTH SVGCONT', svgContainer)
-          let svgContainerWidth = imageWidth
-          let svgContainerHeight = imaheHeight
-          //console.log('svgContainerWidth', svgContainerWidth)
-          //console.log('svgContainerHeight', svgContainerHeight)
-    
-          let gElems = svgContainer.querySelectorAll('g')
-          console.log('svgContainer obok g glems', svgContainer)
-          console.log('gElems', gElems)  // problemem jest to e g elems nie zdazy zaladowaćź wszytskich elementow g do tablicy. Trzeba zatrzymać wykonywanie do monetu a length tablicy będzie większe od 0
-
-          let gElemsCheck = setInterval(() => {
-            console.log("laduje g elem", gElems.length)
-            if(gElems.length) {
-              console.log("G ELEM ZALADOWANE", gElems)
-              clearInterval(gElemsCheck)
-              gElems.forEach((g, i) => {
-                let pathElem = g.querySelector('path')
-                //console.log('path przed D', i, pathElem)
-                let svgText = pathElem.outerHTML
-                //console.log('SVG TEXT', svgText)
-                console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-                let newcoords = parser(svgText, [583, 648], [svgContainerWidth, svgContainerHeight])
-                //console.log('newcoords', newcoords)
-                pathElem.setAttribute('d', newcoords)
-                //console.log('path po D', i, pathElem)
-              })
-
-            }
-          }, 20)
-    
-          
-    
-          $('path').mouseenter(function () {
-            //jQuery(this).find('path').addClass('svgActive')
-            $(this).addClass('svgActive')
-            //console.log("PATH JQUERY", this)
-          })
-    
-          $('path').mouseleave(function () {
-            //jQuery(this).find('path').addClass('svgActive')
-            $(this).removeClass('svgActive')
-          })
-    
-     
-    
+        const gElemsCheck = setInterval(() => {
+          if (gElems.length) {
+            console.log("G ELEM ZALADOWANE", gElems)
+            clearInterval(gElemsCheck)
+            gElems.forEach((g, i) => {
+              let pathElem = g.querySelector('path')
+              //console.log('path przed D', i, pathElem)
+              const svgText = pathElem.outerHTML
+              //console.log('SVG TEXT', svgText)
+              console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
+              const newcoords = parser(svgText, [583, 648], [svgContainerWidth, svgContainerHeight])
+              //console.log('newcoords', newcoords)
+              pathElem.setAttribute('d', newcoords)
+              //console.log('path po D', i, pathElem)
+            })
+          }
+        }, 20)
+        $('path').mouseenter(function () {
+          $(this).addClass('svgActive')
+        })
+        $('path').mouseleave(function () {
+          $(this).removeClass('svgActive')
+        })
       } else {
-    
-          //piEtro
-        //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
-      
-          console.log('SKALOWANIE MALY')
-          //svg container/image
-          let svgContainer = document.getElementById('levelSvgImgMobile')  //kontener svg
-          const coverImg = document.getElementById('coverImgMobile')  // zdjęcie pod svg
-         
-          
-          //cover img width and height
-    
-    
-    
-          //actual width and height of svg container
-          //console.log('WIDTH SVGCONT', svgContainer)
-          let svgContainerWidth = Math.round(coverImg.offsetWidth)
-          let svgContainerHeight = coverImg.offsetHeight
-    
-          setMobileSvgHeight(svgContainerHeight)
-          //console.log('svgContainerWidth', svgContainerWidth)
-          //console.log('svgContainerHeight', svgContainerHeight)
-          //console.log('coverImg', svgContainerWidth)
-    
-          let gElems = svgContainer.querySelectorAll('g')
-          //console.log('gElems', gElems)
-    
-          gElems.forEach((g, i) => {
-            let pathElem = g.querySelector('path')
-            //console.log('path przed M', pathElem)
-            let svgText = pathElem.outerHTML
-            //console.log('SVG TEXT', svgText)
-            //console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-            let newcoords = parser(svgText, [583, 648], [svgContainerWidth, svgContainerHeight])
-            //console.log('newcoords', newcoords)
-            pathElem.setAttribute('d', newcoords)
-            //console.log('path po MM', pathElem)
-          })
-    
-          $('path').mouseenter(function () {
-            //jQuery(this).find('path').addClass('svgActive')
-            $(this).addClass('svgActive')
-            //console.log("PATH JQUERY", this)
-          })
-    
-          $('path').mouseleave(function () {
-            //jQuery(this).find('path').addClass('svgActive')
-            $(this).removeClass('svgActive')
-          })
-    
-     
-    
+        const svgContainer = document.getElementById('levelSvgImgMobile')  //kontener svg
+        const coverImg = document.getElementById('coverImgMobile')  // zdjęcie pod svg
+        const svgContainerWidth = Math.round(coverImg.offsetWidth)
+        const svgContainerHeight = coverImg.offsetHeight
+
+        setMobileSvgHeight(svgContainerHeight)
+
+        const gElems = svgContainer.querySelectorAll('g')
+
+        gElems.forEach((g, i) => {
+          let pathElem = g.querySelector('path')
+          //console.log('path przed M', pathElem)
+          const svgText = pathElem.outerHTML
+          //console.log('SVG TEXT', svgText)
+          //console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
+          const newcoords = parser(svgText, [583, 648], [svgContainerWidth, svgContainerHeight])
+          //console.log('newcoords', newcoords)
+          pathElem.setAttribute('d', newcoords)
+          //console.log('path po MM', pathElem)
+        })
+        $('path').mouseenter(function () {
+          $(this).addClass('svgActive')
+        })
+        $('path').mouseleave(function () {
+          $(this).removeClass('svgActive')
+        })
       }
-
-
     }
-   }, [imaheHeight, imageWidth])
-
-
-
+  }, [imaheHeight, imageWidth])
 
 
   useEffect(() => {
-      fetchGarage()
-    // fetchLevel(match.params.levelId)
-    // fetchUnitsInLevel(match.params.levelId)
-    fetchBuildings()
+    fetchGarage()
+    //fetchBuildings()
     fetchBuilding()
-
-
-    let ihElem = document.getElementById('coverImg') // wysokość img dla desktopu
-     let interval = setInterval(() => {
+    const interval = setInterval(() => {
       let ih = document.getElementById('coverImg').height
       let iw = document.getElementById('coverImg').width
-      if(ih) {
+      if (ih) {
         setImaheHeight(ih)
         setImageWidth(iw)
         console.log("IH JEST", ih)
         setLoading(false)
         clearInterval(interval)
-        
       }
-     }, 10)
+    }, 10)
 
-
-
-
-    $(document).ready(function() {
+    $(document).ready(function () {
       widthofScreen = $(window).width();
       window.addEventListener('resize', redirectAfterResize);
     })
-
   }, [])
 
   const redirectAfterResize = () => {
-    if ($(window).width()==widthofScreen) return; 
-    //console.log("RESIZED!!")
+    if ($(window).width() == widthofScreen) return;
     window.location.reload();
   }
-
-
-//   useEffect(() => {
-
-//     setSelectedBuildingId(level.building_id)
-//     fetchUnitsInLevel(level.id)
-//   }, [level])
-
-
-  useEffect(() => {
-    if (selectedBuildingId != 0) {
-      fetchLevelsInBuilding()
-    }
-  }, [selectedBuildingId])
-
-
-  useEffect(() => {
-    let arr = Object.keys(buildings).map((k) => buildings[k])
-    setBuildingsArray(arr)
-  }, [buildings])
 
   useEffect(() => {
     let arr = Object.keys(garages).map((k) => garages[k])
     setGarageArray(arr)
   }, [garages])
 
-  // fetch LEVEL
-  const fetchLevel = (levelId) => {
-    let details = {
-      'id': levelId
-    };
 
-    let formBody = [];
-    for (let property in details) {
-      let encodedKey = encodeURIComponent(property);
-      let encodedValue = encodeURIComponent(details[property]);
-      formBody.push(encodedKey + "=" + encodedValue);
-    }
-
-    formBody = formBody.join("&");
-    //console.log('formBody', formBody)
-
-    fetch('http://kliwo.realizacje.grupaaf.pl/api/levels-show', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      body: formBody
-    }).then(r => {
-      return r.json()
-    }).then(j => {
-      setLevel(j.data.levels)
-      setInvestment(j.data.investment)
-      //console.log('this level', j)
-    })
-  }
-
-
-//   fetch GARAGE
+  //   fetch GARAGE
   const fetchGarage = () => {
-    let details = {
+    const details = {
       'id': match.params.garageId
     };
-
     let formBody = [];
     for (let property in details) {
       let encodedKey = encodeURIComponent(property);
       let encodedValue = encodeURIComponent(details[property]);
       formBody.push(encodedKey + "=" + encodedValue);
     }
-
     formBody = formBody.join("&");
     //console.log('formBody', formBody)
-
-    fetch('http://kliwo.realizacje.grupaaf.pl/api/building/garages', {
+    fetch('http://kliwo.pl/api/building/garages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -374,24 +149,20 @@ const Garages = ({ match }) => {
   }
 
 
-
   // fetch BUILDING
   const fetchBuilding = () => {
-    let details = {
+    const details = {
       'id': match.params.garageId
     };
-
     let formBody = [];
     for (let property in details) {
       let encodedKey = encodeURIComponent(property);
       let encodedValue = encodeURIComponent(details[property]);
       formBody.push(encodedKey + "=" + encodedValue);
     }
-
     formBody = formBody.join("&");
     //console.log('formBody', formBody)
-
-    fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings-show', {
+    fetch('http://kliwo.pl/api/buildings-show', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -400,230 +171,41 @@ const Garages = ({ match }) => {
     }).then(r => {
       return r.json()
     }).then(j => {
-
       setBuildingInGarage(j.data.building)
       //console.log('this building in garage', j)
     })
   }
 
-  // fetch ALL BUILDINGS
-  const fetchBuildings = () => {
-    return fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings')
-      .then(response => response.json())
-      .then(json => {
-        //console.log('All buildings', json.data.buildings)
-        setBuildings(json.data.buildings)
-      })
-  }
-
-
-  // fetch ALL LEVELS in building
-  const fetchLevelsInBuilding = () => {
-    let details = {
-      'id': selectedBuildingId
-    };
-
-    let formBody = [];
-    for (let property in details) {
-      let encodedKey = encodeURIComponent(property);
-      let encodedValue = encodeURIComponent(details[property]);
-      formBody.push(encodedKey + "=" + encodedValue);
-    }
-
-    formBody = formBody.join("&");
-    //console.log('formBody', formBody)
-
-    fetch('http://kliwo.realizacje.grupaaf.pl/api/buildings-show-levels', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      body: formBody
-    }).then(r => {
-      return r.json()
-    }).then(j => {
-      const arr = Object.values(j.data.levels)
-      setLevelsInBuilding(arr)
-      //console.log('all levels in selected building', j)
-    })
-  }
-
-
-
-
-
-
-  const selectBuildingChange = e => {
-    setSelectedBuildingId(e.target.value)
-
-  }
-
-  const selectLevelChange = e => {
-    setLevelImgLoading(true)
-    setSelectedLevelId(e.target.value)
-    //fetch level with id e.target.value
-    fetchLevel(e.target.value)
-
-    windowWidth = window.innerWidth
-
-    if(windowWidth > 1300) {
-
-
-      setTimeout(() => {
-        console.log('SKALOWANIE DUZY')
-        //svg container/image
-        let svgContainer = document.getElementById('levelSvgImg')  //kontener svg
-        const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
-        console.log('svgContainer', svgContainer)
-  
-        //cover img width and height
-  
-  
-        //actual width and height of svg container
-        //console.log('WIDTH SVGCONT', svgContainer)
-        let svgContainerWidth = Math.round(svgContainer.width.baseVal.value / 0.6)
-        let svgContainerHeight = svgContainer.height.baseVal.value
-        //console.log('svgContainerWidth', svgContainerWidth)
-        //console.log('svgContainerHeight', svgContainerHeight)
-  
-        let gElems = svgContainer.querySelectorAll('g')
-        console.log('gElems', gElems)
-  
-        gElems.forEach((g, i) => {
-          let pathElem = g.querySelector('path')
-          console.log('path przed', pathElem)
-          let svgText = pathElem.outerHTML
-          //console.log('SVG TEXT', svgText)
-          ///console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-          let newcoords = parser(svgText, [910, 745], [svgContainerWidth, svgContainerHeight])
-          //console.log('newcoords', newcoords)
-          pathElem.setAttribute('d', newcoords)
-          console.log('path po', pathElem)
-        })
-  
-        $('path').mouseenter(function () {
-          //jQuery(this).find('path').addClass('svgActive')
-          $(this).addClass('svgActive')
-          console.log("PATH JQUERY", this)
-        })
-  
-        $('path').mouseleave(function () {
-          //jQuery(this).find('path').addClass('svgActive')
-          $(this).removeClass('svgActive')
-        })
-        setLevelImgLoading(false)
-      }, 6500);
-
-
-    } else {
-
-      setTimeout(() => {
-        console.log('SKALOWANIE MALY')
-        //svg container/image
-        let svgContainer = document.getElementById('levelSvgImg')  //kontener svg
-        const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
-        console.log('svgContainer', svgContainer)
-  
-        //cover img width and height
-  
-  
-        //actual width and height of svg container
-        //console.log('WIDTH SVGCONT', svgContainer)
-        let svgContainerWidth = Math.round(svgContainer.width.baseVal.value)
-        let svgContainerHeight = svgContainer.height.baseVal.value
-        //console.log('svgContainerWidth', svgContainerWidth)
-        //console.log('svgContainerHeight', svgContainerHeight)
-  
-        let gElems = svgContainer.querySelectorAll('g')
-        console.log('gElems', gElems)
-  
-        gElems.forEach((g, i) => {
-          let pathElem = g.querySelector('path')
-          console.log('path przed', pathElem)
-          let svgText = pathElem.outerHTML
-          //console.log('SVG TEXT', svgText)
-          ///console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-          let newcoords = parser(svgText, [910, 745], [svgContainerWidth, svgContainerHeight])
-          //console.log('newcoords', newcoords)
-          pathElem.setAttribute('d', newcoords)
-          console.log('path po', pathElem)
-        })
-  
-        $('path').mouseenter(function () {
-          //jQuery(this).find('path').addClass('svgActive')
-          $(this).addClass('svgActive')
-          console.log("PATH JQUERY", this)
-        })
-  
-        $('path').mouseleave(function () {
-          //jQuery(this).find('path').addClass('svgActive')
-          $(this).removeClass('svgActive')
-        })
-        setLevelImgLoading(false)
-      }, 6500);
-
-    }
-
-
-
-  }
-
 
   const mouseOver = data => {
-    //console.log('cloud SHOWN')
     setDataInCloud(data)
     setCloudShown(true)
   }
 
   const mouseLeave = data => {
-    //console.log('cloud NOT SHOWN')
     setCloudShown(false)
   }
 
   const printGarageStatusClass = data => {
-    if(data) {
-      if(data.available == 1) {
+    if (data) {
+      if (data.available == 1) {
         return 'garage-legend-avaliable'
-      } 
-      if(data.available == 0) {
+      }
+      if (data.available == 0) {
         return 'garage-legend-sold'
       }
     }
   }
 
   const printGarageStatusText = data => {
-    if(data) {
-      if(data.available == 1) {
+    if (data) {
+      if (data.available == 1) {
         return 'Dostępne'
       }
-      if(data.available == 0) {
+      if (data.available == 0) {
         return 'Sprzedane'
       }
     }
-  }
-
-  const printStatus = data => {
-    let statusClass = ''
-    let statusName = ''
-    switch (data.status) {
-      case "1":
-        statusName = 'sprzedane'
-        statusClass = 'level-legend-sold'
-        break;
-      case "2": statusName = 'zarezerwowane'
-        statusClass = 'level-legend-reserved'
-        break;
-      case "3": statusName = 'wolne'
-        statusClass = 'level-legend-avaliable'
-        break;
-
-    }
-    return (
-      <div className={`${statusClass} flex ai-c`}>
-        <span></span>
-        <p>{statusName}</p>
-      </div>
-    )
   }
 
 
@@ -633,38 +215,35 @@ const Garages = ({ match }) => {
       <div style={{ display: loading ? 'flex' : 'none' }} className="preloader flex ai-c jc-c">
         <img src={preLoaderGif} />
       </div>
-
       <div className="container">
         <p className="bold-title">Kliknij na lokal, aby dowiedzieć się więcej.</p>
       </div>
-
       {/* DESKTOP */}
       <div className="svg-container level-svg-desktop" style={{ height: imaheHeight }}>
-      {/* <div style={{display: levelImgLoading ? '' : ''}} className="">
+        {/* <div style={{display: levelImgLoading ? '' : ''}} className="">
       <img src={preLoaderGif} />
       </div> */}
-        <div style={{position: 'relative'}} className="container">
-        <img id="coverImg" style={{ position: 'absolute', width: '60%' }} src={buildingInGarage.garage_image} />
-        <svg style={{ position: 'absolute' }} id="levelSvgImg" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
-          {
-            garageArray.map((g, i) => {
-              let garageClass = ''
-              if (g.available == 1) {
-                garageClass = 'garageFree'
-              } else if (g.available == 0) {
-                garageClass = 'garageSold'
-              }
-              //console.log('u', u)
-              let svg = g.svg
-              //console.log('svg', svg)
-              return <g onMouseOver={() => mouseOver(g)} onMouseLeave={() => mouseLeave()} id={`unitsvg${i + 1}`} className={garageClass} dangerouslySetInnerHTML={{ __html: svg }}>
+        <div style={{ position: 'relative' }} className="container">
+          <img id="coverImg" style={{ position: 'absolute', width: '60%' }} src={buildingInGarage.garage_image} />
+          <svg style={{ position: 'absolute' }} id="levelSvgImg" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
+            {
+              garageArray.map((g, i) => {
+                let garageClass = ''
+                if (g.available == 1) {
+                  garageClass = 'garageFree'
+                } else if (g.available == 0) {
+                  garageClass = 'garageSold'
+                }
+                //console.log('u', u)
+                let svg = g.svg
+                //console.log('svg', svg)
+                return <g onMouseOver={() => mouseOver(g)} onMouseLeave={() => mouseLeave()} id={`unitsvg${i + 1}`} className={garageClass} dangerouslySetInnerHTML={{ __html: svg }}>
 
-              </g>
-            })
-          }
-        </svg>
+                </g>
+              })
+            }
+          </svg>
         </div>
-
         <div style={{ display: cloudShown ? '' : 'none' }} className="svg-cloud svg-cloud-garage">
           <p className="svg-cloud-garage-title">Stanowisko postojowe {dataInCloud.number}</p>
           {dataInCloud.status == 0 && (
@@ -678,8 +257,6 @@ const Garages = ({ match }) => {
             <p>{printGarageStatusText(dataInCloud)}</p>
           </p>
         </div>
-
-
         <div className="container">
           <div className="level-details">
             {/* <img src={investment.logo} alt={investment.name} />
@@ -725,32 +302,15 @@ const Garages = ({ match }) => {
               </ul>
             </div>
             <a className="btn back-to-building-btn" href="javascript:history.back()">Wróć do widoku budynku</a>
-
           </div>
         </div>
-
-
       </div>
 
-
-
-
-
-
-
-
-
-
-
-            {/* MOBILE */}
-
-
-       
+      {/* MOBILE */}
       <div id="level-svg-mobile" className="svg-container level-svg-mobile" style={{ height: mobileSvgHeight }}>
-      {/* <div style={{display: levelImgLoading ? '' : ''}} className="">
+        {/* <div style={{display: levelImgLoading ? '' : ''}} className="">
       <img src={preLoaderGif} />
       </div> */}
-       
         <img id="coverImgMobile" style={{ position: 'absolute', width: '100%' }} src={buildingInGarage.garage_image} />
         <svg style={{ position: 'absolute' }} id="levelSvgImgMobile" width="100%" height={mobileSvgHeight} xmlns="http://www.w3.org/2000/svg">
           {
@@ -770,8 +330,6 @@ const Garages = ({ match }) => {
             })
           }
         </svg>
-        
-
         <div style={{ display: cloudShown ? '' : 'none' }} className="svg-cloud svg-cloud-garage">
           <p className="svg-cloud-garage-title">Stanowisko postojowe {dataInCloud.number}</p>
           {dataInCloud.status == 0 && (
@@ -785,8 +343,6 @@ const Garages = ({ match }) => {
             <p>{printGarageStatusText(dataInCloud)}</p>
           </p>
         </div>
-
-
         <div className="container">
           <div className="level-details">
             {/* <img src={investment.logo} alt={investment.name} />
@@ -813,7 +369,6 @@ const Garages = ({ match }) => {
                 </select>
               </div>
             </div> */}
-
             <div className="level-legend">
               <p className="level-legend-title">Legenda</p>
               <ul className="level-legend-items">
@@ -832,19 +387,9 @@ const Garages = ({ match }) => {
               </ul>
             </div>
             <a className="btn back-to-building-btn" href="javascript:history.back()">Wróć do widoku budynku</a>
-
           </div>
         </div>
-
-
       </div>
-
-
-
-
-
-
-
       <Footer />
     </div>
   )

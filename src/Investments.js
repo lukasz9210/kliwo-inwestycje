@@ -21,8 +21,9 @@ import Header from './Header.js'
 import Footer from './Footer.js'
 import $ from 'jquery';
 import preLoaderGif from './images/preloader.gif'
+import { parser } from './helpers.js'
 
-const Test = ({ match }) => {
+const Investments = ({ match }) => {
   const [investment, setInvestment] = useState({})
   const [redirect, setRedirect] = useState(false)
   const [buildings, setBuildings] = useState([])
@@ -32,71 +33,66 @@ const Test = ({ match }) => {
   const [cloudShown, setCloudShown] = useState(false)
   const [dataInCloud, setDataInCloud] = useState({})
   const [loading, setLoading] = useState(true)
-
-  
-
   let windowWidth = 0
   let widthofScreen = 0
 
 
-  const coord = function (xy, orig_size, chngd_size) {
-    const x_scale = chngd_size[0] / orig_size[0];
-    const y_scale = chngd_size[1] / orig_size[1];
-    let coo = [];
-    for (let i = 0; i < xy.length; i += 2) {
-      coo.push(xy[i] * x_scale);
-      coo.push(xy[i + 1] * y_scale);
-    }
-    // console.log('coo', coo)
-    return coo;
-  }
+  useEffect(() => {
+    if (imaheHeight) {
+      const svgContainer = document.getElementById('svg1')
+      const svgContainerWidth = Math.round(svgContainer.width.baseVal.value) / 0.6
+      const svgContainerHeight = svgContainer.height.baseVal.value
 
+      const intervalGElems = setInterval(() => {
+        const gElems = svgContainer.querySelectorAll('g')
+        if (gElems.length > 0) {
+          clearInterval(intervalGElems)
 
-  const parser = function (text, o, ch) {
-    let parser = new DOMParser();
-    let xmlDoc = parser.parseFromString(text, "text/xml");
-
-    let d = xmlDoc.getElementsByTagName('path')[0].getAttribute('d');
-
-    let arr = d.toUpperCase().replace(/,/g, ' ').replace(/-/g, ' -').split(' ');
-
-    arr = arr.filter(val => val != '');
-
-    let k = 0;
-    while (k < arr.length) {
-      if ((arr[k].length > 1) && (arr[k].match(/[A-Z]/i))) {
-        let tmp = arr[k];
-        arr[k] = arr[k].substr(0, 1);
-        arr.splice(k + 1, 0, tmp.substr(1, tmp.length));
-      }
-      k += 1;
-    }
-
-    let tmp_arr = [];
-    let i = 0;
-    while (i < arr.length) {
-      let tmp = [];
-      if (arr[i].match(/[A-Z]/i)) {
-        let j = i;
-        while (j < arr.length - 1) {
-          tmp.push(arr[j]);
-          //console.log('tmp', tmp)
-          if (arr[j + 1].match(/[A-Z]/i)) {
-            let tmp2 = coord(tmp, o, ch);
-            tmp2 = tmp2.filter(val => !Number.isNaN(val));
-            tmp_arr.push(arr[i] + tmp2.join(' '));
-            i = j;
-            break;
-          }
-          j += 1
+          gElems.forEach((g, i) => {
+            let pathElem = g.querySelector('path')
+            //console.log('path przed', pathElem)
+            const svgText = pathElem.outerHTML
+            //console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
+            const newcoords = parser(svgText, [1230, 846], [svgContainerWidth, svgContainerHeight])
+            //console.log('newcoords', newcoords)
+            pathElem.setAttribute('d', newcoords)
+            //console.log('path po', pathElem)
+            setLoading(false)
+          })
         }
-      }
-      i += 1;
+      }, 1000)
     }
-    //console.log('tmp_arr', tmp_arr) 
-    return tmp_arr.join(' ') + ' Z';
-  }
+  }, [imaheHeight])
 
+
+  useEffect(() => {
+    if (imaheHeightMobile) {
+      const svgContainer = document.getElementById('svg2')  //kontener svg
+
+      //actual width and height of svg container
+      const svgContainerWidth = Math.round(svgContainer.width.baseVal.value)
+      const svgContainerHeight = svgContainer.height.baseVal.value
+
+      const intervalGElems = setInterval(() => {
+        const gElems = svgContainer.querySelectorAll('g')
+        if (gElems.length > 0) {
+          clearInterval(intervalGElems)
+
+          gElems.forEach((g, i) => {
+            let pathElem = g.querySelector('path')
+            //console.log('path przed', pathElem)
+            const svgText = pathElem.outerHTML
+            //console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
+            const newcoords = parser(svgText, [1230, 846], [svgContainerWidth, svgContainerHeight])
+            //console.log('newcoords', newcoords)
+            pathElem.setAttribute('d', newcoords)
+            //console.log('path po', pathElem)
+            setLoading(false)
+          })
+        }
+      }, 1000)
+    }
+  }, [imaheHeightMobile])
 
 
   useEffect(() => {
@@ -104,96 +100,29 @@ const Test = ({ match }) => {
     console.log('windowWidth', windowWidth)
     fetchInvestment()
     fetchBuildingsInInvestment()
-    setTimeout(() => {
-      let ih = document.getElementById('coverImg').height
-      // let abcd = document.getElementById('investment-svg-mobile')
-      // console.log('abcd', abcd)
-      let ihmobile = document.getElementById('investment-svg-mobile').height
-      console.log('ihmobile', ihmobile)
-      console.log('ih', ih)
-      setImaheHeight(ih)
-      setImaheHeightMobile(ihmobile)
-      setLoading(false)
-      
-    }, 5000);
-
-
-    //inwestycja
-    //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
-    if(windowWidth > 1300) {
-      console.log("WIEKSZY EKRAN")
-      //inwestycja
-    //setTimeOut jest dlatego eby zdąył wrzucić dynamiczne elementy koordynatorówdo kontenera svg
-    setTimeout(() => {
-      //console.log('DONE')
-      //svg container/image
-      let svgContainer = document.getElementById('svg1')  //kontener svg
-      const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
-
-      //cover img width and height
-      let coverImgWidth = coverImg.width
-      let coverImgHeight = coverImg.height
-
-      //actual width and height of svg container
-      let svgContainerWidth = Math.round(svgContainer.width.baseVal.value) / 0.6
-      let svgContainerHeight = svgContainer.height.baseVal.value
-      console.log('svgContainerWidth', svgContainerWidth)
-      console.log('svgContainerHeight', svgContainerHeight)
-
-      let gElems = svgContainer.querySelectorAll('g')
-      //console.log('gElems', gElems)
-
-      gElems.forEach((g, i) => {
-        let pathElem = g.querySelector('path')
-        //console.log('path przed', pathElem)
-        let svgText = pathElem.outerHTML
-        //console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-        let newcoords = parser(svgText, [1230, 846], [svgContainerWidth, svgContainerHeight])
-        //console.log('newcoords', newcoords)
-        pathElem.setAttribute('d', newcoords)
-        //console.log('path po', pathElem)
-      })
-    }, 5000);
-    //koniec inwestycji
-
-    } else {
-      console.log("MNIEJSZY EKRAN")
-      setTimeout(() => {
-        //console.log('DONE')
-        //svg container/image
-        let svgContainer = document.getElementById('svg2')  //kontener svg
-        const coverImg = document.getElementById('coverImg')  // zdjęcie pod svg
-  
-        //cover img width and height
-        let coverImgWidth = coverImg.width
-        let coverImgHeight = coverImg.height
-  
-        //actual width and height of svg container
-        let svgContainerWidth = Math.round(svgContainer.width.baseVal.value)
-        let svgContainerHeight = svgContainer.height.baseVal.value
-        console.log('svgContainerWidth', svgContainerWidth)
-        console.log('svgContainerHeight', svgContainerHeight)
-  
-        let gElems = svgContainer.querySelectorAll('g')
-        //console.log('gElems', gElems)
-  
-        gElems.forEach((g, i) => {
-          let pathElem = g.querySelector('path')
-          //console.log('path przed', pathElem)
-          let svgText = pathElem.outerHTML
-          //console.log('data for parse', svgText, svgContainerWidth, svgContainerHeight)
-          let newcoords = parser(svgText, [1230, 846], [svgContainerWidth, svgContainerHeight])
-          //console.log('newcoords', newcoords)
-          pathElem.setAttribute('d', newcoords)
-          //console.log('path po', pathElem)
-        })
-      }, 5000);
-      //koniec inwestycji
-
+    if (windowWidth > 1300) {
+      const interval = setInterval(() => {
+        let ih = document.getElementById('coverImg').height
+        if (ih) {
+          setImaheHeight(ih)
+          console.log("IH JEST", ih)
+          clearInterval(interval)
+        }
+      }, 10)
     }
-  
 
-    $(document).ready(function() {
+    if (windowWidth < 1300) {
+      const interval = setInterval(() => {
+        const ihmobile = document.getElementById('investment-svg-mobile').height
+        if (ihmobile) {
+          setImaheHeightMobile(ihmobile)
+          setLoading(false)
+          clearInterval(interval)
+        }
+      }, 10)
+    }
+
+    $(document).ready(function () {
       widthofScreen = $(window).width();
       window.addEventListener('resize', redirectAfterResize);
     })
@@ -201,17 +130,14 @@ const Test = ({ match }) => {
   }, [])
 
   const redirectAfterResize = () => {
-    if ($(window).width()==widthofScreen) return; 
-    console.log("RESIZED!!")
+    if ($(window).width() == widthofScreen) return;
     window.location.reload();
   }
-  
 
   const fetchInvestment = () => {
-    let details = {
+    const details = {
       'id': match.params.investId
     };
-
     let formBody = [];
     for (let property in details) {
       let encodedKey = encodeURIComponent(property);
@@ -220,9 +146,8 @@ const Test = ({ match }) => {
     }
 
     formBody = formBody.join("&");
-    console.log('formBody', formBody)
-
-    fetch('http://kliwo.realizacje.grupaaf.pl/api/investments-show', {
+    //console.log('formBody', formBody)
+    fetch('https://kliwo.pl/api/investments-show', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -236,9 +161,8 @@ const Test = ({ match }) => {
     })
   }
 
-
   const fetchBuildingsInInvestment = () => {
-    let details = {
+    const details = {
       'id': match.params.investId
     };
 
@@ -251,8 +175,7 @@ const Test = ({ match }) => {
 
     formBody = formBody.join("&");
     //console.log('formBody', formBody)
-
-    fetch('http://kliwo.realizacje.grupaaf.pl/api/investments-show-buildings', {
+    fetch('https://kliwo.pl/api/investments-show-buildings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -261,33 +184,22 @@ const Test = ({ match }) => {
     }).then(r => {
       return r.json()
     }).then(j => {
-      //setInvestment(j.data.investments)
-
       const arr = Object.values(j.data.buildings)
-
       setBuildings(arr)
-      //console.log('buildings in this investment', j)
-      //console.log('buildings', buildings)
     })
   }
-
-
-
 
   const redirectToBuilding = param => {
     setRedirect(true)
     setRedirectId(param)
   }
 
-
   const mouseOver = data => {
-    console.log('cloud SHOWN')
     setDataInCloud(data)
     setCloudShown(true)
   }
 
-  const mouseLeave = data => {
-    console.log('cloud NOT SHOWN')
+  const mouseLeave = () => {
     setCloudShown(false)
   }
 
@@ -297,17 +209,14 @@ const Test = ({ match }) => {
       <div style={{ display: loading ? 'flex' : 'none' }} className="preloader flex ai-c jc-c">
         <img src={preLoaderGif} />
       </div>
-
       <div className="investment">
         <div className="container">
           <p className="bold-title">Kliknij na wybrany budynek, aby poznać szczegóły.</p>
         </div>
-
         <div className="svg-container investment-svg-desktop" style={{ height: imaheHeight }}>
           <div className="mapBox" id="investB1" >Kliknij i sprawdź!</div>
           <div className="mapBox" id="investB4" >Kliknij i sprawdź!</div>
           <div className="mapBox" id="investB5" >Kliknij i sprawdź!</div>
-
           <img className="" id="coverImg" style={{ position: 'absolute', width: '60%' }} src={investment.svg} />
           <svg className="" style={{ position: 'absolute' }} id="svg1" width="60%" height={imaheHeight} xmlns="http://www.w3.org/2000/svg">
             {
@@ -322,15 +231,11 @@ const Test = ({ match }) => {
             }
           </svg>
 
-        
-
-
           {redirect ? <Redirect push to={`/budynek/${redirectId}`} /> : null}
 
           <div style={{ display: cloudShown ? 'block' : 'none' }} className="svg-cloud">
             <p>{dataInCloud.name}</p>
           </div>
-
           <div className="investment-details">
             <img src={investment.logo} alt={investment.name} />
             <h4 className="investment-details-name">{investment.name}</h4>
@@ -338,18 +243,12 @@ const Test = ({ match }) => {
             <p className="investment-details-description">{investment.description}</p>
             <a className="btn learn-more-btn" href="#investment-boxes">Dowiedz się więcej</a>
           </div>
-
         </div>
-
-
-
-
-
-            {/* MOBILE */}
+        {/* MOBILE */}
         <div className="svg-container investment-svg-mobile" style={{ height: imaheHeightMobile }}>
-        <div className="mapBox" id="investB1" >Kliknij i sprawdź!</div>
-        <div className="mapBox" id="investB4" >Kliknij i sprawdź!</div>
-        <div className="mapBox" id="investB5" >Kliknij i sprawdź!</div>
+          <div className="mapBox" id="investB1" >Kliknij i sprawdź!</div>
+          <div className="mapBox" id="investB4" >Kliknij i sprawdź!</div>
+          <div className="mapBox" id="investB5" >Kliknij i sprawdź!</div>
           <img className="" id="investment-svg-mobile" style={{ position: 'absolute', width: '100%' }} src={investment.svg} />
           <svg className="" style={{ position: 'absolute' }} id="svg2" width="100%" height={imaheHeightMobile} xmlns="http://www.w3.org/2000/svg">
             {
@@ -364,15 +263,11 @@ const Test = ({ match }) => {
             }
           </svg>
 
-          
-
-
           {redirect ? <Redirect push to={`/budynek/${redirectId}`} /> : null}
 
           <div style={{ display: cloudShown ? 'block' : 'none' }} className="svg-cloud">
             <p>{dataInCloud.name}</p>
           </div>
-
           <div className="investment-details">
             <img src={investment.logo} alt={investment.name} />
             <h4 className="investment-details-name">{investment.name}</h4>
@@ -380,24 +275,15 @@ const Test = ({ match }) => {
             <p className="investment-details-description">{investment.description}</p>
             <a className="btn learn-more-btn" href="#investment-boxes">Dowiedz się więcej</a>
           </div>
-
         </div>
-
-
-
-
         <div className="container">
-
-        <div className="investment-details investment-details-mobile">
+          <div className="investment-details investment-details-mobile">
             <img src={investment.logo} alt={investment.name} />
             <h4 className="investment-details-name">{investment.name}</h4>
             <h5 className="investment-details-address">{investment.address}</h5>
             <p className="investment-details-description">{investment.description}</p>
             <a className="btn learn-more-btn" href="#investment-boxes">Dowiedz się więcej</a>
           </div>
-
-
-
           <div className="investment-benefits">
             <h4 className="bold-title">Dlaczego Osiedle {investment.name}?</h4>
             <div className="investment-benefits-content flex jc-spb">
@@ -431,13 +317,8 @@ const Test = ({ match }) => {
               </div>
             </div>
           </div>
-
-
         </div>
-
-
-
-        <div id="investment-boxes" className="investment-boxes" style={{ backgroundImage: 'url(http://kliwo.realizacje.grupaaf.pl/wp-content/uploads/2020/02/B5.jpg)' }}>
+        <div id="investment-boxes" className="investment-boxes" style={{ backgroundImage: 'url(https://kliwo.pl/wp-content/uploads/2020/02/B5.jpg)' }}>
           <div className="container flex">
             <div className="investment-box investment-box-left" >
               <div className="investment-box-content">
@@ -446,7 +327,7 @@ const Test = ({ match }) => {
                   <p>Do budowy Osiedla Czereśniowego wykorzystano starannie wyselekcjonowane materiały o najwyższej jakości. Standard wykończenia lokali mieszkalnych oraz usługowych obejmuje m.in.:</p>
                 </div>
                 <div className="investment-box-list">
-                <div className="investment-box-list-item flex ai-c">
+                  <div className="investment-box-list-item flex ai-c">
                     <img src={roletyImg} alt="" />
                     <div className="investment-box-list-item-text">
                       <p><strong>Rolety zewnętrzne</strong> – zainstalowane na wszystkich oknach PCV znajdujących się w lokalach (z wyłączeniem okien dachowych/połaciowych)</p>
@@ -467,7 +348,6 @@ const Test = ({ match }) => {
                 </div>
               </div>
             </div>
-
             <div className="investment-box investment-box-right" >
               <div className="investment-box-content">
                 <p className="bold-title">Bezpieczeństwo inwestycyjne</p>
@@ -490,8 +370,6 @@ const Test = ({ match }) => {
                 </div>
               </div>
             </div>
-
-
             <div className="investment-box investment-box-left" >
               <div className="investment-box-content">
                 <p className="bold-title">Ekologiczne rozwiązania</p>
@@ -514,8 +392,6 @@ const Test = ({ match }) => {
                 </div>
               </div>
             </div>
-
-
             <div className="investment-box investment-box-right" >
               <div className="investment-box-content">
                 <p className="bold-title">Zadecyduj o przestrzeni, w której zamieszkasz!</p>
@@ -550,9 +426,6 @@ const Test = ({ match }) => {
                 </div>
               </div>
             </div>
-
-
-
             <div className="investment-box investment-box-left" >
               <div className="investment-box-content">
                 <p className="bold-title">Miejsca postojowe w garażu podziemnym</p>
@@ -569,8 +442,6 @@ const Test = ({ match }) => {
                 </div>
               </div>
             </div>
-
-
             <div className="investment-box investment-box-right" >
               <div className="investment-box-content">
                 <p className="bold-title">Dogodna lokalizacja</p>
@@ -599,8 +470,6 @@ const Test = ({ match }) => {
                 </div>
               </div>
             </div>
-
-
             <div className="investment-box investment-box-left" >
               <div className="investment-box-content">
                 <p className="bold-title">Zamieszkaj w Trzebnicy!</p>
@@ -635,33 +504,15 @@ const Test = ({ match }) => {
                 </div>
               </div>
             </div>
-
-
-            
           </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       </div>
       <Footer />
     </div>
   )
 }
 
-export default Test
+export default Investments
 
 
 
